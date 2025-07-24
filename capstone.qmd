@@ -1,9 +1,9 @@
 ---
 title: "Drug Pharmacy Costs Across US Demographics"
 subtitle: |
-  ![](images/W_compass.png){height=0.75in}
+  ![](images/W_compass.png){height=0.5in}
   Data Science Capstone
-author: "Ellann Cohen and Travis McKenzie"
+authors: "Ellann Cohen and Travis McKenzie"
 bibliography: references.bib
 title-block-banner: true
 format: 

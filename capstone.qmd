@@ -13,6 +13,7 @@ format:
       dark: darkly
     title-block-banner: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);
     title-block-banner-color: "#D8DEE9"
+runtime: shiny
 ---
 
 {{< include _01_intro.qmd >}}

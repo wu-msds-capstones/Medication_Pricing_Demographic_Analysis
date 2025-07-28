@@ -6,6 +6,6 @@ This template already has an orphaned gh-pages repo created, so all that is nece
 
 To update the gh-pages branch (aka the published webpage), you can use the following command from this folder in your terminal/command line:
 
-```bash
+```bash/terminal
 quarto publish gh-pages
 ```

@@ -8,4 +8,4 @@ Drug prices do in fact vary significantly regionally but even within some states
 
 **we can add a comment about Connecticut here**
 
-Our team was very surprised by what we observed once the median prices were applied to map plots.  There are clearly patters
+This regional variation underscores the importance of localized analysis. It also raises important questions about equity and access—particularly for beneficiaries in high-cost areas who may face greater financial burdens for the same treatments available at lower costs elsewhere. These disparities suggest that systemic inefficiencies or market imbalances may be at play, warranting further investigation and policy attention.

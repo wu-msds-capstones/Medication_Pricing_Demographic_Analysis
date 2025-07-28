@@ -4,7 +4,7 @@ The plan information, once condensed, could be synthesized into the census infor
 
 Drug prices do in fact vary significantly regionally but even within some states.  As is clearly demonstrated in @fig-map-semaglutide, price varies significantly.
 
-![Median Medicare Price for 30-day Supply of Semaglutide by US County](./images/map_semaglutide_739.png){#fig-map-semaglutide}
+![Median Medicare Price for 30-day Supply of Semaglutide by US County](./images/map_semaglutide_727x375.png){#fig-map-semaglutide}
 
 **add plot of another very different price pattern drug**
 

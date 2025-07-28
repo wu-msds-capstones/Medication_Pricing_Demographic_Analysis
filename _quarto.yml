@@ -12,3 +12,6 @@ format:
     theme:
       light: lightly
       dark: darkly
+
+# execute:
+  # freeze: auto

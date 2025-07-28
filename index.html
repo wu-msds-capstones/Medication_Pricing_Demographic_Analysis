@@ -359,14 +359,14 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
 <h1>Analysis</h1>
 <section id="scope-of-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="scope-of-analysis">Scope of Analysis:</h2>
-<p>One of the first goals was to get an overall look at the data available for exploration, once it was connected in a relational way. The initial strategy involved attempting to condense and aggregate details. An issue that was understood and would prove to be a significant challenge was how granular the formulary data was. An extensive analysis of the formulary data was required just to determine which descriptive statistics would best relate to the census data. Another key consideration was trying to determine which medications to focus on. It was not feasible to attempt to evaluate all 6000 medications in the formulary across all plans and contracts. An appropriate solution was to focus on one or a few medications within the formulary. The addition of the CMS spending data proved to be invaluable. This data proved to be simple and well-structured, allowing for quick analysis. Many approaches were tested. The most robust and informative version of this exploration was the result of combining the spending data from Part B, Part D, and Medicaid. This allowed for the identification of high-impact drugs that would warrant exploration. Our team created lists of the top 10 (<a href="#fig-top-10-spending" class="quarto-xref">Figure&nbsp;1</a>) and top 25 drugs by spending across these three pools of coverage. Additionally, beneficiary counts, claim counts, and dose counts were added for additional texture. After reviewing some of these medications, several medications of interest were selected for further analysis.</p>
-<div id="fig-top-10-spending" class="quarto-float quarto-figure quarto-figure-center anchored">
+<p>One of the first goals was to get an overall look at the data available for exploration, once it was connected in a relational way. The initial strategy involved attempting to condense and aggregate details. An issue that was understood and would prove to be a significant challenge was how granular the formulary data was. An extensive analysis of the formulary data was required just to determine which descriptive statistics would best relate to the census data. Another key consideration was trying to determine which medications to focus on. It was not feasible to attempt to evaluate all 6000 medications in the formulary across all plans and contracts. An appropriate solution was to focus on one or a few medications within the formulary. The addition of the CMS spending data proved to be invaluable. This data proved to be simple and well-structured, allowing for quick analysis. Many approaches were tested. The most robust and informative version of this exploration was the result of combining the spending data from Part B, Part D, and Medicaid. This allowed for the identification of high-impact drugs that would warrant exploration. Our team created lists of the top 10 (<a href="#fig-topspend" class="quarto-xref">Figure&nbsp;1</a>) and top 25 drugs by spending across these three pools of coverage. Additionally, beneficiary counts, claim counts, and dose counts were added for additional texture. After reviewing some of these medications, several medications of interest were selected for further analysis.</p>
+<div id="fig-topspend" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-top-10-spending-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="./images/top_drugs_by_spending_2023.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Top ten drugs by absolute medicare spending in 2023"><img src="./images/top_drugs_by_spending_2023.png" class="img-fluid figure-img"></a>
+<div aria-describedby="fig-topspend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="./images/Top_Spend.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Top drugs by absolute Medicare spending in 2023"><img src="./images/Top_Spend.jpg" class="img-fluid figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-top-10-spending-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Top ten drugs by absolute medicare spending in 2023
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-topspend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Top drugs by absolute Medicare spending in 2023
 </figcaption>
 </figure>
 </div>
@@ -422,6 +422,7 @@ Figure&nbsp;5: Median Medicare Price for 30-day Supply of Semaglutide by US Coun
 </figcaption>
 </figure>
 </div>
+<p><strong>add plot of another very different price battern drug</strong></p>
 <p><strong>we can add a comment about Connecticut here</strong></p>
 <p>Our team was very surprised by what we observed once the median prices were applied to map plots. There are clearly patterns here, but they vary geographically with different drugs.</p>
 <div id="fig-plans-vs-population" class="quarto-float quarto-figure quarto-figure-center anchored">

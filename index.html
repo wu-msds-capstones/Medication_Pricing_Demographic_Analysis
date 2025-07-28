@@ -24,7 +24,6 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -58,6 +57,9 @@ div.csl-indent {
 <link href="site_libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark-b15df86742554840d07b04d0f56a07e9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <style>
 
       .quarto-title-block .quarto-title-banner h1,
@@ -286,8 +288,8 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#background-and-data-collection" id="toc-background-and-data-collection" class="nav-link" data-scroll-target="#background-and-data-collection">Background and Data Collection</a></li>
+  <li><a href="#data-engineering" id="toc-data-engineering" class="nav-link" data-scroll-target="#data-engineering">Data Engineering</a></li>
   <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
@@ -307,30 +309,84 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>The rising cost of pharmaceuticals in the United States presents significant implications for public health policy, equity in healthcare access, and the financial well-being of diverse populations. This capstone project investigates the central research question: <em>“How have pharmacy costs evolved over the past half decade across U.S. demographic groups, and what trends can be forecast for the next five years?”</em> To address this, we integrate publicly available data from the Centers for Medicare &amp; Medicaid Services (CMS), the U.S. Census Bureau, and the Food and Drug Administration (FDA), capturing detailed information on drug prices, clinical indications, population demographics, and coverage programs. These data were ingested and harmonized into a unified DuckDB instance hosted on AWS S3 cloud storage, enabling scalable, query-efficient analysis across large, heterogeneous datasets. (Thanks Prof.&nbsp;Rembold!) This infrastructure supports a multi-faceted exploration of pharmaceutical spending patterns and sets the stage for rigorous, demographic-driven cost modeling.</p>
-<p>Something something, and then I state some citable facts <span class="citation" data-cites="Zelner2022">(<a href="#ref-Zelner2022" role="doc-biblioref">Zelner, Broen, and August 2022</a>)</span>.</p>
+<p>The rising cost of pharmaceuticals in the United States presents significant implications for public health policy, equity in healthcare access, and the financial well-being of diverse populations. This capstone project investigates the central research question: <em>“How have pharmacy costs evolved over the past half decade across U.S. demographic groups, and what trends can be forecast for the next five years?”</em> To address this, we integrate publicly available data from the Centers for Medicare &amp; Medicaid Services (CMS), the U.S. Census Bureau, and the Food and Drug Administration (FDA), capturing detailed information on drug prices, clinical indications, population demographics, and coverage programs. These data were ingested and harmonized into a unified DuckDB instance hosted on AWS S3 cloud storage, enabling scalable, query-efficient analysis across large, heterogeneous datasets. This infrastructure supports a multi-faceted exploration of pharmaceutical spending patterns and sets the stage for rigorous, demographic-driven cost modeling.</p>
+<p>Medication usage is a reality that touches nearly every American. According to a KFF (formerly Kaiser Family Foundation) research poll, 60% of adults report taking at least one prescription medication, and 25% take four or more prescribed medications [1]. As pharmaceutical technology continues to advance, the affordability of these medications remains a significant concern for those who rely on them to manage a wide range of health conditions.</p>
+<p>Medications are often the first line of treatment for both chronic and acute medical diagnoses, and they are a major driver of healthcare costs. Consider how frequently a provider recommends a medication—or a combination of medications—as the initial response to a diagnosis. For many Americans, the financial burden of these treatments contributes to stress and anxiety, especially within the framework of a largely privatized healthcare system. Even with insurance, Medicare, or Medicaid, the out-of-pocket costs for a prescription regimen can be substantial.</p>
+<p>According to the Commonwealth Fund, an estimated 30% of adults carry medical debt. Alarmingly, nearly 57% of underinsured adults report delaying or avoiding necessary treatment due to cost [2]. This issue is further complicated by the structure of public insurance programs like Medicare and Medicaid, which are only available to specific segments of the population. These programs also vary significantly by state and county, with plan options that can dramatically affect both pricing and individual financial responsibility. As a result, geographic and demographic disparities continue to challenge equitable access to care.</p>
+<p>While medications are just one component of medical treatment, they play a critical role in preventing more costly interventions down the line. For example, chronic conditions such as diabetes, cardiovascular disease, and chronic kidney disease can often be managed effectively with medication, reducing the need for hospitalization or surgery. A recent study by UNC Health found that oral semaglutide (Brand names: Ozempic and Rybelsus for diabetes, and Wegovy for weight loss) significantly reduced the incidence of heart attacks and strokes [3]. This highlights the importance of medication affordability—not just as a matter of convenience, but as a cornerstone of equitable and effective healthcare.</p>
+<p>This project aims to explore the costs associated with Medicare medication plans and how those costs impact the various demographics across the U.S. By examining the structure and variability of Medicare plan pricing—particularly how they differ by state and county—we can better understand the financial burden placed on disadvantaged populations. This analysis will highlight disparities in access and affordability, and seek to identify patterns that may inform policy improvements or targeted interventions to promote more equitable healthcare outcomes.</p>
 </section>
-<section id="background" class="level1">
-<h1>Background</h1>
+<section id="background-and-data-collection" class="level1">
+<h1>Background and Data Collection</h1>
+<p>Due to the disparate nature of medication pricing across private healthcare systems throughout the United States, we selected data from the Centers for Medicare and Medicaid Services (CMS). The data made available by CMS is vast [4] with well over 100 data sets focusing on a wide variety of topics and interests.</p>
+<p>We decided to leverage “The Quarterly Prescription Drug Plan Formulary” data set. Of particular interest were the pricing files, basic drugs formulary files, and plan information files. We also leveraged the geographic locator file, which enabled us to connect plans and prices back to the county level across the US. A key consideration and constraint is that Medicare &amp; Medicaid plans and pricing only apply to the particular subset of the population that qualify for Medicare and Medicaid. To be Medicare eligible, applicants generally must be age 65 or older. In order to get Medicare before age 65, one must have a disability, ESRD (End-Stage Renal Disease), or ALS (Amyotrophic Lateral Sclerosis) [8]. This was ultimately one of the more comprehensive, cohesive, and dynamic data sets available related to medication pricing. Furthermore, it presented the unique advantage of having prices by plan and by region, which allowed us to pursue analysis that could be contextualized by regional demographics. The data was easily accessible and downloadable as a zip file.</p>
+<p>Several APIs were explored that had general medication data. In particular, there is now a growing number of online pharmacies that report medication pricing. Companies such as GoodRx (www.goodrx.com) host an API and are on a mission to help level the playing field for medication prices for consumers, but we would not be able to appropriately pair this with the demographic data we would later select.</p>
+<p><strong>add some details here about what the formulary is and give better context to the reader</strong></p>
+<p>The ability to pair the medication prices with demographic data was critical to our exploration and analysis. The goal was to gather insights into how different demographics are impacted by medication pricing variation. The demographic data selection was much simpler, and we quickly concluded that the US Census would provide compelling county-level demographic information, which we could connect to the medication pricing data. This would pair in a compelling way with our Medicare Formulary data.</p>
+<p>*elaborate on census data collection**</p>
+<p>There is an obvious issue with using the Medicare formulary data as a foundation for pricing, which we mentioned briefly and warrants further discussion. This data is constrained to a subset of the population. It is worth considering how Medicare formulary data, specifically Part D coverage, can serve as a functional proxy for medication prices across the US. First, Medicare Part D covers over 50 million beneficiaries, which makes it one of the largest prescription drug programs in the US. Medicare contracts with private insurers who then negotiate prices with drug manufacturers and pharmacies, which can reflect real-world pricing. Medicare has tremendous leverage in the marketplace and is one of the largest purchasers of prescription drugs. Accordingly, this makes Medicare a substantial market influencer, which means that its pricing can set or anchor prices for the entire marketplace. We can reasonably infer that uninsured buyers, or buyers leveraging other forms of insurance, would pay at least as much as Medicare under Part D coverage. Furthermore, since the private insurers are negotiating prices, the prices are expected to generally reflect market competition, rebate structures, and incentives in the local markets in which they are negotiating. Comparative analysis of regional and county-level formularies offers valuable insights into the overall landscape of drug pricing in the US.</p>
+<p>Taking this approach is not without its limitations. The most significant constraint is the lack of transparency around rebates and negotiated discounts, which means that the net prices might differ from what is publicly listed. It also does not fully capture negotiations in non-Medicare markets, which could present notable deviations from the information that is available to us. Accordingly, the pricing that we extracted should not be considered the exact pricing for any particular medication. Our ability to assess the extent of this is limited since private insurers are not publishing their formulary data.</p>
+<p>Another key consideration was the sheer scope of the data we were beginning to assemble. The formulary files are very large and are published quarterly. Additionally, the formulary covers pricing for approximately 6336 different medication structures (types, doses, administration) across 796 contracts and 458 plans, for a total of 5644 unique contract/plan combinations. Complicating it further is that there are also regional formularies under MA (Medicare Advantage, also known as “Part C”) and PDP (Prescription Drug Plan). As such, we needed a way to streamline our analysis.</p>
+<p>Three additional and separate data sets were secured related to spending, also furnished by CMS, which outlined overall spending by drug and by year from 2019 - 2023. This lacked the geographic granularity to evaluate medications at the county level, but would provide context for which medications could be considered high impact, focusing exploration of the formulary data. This included spending under Part D, Part B, and Medicaid. Notably, the formulary data is limited to Part D. However, the overall spending information would assist in determining which medications are having the greatest impact nationally from a raw cost perspective. Additionally, the data contained information about the number of beneficiaries, claims filed, and doses. This allowed assessment of which medications are prescribed less frequently with higher cost, or by contrast, high frequency and low cost. Integrating this data into the overall database enabled greater flexibility and synthesized well with the other data being compiled.</p>
+<p>There was ultimately a significant gap observed upon preliminary exploration of the expanded data set. The CMS formulary data lacks any type of medication name. Only NDC (National Drug Code) codes were provided inside the formulary, which were tied to the prices. This presented a problematic hurdle to the analysis for a litany of reasons. The overall spending data only provided drug names, not NDC codes, so there was no way to connect the two, and they existed as separate datasets in our database. Perhaps most importantly, the lack of any medication name created some immediately obvious issues when attempting to discuss and present findings. Only being able to reference raw codes was simply not a reasonable consideration. Many other issues were observed, and being able to connect names to NDC codes was immediately prioritized. Fortunately, the FDA (Food and Drug Administration) publishes comprehensive data sets. The FDA also publishes a large number of data sets, so securing the information requires evaluating and securing relevant information. An NDC database file was secured. This was provided as a zip file. By itself, this data presented additional challenges regarding how to evaluate and integrate it with the growing project dataset. It existed essentially as two text files, which contained product and packaging information. The scope of the project expanded further as each drug was complicated with more context, including packaging and strength levels.</p>
+<p>Fortunately, the naming conventions utilized by CMS in their overall spending data were largely consistent with the naming conventions provided by the FDA, which allowed for these files to be related in the database. The project now had compelling connections across a massive number of very large data files. The most concerning connection based on string matching between the NDC data and the CMS spending data proved solid and was able to join more than 95% of the medications summarized for Part D spending.</p>
 </section>
-<section id="data" class="level1">
-<h1>Data</h1>
+<section id="data-engineering" class="level1">
+<h1>Data Engineering</h1>
+<p>From the outset, a large number of issues were present just in the gathering and assembling of the data. The most immediate problem that needed to be solved was related to the size and scale of the data that would need to be available in a manner that members of the team could access remotely and ensure. While cleaning and creating connections to structure and normalize the data, the team needed to be able to ensure that work was not siloed, creating a risk that the data would be inconsistent and disjointed. The hundreds of gigabytes of data would exceed the limits enforced by GitHub. GitHub recommends a single file limit of 1MB and enforces the limit at 100MB. While GitHub does offer a large file storage option, it was not going to suit the needs of this project. Professor Jed Rembold was able to suggest a novel solution, which was ultimately pursued to remedy this issue. He suggested the use of an Amazon Web Services (AWS) S3 (Simple Storage Service) bucket to store the data, or one of many other cloud storage options, such as Microsoft Azure Blob Storage or Google Cloud Storage. Amazon Web Services was selected after researching the various options. The AWS S3 bucket that our team created allowed for the data to be stored in digital buckets, making all files accessible anywhere at any time via the cloud. This provided a safe place to house any large new files as the data was explored and connected. Access could be standardized and integrated into exploration. Setting up and establishing the bucket was no small feat and required extensive investigation and practice. Neither member of our team had leveraged AWS in any form prior to this project. It became immediately apparent that this solution could be very complex and difficult for novices to approach. Fortunately, LLM support from Copilot and Chat GPT was effective in working through the various technical complexities and making this solution more approachable. Furthermore, AWS has an integrated LLM which provides further support to setting up the S3, facilitating access to both team members, and establishing tokens for remote access.</p>
+<p>Setting up the AWS S3 was not the only task in this solution. Professor Rembold also recommended leveraging DuckDB to manage the database. DuckDB is an in-process SQL OLAP (Online Analytical Processing) database management system. It is specifically designed for fast analytical queries on large datasets. It also does not require a server to run. Yet another piece of the puzzle was Professor Rembold’s third piece of advice, which was to leverage the Parquet format rather than the CSV and text file formats that were ingested from CMS, the FDA, and the US Census Bureau. Parquet is a columnar storage file format that was designed to enhance data processing efficiency. It is leveraged in big data and analytics environments. It works natively with DuckDB. Its efficient compression allowed for all of the files comprising the dataset to be stored in the same bucket and be worked on using similar scripting and access processes.</p>
+<p>This recommended structure proved to be a profound solution to manage the database. The AWS S3 bucket, DuckDB, and Parquet file formats all worked together and could be libraried in R to allow for reusable scripts that could be stored in the GitHub repository. This allowed the team to work asynchronously on the same data, which was still connected to the same repository. This also provided an excellent opportunity to expand and explore some of the additional features provided by RStudio, specifically with GitHub integration.</p>
+<p>Over 100 different Parquet files were stored in the S3 bucket. Many of these were variations of the plan files, geographic locator files, drug formulary files, and drug pricing files from the CMS quarterly formulary data set. It was not expected that all files would be used, but the early exploration necessitated the availability of every quarter from every year (2019-2023) of the data set. Ultimately, the Census, NDC, and CMS spending data sets were much more reasonable from a size perspective, and only using those would not have necessitated the use of a large, scalable storage option. Using the S3 made the process of engineering the data more complicated, but it was the right solution for this project. It made the process of structuring a relational database with all of the desired files achievable.</p>
+<div id="fig-uniqueprices" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-uniqueprices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="./images/top_30_drug_ndcs_by_number_of_unique_prices_30_day.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Plot of the top 30 drugs by the number of unique prices across the nation for medicare patients (30-day supply only)"><img src="./images/top_30_drug_ndcs_by_number_of_unique_prices_30_day.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uniqueprices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Plot of the top 30 drugs by the number of unique prices across the nation for medicare patients (30-day supply only)
+</figcaption>
+</figure>
+</div>
+<p><strong>Fig 1: Plot of the top 30 drugs by the number of unique prices across the nation for medicare patients (30-day supply only)</strong></p>
+<p>Our team took an ELT (Extract, Load, Transform) approach to integrating the data and preparing it for analysis. Analyzing and creating database connections would take place after it had been extracted from the various aforementioned sources, loaded into our S3 bucket. The S3 bucket effectively served the role of data warehouse. Both team members could then remotely connect to the remote cloud warehouse by way of scripts in R, constructed around SQL queries inside of DuckDB functions to query information. Those scripts could be stored and saved in the GitHub repository. This allowed the team to scale and build upon insights, solutions, and code. This facilitated a harmonious mechanism for analysis, discovery, and insights.</p>
+<p>The process of connecting all the files was not without challenges, many of which were mentioned and addressed during data collection. One of the larger clearing and connecting issues was related to NDC formats. The NDC number is typically in an 11-digit format divided into three segments. However, there are other common formats and structures that may or may not include page details. There are also HIPAA standard formats, which add a leading zero. The NDC files utilized an 11-digit product NDC code with hyphens separating the three sections: labeler code (5 digits), product code (4 digits), and the package code (3 digits). The CMS formulary files utilized a 9-digit NDC code without a hyphen (only the labeler and product codes). It took a bit of trial and experimentation to transform the files and get them to cooperate with each other. Another critical hurdle was connecting the NDC files to the CMS spending data, which required string matching on generic medication names. Fortunately, the majority of the medications were able to match product NDC codes, but were limited by a lack of package details. While medication names are unique, the string structure can have simple variations, which creates a significant risk of not being able to match a great number of the medications our team hoped to analyze.</p>
+<p>Upon completion of the preliminary engineering of the data for this project, our team could effectively connect insights and data from the census at the county level, link that to CMS formulary pricing under Medicare Part D, connect that to NDC codes, and lastly connect that to CMS spending details. The data was ready for analysis and further refinement. With the data connected, it could be condensed and aggregated in a manner that allowed for exploration of medication pricing and its impact across various demographics within the U.S.</p>
 </section>
 <section id="analysis" class="level1">
 <h1>Analysis</h1>
+<p>##Scope of Analysis: One of the first goals was to get an overall look at the data available for exploration, once it was connected in a relational way. The initial strategy involved attempting to condense and aggregate details. An issue that was understood and would prove to be a significant challenge was how granular the formulary data was. An extensive analysis of the formulary data was required just to determine which descriptive statistics would best relate to the census data. Another key consideration was trying to determine which medications to focus on. It was not feasible to attempt to evaluate all 6000 medications in the formulary across all plans and contracts. An appropriate solution was to focus on one or a few medications within the formulary. The addition of the CMS spending data proved to be invaluable. This data proved to be simple and well-structured, allowing for quick analysis. Many approaches were tested. The most robust and informative version of this exploration was the result of combining the spending data from Part B, Part D, and Medicaid. This allowed for the identification of high-impact drugs that would warrant exploration. Our team created lists of the top 10 and top 25 drugs by spending across these three pools of coverage. Additionally, beneficiary counts, claim counts, and dose counts were added for additional texture. After reviewing some of these medications, several medications of interest were selected for further analysis.</p>
+<p><strong>Add Travis’ Top 10 graph here - Figure X:</strong></p>
+<p>##Overview of Analysis: With the structure of our data, it was possible to map pricing to counties across the U.S., but it was not feasible to do every combination of contract, plan, and dose variation that existed within the formulary without some simplification. For example, the specific drugs with the most variance in unique prices across the country are shown in (<a href="#fig-uniqueprices" class="quarto-xref">Figure&nbsp;2</a>) below. It was decided to simplify this as much as possible. We first limited our data to only prices with a 30-day supply option (vs 60 and 90 supply options). Our team also elected to democratize the MA and PDP plans by counties in which they were available, ensuring that the data represented the greatest number of pricing options available to any particular county. From there, the median drug price was established for each 30-day supply of the medication across all dosages and delivery methods remaining from our selection for each county. This median reflects the price across all contracts and plans for a 30-day supply across all doses and delivery mechanisms within each U.S. counties. We took several approaches to condensing the data into a useful county-level structure and considered and preserved many other statistics related to plan density, contract density, and price spread, to name a few. Median price was explicitly selected as an alternative to the mean to resist any outlier prices across contracts and plans.</p>
+<div id="fig-uniqueprices" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-uniqueprices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="./images/top_30_drug_ndcs_by_number_of_unique_prices_30_day.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Plot of the top 30 drugs by the number of unique prices across the nation for medicare patients (30-day supply only)"><img src="./images/top_30_drug_ndcs_by_number_of_unique_prices_30_day.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uniqueprices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Plot of the top 30 drugs by the number of unique prices across the nation for medicare patients (30-day supply only)
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
+<p>The plan information, once condensed, could be synthesized into the census information to start evaluating median price and other formulary statistics against the various demographic data available. An early concern in the development of this project was whether there would even be any price variation. A common misconception is that Medicare drug prices are the same everywhere, but they vary due to many factors outlined earlier. The results were surprising.</p>
+<p>Drug prices do in fact vary significantly regionally but even within some states. As is clearly demonstrated in FIGURE X, price varies significantly.</p>
+<p><strong>FIGURE X: map </strong></p>
+<p><strong>we can add a comment about Connecticut here</strong></p>
+<p>Our team was very surprised by what we observed once the median prices were applied to map plots. There are clearly patters</p>
 </section>
 <section id="conclusions" class="level1">
 <h1>Conclusions</h1>
+<p>Build more here.</p>
+<p>Sadly, the responsibility for many Medicare dependents is that they must carefully review Medicare plans in order to ensure they have the best coverage for their medical needs. They have to leverage plan finder tools and licensed advisors to find the most cost effective plans. However, for a program that is designed to support the elderly and those in need, the asks are significant.</p>
+<p>The Inflation Reduction Act of 2022[6] was one step towards attempting to reign in some of the unsustainable drug cost issues. There is evidence to show that regulatory engagement in negotiations can help to mitigate the increasing costs of medication treatment modalities. The U.S. Department of Health and Human Services (HHS) through CMS announced in December 2024 cost savings for 64 drugs, for some Medicare recipients, whose prices were being raised faster than the already high rate of inflation [7]. Unfortunately, limited objective data and information is available to better understand the actual impact of this legislation. Much of the savings from renegotiated prices will not take effect until 2026. The actual impact will ultimately depend on how drug companies respond, how prices evolve and how many people use the impacted medications.</p>
+<p>Our team recommends…</p>
 </section>
 <section id="references" class="level1">
 <h1>References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-Zelner2022" class="csl-entry" role="listitem">
-Zelner, Jon, Kelly Broen, and Ella August. 2022. <span>“A Guide to Backward Paper Writing for the Data Sciences.”</span> <em>Patterns</em> 3 (3): 100423. <a href="https://doi.org/10.1016/j.patter.2021.100423">https://doi.org/10.1016/j.patter.2021.100423</a>.
-</div>
+<div id="refs" role="list">
+
 </div>
 </section>
 
@@ -749,6 +805,38 @@ Zelner, Jon, Kelly Broen, and Ella August. 2022. <span>“A Guide to Backward Pa
   });
   </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

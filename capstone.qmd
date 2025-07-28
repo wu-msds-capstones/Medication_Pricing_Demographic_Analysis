@@ -18,7 +18,7 @@ runtime: shiny
 
 {{< include _01_intro.qmd >}}
 {{< include _02_background_and_data_collection.qmd >}}
-{{< include _03_data.qmd >}}
+{{< include _03_data_engineering.qmd >}}
 {{< include _04_analysis.qmd >}}
 {{< include _05_results.qmd >}}
 {{< include _06_conclusions.qmd >}}

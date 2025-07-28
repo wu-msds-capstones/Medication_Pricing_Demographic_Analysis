@@ -300,7 +300,11 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#background-and-data-collection" id="toc-background-and-data-collection" class="nav-link" data-scroll-target="#background-and-data-collection">Background and Data Collection</a></li>
   <li><a href="#data-engineering" id="toc-data-engineering" class="nav-link" data-scroll-target="#data-engineering">Data Engineering</a></li>
-  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a>
+  <ul class="collapse">
+  <li><a href="#scope-of-analysis" id="toc-scope-of-analysis" class="nav-link" data-scroll-target="#scope-of-analysis">Scope of Analysis:</a></li>
+  <li><a href="#overview-of-analysis" id="toc-overview-of-analysis" class="nav-link" data-scroll-target="#overview-of-analysis">Overview of Analysis:</a></li>
+  </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
@@ -321,7 +325,7 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
 <h1>Introduction</h1>
 <p>The rising cost of pharmaceuticals in the United States has far-reaching implications for public health policy, healthcare equity, and the financial stability of diverse populations.</p>
 <p>To investigate this issue, we integrated publicly available data from the Centers for Medicare &amp; Medicaid Services (CMS), the U.S. Census Bureau, and the Food and Drug Administration (FDA). These datasets include detailed information on drug pricing, clinical indications, population demographics, and coverage programs. We harmonized the data into a unified DuckDB instance hosted on AWS S3, enabling scalable, efficient querying across large and heterogeneous datasets. This infrastructure supports a comprehensive analysis of pharmaceutical spending patterns and lays the groundwork for robust, demographically informed cost modeling.</p>
-<p>Medication usage is a reality that touches nearly every American. According to a KFF (formerly Kaiser Family Foundation) research poll <span class="citation" data-cites="KFF2022">(<a href="#ref-KFF2022" role="doc-biblioref"><strong>KFF2022?</strong></a>)</span>, 60% of adults report taking at least one prescription medication, and 25% take four or more prescribed medications. As pharmaceutical technology continues to advance, the affordability of these medications remains a significant concern for those who rely on them to manage a wide range of health conditions.</p>
+<p>Medication usage is a reality that touches nearly every American. According to a KFF (formerly Kaiser Family Foundation) research poll <span class="citation" data-cites="KFF2024">(<a href="#ref-KFF2024" role="doc-biblioref"><span>“Public Opinion on Prescription Drugs and Their Prices”</span> 2024</a>)</span>, 60% of adults report taking at least one prescription medication, and 25% take four or more prescribed medications. As pharmaceutical technology continues to advance, the affordability of these medications remains a significant concern for those who rely on them to manage a wide range of health conditions.</p>
 <p>Medications are often the first line of treatment for both chronic and acute medical diagnoses, and they are a major driver of healthcare costs. Consider how frequently a provider recommends a medication—or a combination of medications—as the initial response to a diagnosis. For many Americans, the financial burden of these treatments contributes to stress and anxiety, especially within the framework of a largely privatized healthcare system. Even with insurance, Medicare, or Medicaid, the out-of-pocket costs for a prescription regimen can be substantial.</p>
 <p>According to the Commonwealth Fund <span class="citation" data-cites="TCF2025">(<a href="#ref-TCF2025" role="doc-biblioref"><span>“2025 Scorecard on State Health System Performance, Fragile Progress, Continuing Disparities”</span> 2025</a>)</span>, an estimated 30% of adults carry medical debt. Alarmingly, nearly 57% of under-insured adults report delaying or avoiding necessary treatment due to cost. This issue is further complicated by the structure of public insurance programs like Medicare and Medicaid, which are only available to specific segments of the population. These programs also vary significantly by state and county, with plan options that can dramatically affect both pricing and individual financial responsibility. As a result, geographic and demographic disparities continue to challenge equitable access to care.</p>
 <p>While medications are just one component of medical treatment, they play a critical role in preventing more costly interventions down the line. For example, chronic conditions such as diabetes, cardiovascular disease, and chronic kidney disease can often be managed effectively with medication, reducing the need for hospitalization or surgery. A recent study by UNC Health <span class="citation" data-cites="unc2025semaglutide">(<a href="#ref-unc2025semaglutide" role="doc-biblioref">UNC Health 2025</a>)</span> found that oral semaglutide (Brand names: Ozempic and Rybelsus for diabetes, and Wegovy for weight loss) significantly reduced the incidence of heart attacks and strokes. This highlights the importance of medication affordability—not just as a matter of convenience, but as a cornerstone of equitable and effective healthcare.</p>
@@ -353,7 +357,9 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
 </section>
 <section id="analysis" class="level1">
 <h1>Analysis</h1>
-<p>##Scope of Analysis: One of the first goals was to get an overall look at the data available for exploration, once it was connected in a relational way. The initial strategy involved attempting to condense and aggregate details. An issue that was understood and would prove to be a significant challenge was how granular the formulary data was. An extensive analysis of the formulary data was required just to determine which descriptive statistics would best relate to the census data. Another key consideration was trying to determine which medications to focus on. It was not feasible to attempt to evaluate all 6000 medications in the formulary across all plans and contracts. An appropriate solution was to focus on one or a few medications within the formulary. The addition of the CMS spending data proved to be invaluable. This data proved to be simple and well-structured, allowing for quick analysis. Many approaches were tested. The most robust and informative version of this exploration was the result of combining the spending data from Part B, Part D, and Medicaid. This allowed for the identification of high-impact drugs that would warrant exploration. Our team created lists of the top 10 (<a href="#fig-top-10-spending" class="quarto-xref">Figure&nbsp;1</a>) and top 25 drugs by spending across these three pools of coverage. Additionally, beneficiary counts, claim counts, and dose counts were added for additional texture. After reviewing some of these medications, several medications of interest were selected for further analysis.</p>
+<section id="scope-of-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="scope-of-analysis">Scope of Analysis:</h2>
+<p>One of the first goals was to get an overall look at the data available for exploration, once it was connected in a relational way. The initial strategy involved attempting to condense and aggregate details. An issue that was understood and would prove to be a significant challenge was how granular the formulary data was. An extensive analysis of the formulary data was required just to determine which descriptive statistics would best relate to the census data. Another key consideration was trying to determine which medications to focus on. It was not feasible to attempt to evaluate all 6000 medications in the formulary across all plans and contracts. An appropriate solution was to focus on one or a few medications within the formulary. The addition of the CMS spending data proved to be invaluable. This data proved to be simple and well-structured, allowing for quick analysis. Many approaches were tested. The most robust and informative version of this exploration was the result of combining the spending data from Part B, Part D, and Medicaid. This allowed for the identification of high-impact drugs that would warrant exploration. Our team created lists of the top 10 (<a href="#fig-top-10-spending" class="quarto-xref">Figure&nbsp;1</a>) and top 25 drugs by spending across these three pools of coverage. Additionally, beneficiary counts, claim counts, and dose counts were added for additional texture. After reviewing some of these medications, several medications of interest were selected for further analysis.</p>
 <div id="fig-top-10-spending" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-top-10-spending-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -364,7 +370,10 @@ Figure&nbsp;1: Top ten drugs by absolute medicare spending in 2023
 </figcaption>
 </figure>
 </div>
-<p>##Overview of Analysis: With the structure of our data, it was possible to map pricing to counties across the U.S., but it was not feasible to do every combination of contract, plan, and dose variation that existed within the formulary without some simplification. For example, the specific drugs with the most variance in unique prices across the country are shown in {<a href="#fig-uniqueprices" class="quarto-xref">Figure&nbsp;2</a>} below.</p>
+</section>
+<section id="overview-of-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="overview-of-analysis">Overview of Analysis:</h2>
+<p>With the structure of our data, it was possible to map pricing to counties across the U.S., but it was not feasible to do every combination of contract, plan, and dose variation that existed within the formulary without some simplification. For example, the specific drugs with the most variance in unique prices across the country are shown in {<a href="#fig-uniqueprices" class="quarto-xref">Figure&nbsp;2</a>} below.</p>
 <div id="fig-uniqueprices" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-uniqueprices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -397,6 +406,7 @@ Figure&nbsp;4: Number of unique combinations of contract &amp; plan IDs availabl
 </figcaption>
 </figure>
 </div>
+</section>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
@@ -449,6 +459,9 @@ Centers for Medicare &amp; Medicaid Services. 2024a. <span>“HHS Announces Cost
 </div>
 <div id="ref-cms2025data" class="csl-entry" role="listitem">
 ———. 2025. <span>“CMS Data Navigator.”</span> <a href="https://data.cms.gov/">https://data.cms.gov/</a>.
+</div>
+<div id="ref-KFF2024" class="csl-entry" role="listitem">
+<span>“Public Opinion on Prescription Drugs and Their Prices.”</span> 2024. <a href="https://www.kff.org/health-costs/poll-finding/public-opinion-on-prescription-drugs-and-their-prices/">https://www.kff.org/health-costs/poll-finding/public-opinion-on-prescription-drugs-and-their-prices/</a>.
 </div>
 <div id="ref-unc2025semaglutide" class="csl-entry" role="listitem">
 UNC Health. 2025. <span>“Study Finds Oral Semaglutide Vastly Reduces Heart Attacks, Strokes.”</span> 2025. <a href="https://news.unchealthcare.org/2025/03/study-finds-oral-semaglutide-vastly-reduces-heart-attacks-strokes/">https://news.unchealthcare.org/2025/03/study-finds-oral-semaglutide-vastly-reduces-heart-attacks-strokes/</a>.

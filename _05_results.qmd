@@ -6,11 +6,11 @@ Drug prices do in fact vary significantly regionally but even within some states
 
 ![Median Medicare Price for 30-day Supply of Semaglutide by US County](./images/map_semaglutide_739.png){#fig-map-semaglutide}
 
-**add plot of another very different price battern drug**
+**add plot of another very different price pattern drug**
 
 **we can add a comment about Connecticut here**
 
-Our team was very surprised by what we observed once the median prices were applied to map plots.  There are clearly patterns here, but they vary geographically with different drugs.
+Our team was very surprised by what we observed once the median prices were applied to map plots.  There are clearly patterns here, but they vary geographically with different drugs. To see maps for many more drugs, see this [shiny app](https://gpc1.shinyapps.io/shiny_maps_drug_median_price/). 
 
 ![Correlation between the number of contract-plan combinations in a county vs the population](./images/number_contract_plans_vs_tot_population.png){#fig-plans-vs-population}
 

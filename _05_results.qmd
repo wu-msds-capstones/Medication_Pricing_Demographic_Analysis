@@ -2,10 +2,14 @@
 
 The plan information, once condensed, could be synthesized into the census information to start evaluating median price and other formulary statistics against the various demographic data available.  An early concern in the development of this project was whether there would even be any price variation.  A common misconception is that Medicare drug prices are the same everywhere, but they vary due to many factors outlined earlier.  The results were surprising.
 
-Drug prices do in fact vary significantly regionally but even within some states.  As is clearly demonstrated in FIGURE X, price varies significantly.
+Drug prices do in fact vary significantly regionally but even within some states.  As is clearly demonstrated in @fig-map-semaglutide, price varies significantly.
 
-**FIGURE X: map **
+![Median Medicare Price for 30-day Supply of Semaglutide by US County](./images/map_semaglutide_739.png){#fig-map-semaglutide}
 
 **we can add a comment about Connecticut here**
 
-Our team was very surprised by what we observed once the median prices were applied to map plots.  There are clearly patters
+Our team was very surprised by what we observed once the median prices were applied to map plots.  There are clearly patterns here, but they vary geographically with different drugs.
+
+
+![Correlation between the number of contract-plan combinations in a county vs the population](./images/number_contract_plans_vs_tot_population.png){#fig-plans-vs-population}
+

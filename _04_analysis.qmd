@@ -8,6 +8,48 @@ One of the first goals was to get an overall look at the data available for expl
 ## Overview of Analysis:
 With the structure of our data, it was possible to map pricing to counties across the U.S., but it was not feasible to do every combination of contract, plan, and dose variation that existed within the formulary without some simplification. For example, the specific drugs with the most variance in unique prices across the country are shown in {@fig-uniqueprices} below. 
 
+```{r}
+#| label: fig-pricevariance
+#| fig-cap: "Variance in price amongst the top drugs (by absolute spending) across the US"
+#| warning: false
+
+# Load libraries
+library(ggplot2)
+library(dplyr)
+
+box_plot_table <- readRDS("data/box_plot_table.rds")
+
+# Define your custom order
+custom_order <- c(    "Apixaban", 
+                      "Adalimumab", 
+                      "Dulaglutide", 
+                      "Lenalidomide", 
+                      "Rivaroxaban",
+                      "Empagliflozin", 
+                      "Semaglutide", 
+                      "Paliperidone Palmitate", 
+                      "Etanercept",
+                      "Insulin Aspart", 
+                      "Ustekinumab", 
+                      "Ibrutinib", 
+                      "Tiotropium Bromide", 
+                      "Liraglutide")
+
+# Reorder the factor
+box_plot_table <- box_plot_table %>%
+  mutate(drug_name_clean = factor(drug_name_clean, levels = rev(custom_order)))
+
+# Create the box plot
+ggplot(box_plot_table, aes(x = drug_name_clean, y = UNIT_COST)) +
+  geom_boxplot() + 
+  labs(title = "Variance in price amongst the top drugs (by absolute spending)",
+       x = "",
+       y = "Price (USD, log scale)") +
+  scale_y_log10(labels = comma) +
+  theme_minimal() +
+  coord_flip() # Flip coordinates for better readability
+```
+
 ![Plot of the top 30 drugs by the number of unique prices across the nation for medicare patients (30-day supply only)](./images/top_30_drug_ndcs_by_number_of_unique_prices_30_day.png){#fig-uniqueprices}
 
 The distribution of prices for the drug with the largest number of unique prices (NDC 71288-0410) is shown in (@fig-price1drug). 

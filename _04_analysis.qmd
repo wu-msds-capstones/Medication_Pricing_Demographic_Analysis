@@ -29,7 +29,7 @@ For the rest of the analysis, we plan to use these top drugs by the most absolut
 | $11.6B            | Liraglutide           | Victoza, Saxenda           | Type 2 Diabetes, Obesity                                                                  |
 :::
 
-: Table 1: Top medications by absolute spend and the treatment conditions {#tbl-top-meds"}  
+Table 1: Top medications by absolute spend and the treatment conditions {#tbl-top-meds}  
 
 ## Overview of Analysis:
 Afte mapping individual medication prices to counties across the U.S. by way of which Medicare plans were available in each county, we discovered that drugs can have a lot more variance in pricing than we even imagined. The most variable drug had over 6k unique prices across the country, with many in the 4k range. To statistically simplify, we took the median across all 30-day supply prices for each drug (9-digit NDC code) within each county. Note: 60-day and 90-day prices were also available, but were filtered out to simplify the overall analysis. A box plot of the top medications by total spend are shown below descending from the most spend to the least spend.  {@fig-pricevariance} This shows the variance in drug prices. Note that the absolute cost of the medication doesn’t correlate with the total nationwide spend for that medication. The drug with the top overall spend (Apixaban) is one of the cheapest at ~$10 per 30-day supply, while another drug in the top overall spend is VERY expensive at ~$26k per 30-day supply.

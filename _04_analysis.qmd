@@ -6,12 +6,12 @@ One of the first goals was to understand the connected data at a high level by c
 **TRAVIS TO UPDATE THIS PLOT WITH CODE**
 
 ![Top drugs by absolute Medicare spending in 2023](./images/Top_Spend.jpg){#fig-topspend}
-For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what these medications treat, see the table below. [@table-top-meds]
+For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what conditions these medications treat, see the table below. See @tbl-top-meds
 
 
-Table: Top medications by absolute spend and the treatment conditions {#table-top-meds .striped .hover tbl-colwidths="[20,20,20,40]"}  
+::: {.table .striped .hover tbl-colwidths="[20,20,20,40]"}
 
-| Total Spend (USD) | Generic Name          | Brand Name(s)              | Common Conditions                                                                                                 |
+| Total Spend (USD) | Generic Name          | Brand Name(s)              | Common Treatment Conditions                                                                                                 |
 |-------------------|-----------------------|----------------------------|------------------------------------------------------------------------------------------------------------------|
 | $67.3B            | Apixaban              | Eliquis                    | AFib (Atrial Fibrillation), DVT/PE (Deep Vein Thrombosis / Pulmonary Embolism), Post-surgery Prophylaxis          |
 | $43.1B            | Adalimumab            | Humira, Biosimilars        | chronic inflammatory or autoimmune conditions such as RA (Rheumatoid Arthritis), PsA (Psoriatic Arthritis), AS (Ankylosing Spondylitis), CD (Crohn's Disease), UC (Ulcerative Colitis), Psoriasis, JIA (Juvenile Idiopathic Arthritis), uveitis |
@@ -26,9 +26,10 @@ Table: Top medications by absolute spend and the treatment conditions {#table-to
 | $15.2B            | Ustekinumab           | Stelara                    | Psoriasis, PsA (Psoriatic Arthritis), Crohns                                                                     |
 | $14.5B            | Ibrutinib             | Imbruvica                  | blood cancers such as CLL (Chronic Lymphocytic Leukemia), MCL (Mantle Cell Lymphoma), and WM (Waldenström's Macroglobulinemia) |
 | $12.1B            | Tiotropium Bromide    | Spiriva                    | COPD (Chronic Obstructive Pulmonary Disease), Asthma (adjunct)                                                  |
-| $11.6B            | Liraglutide           | Victoza, Saxenda           | Type 2 Diabetes, Obesity                                                                                        |
+| $11.6B            | Liraglutide           | Victoza, Saxenda           | Type 2 Diabetes, Obesity                                                                  |
+:::
 
-
+: Table 1: Top medications by absolute spend and the treatment conditions {#tbl-top-meds"}  
 
 ## Overview of Analysis:
 Afte mapping individual medication prices to counties across the U.S. by way of which Medicare plans were available in each county, we discovered that drugs can have a lot more variance in pricing than we even imagined. The most variable drug had over 6k unique prices across the country, with many in the 4k range. To statistically simplify, we took the median across all 30-day supply prices for each drug (9-digit NDC code) within each county. Note: 60-day and 90-day prices were also available, but were filtered out to simplify the overall analysis. A box plot of the top medications by total spend are shown below descending from the most spend to the least spend.  {@fig-pricevariance} This shows the variance in drug prices. Note that the absolute cost of the medication doesn’t correlate with the total nationwide spend for that medication. The drug with the top overall spend (Apixaban) is one of the cheapest at ~$10 per 30-day supply, while another drug in the top overall spend is VERY expensive at ~$26k per 30-day supply.

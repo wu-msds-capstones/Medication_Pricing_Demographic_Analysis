@@ -372,107 +372,107 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
 <h2 class="anchored" data-anchor-id="scope-of-analysis">Scope of Analysis:</h2>
 <p>One of the first goals was to understand the connected data at a high level by condensing and aggregating details. Due to the granularity of the formulary data, it was necessary to narrow the focus rather than analyze all 6,000+ medications. The CMS spending datasets (Part B, Part D, and Medicaid) provided a clearer, structured view and helped identify high-impact drugs. Using this data, we generated top drug lists by total spend, claims, and doses (<strong>?@fig-topspend</strong>), ultimately selecting a few key medications for deeper analysis.</p>
 <p><strong>TRAVIS TO UPDATE THIS PLOT WITH CODE</strong></p>
-<p><img src="./images/Top_Spend.jpg" id="fig-topspend" class="img-fluid" alt="Top drugs by absolute Medicare spending in 2023"> For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what these medications treat, see the table below. {<span class="citation" data-cites="table-top-meds">(<a href="#ref-table-top-meds" role="doc-biblioref"><strong>table-top-meds?</strong></a>)</span>}</p>
+<p><img src="./images/Top_Spend.jpg" id="fig-topspend" class="img-fluid" alt="Top drugs by absolute Medicare spending in 2023"> For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what these medications treat, see the table below. <span class="citation" data-cites="table-top-meds">(<a href="#ref-table-top-meds" role="doc-biblioref"><strong>table-top-meds?</strong></a>)</span></p>
 <table class="caption-top table">
 <caption>Table 1 - Top medications by absolute spend and the treatment condistions</caption>
 <colgroup>
-<col style="width: 31%">
-<col style="width: 19%">
-<col style="width: 24%">
-<col style="width: 24%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 15%">
+<col style="width: 61%">
 </colgroup>
 <thead>
 <tr class="header">
+<th>Total Spend (USD)</th>
 <th>Generic Name</th>
 <th>Brand Name(s)</th>
 <th>Common Conditions</th>
-<th>Total Spend (USD)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
+<td>$67.3B</td>
 <td>Apixaban</td>
 <td>Eliquis</td>
 <td>AFib (Atrial Fibrillation), DVT/PE (Deep Vein Thrombosis / Pulmonary Embolism), Post-surgery Prophylaxis</td>
-<td>$67.3B</td>
 </tr>
 <tr class="even">
+<td>$43.1B</td>
 <td>Adalimumab</td>
 <td>Humira, Biosimilars</td>
 <td>chronic inflammatory or autoimmune conditions such as RA (Rheumatoid Arthritis), PsA (Psoriatic Arthritis), AS (Ankylosing Spondylitis), CD (Crohn’s Disease), UC (Ulcerative Colitis), Psoriasis, JIA (Juvenile Idiopathic Arthritis), uveitis</td>
-<td>$43.1B</td>
 </tr>
 <tr class="odd">
+<td>$30.9B</td>
 <td>Dulaglutide</td>
 <td>Trulicity</td>
 <td>Type 2 Diabetes</td>
-<td>$30.9B</td>
 </tr>
 <tr class="even">
+<td>$29.9B</td>
 <td>Lenalidomide</td>
 <td>Revlimid</td>
 <td>Multiple Myeloma, MDS (Myelodysplastic Syndromes)</td>
-<td>$29.9B</td>
 </tr>
 <tr class="odd">
+<td>$28.4B</td>
 <td>Rivaroxaban</td>
 <td>Xarelto</td>
 <td>AFib (Atrial Fibrillation), DVT/PE (Deep Vein Thrombosis / Pulmonary Embolism)</td>
-<td>$28.4B</td>
 </tr>
 <tr class="even">
+<td>$26.9B</td>
 <td>Empagliflozin</td>
 <td>Jardiance</td>
 <td>Type 2 Diabetes, CV risk</td>
-<td>$26.9B</td>
 </tr>
 <tr class="odd">
+<td>$26.7B</td>
 <td>Semaglutide</td>
 <td>Ozempic, Wegovy</td>
 <td>Type 2 diabetes, Obesity</td>
-<td>$26.7B</td>
 </tr>
 <tr class="even">
+<td>$18.4B</td>
 <td>Paliperidone Palmitate</td>
 <td>Invega Sustenna/Trinza</td>
 <td>Schizophrenia</td>
-<td>$18.4B</td>
 </tr>
 <tr class="odd">
+<td>$16.7B</td>
 <td>Etanercept</td>
 <td>Enbrel</td>
 <td>RA (Rheumatoid Arthritis), PsA (Psoriatic Arthritis), AS (Ankylosing Spondylitis), Psoriasis</td>
-<td>$16.7B</td>
 </tr>
 <tr class="even">
+<td>$15.7B</td>
 <td>Insulin Aspart</td>
 <td>Novolog, Fiasp</td>
 <td>Type 1 &amp; 2 Diabetes</td>
-<td>$15.7B</td>
 </tr>
 <tr class="odd">
+<td>$15.2B</td>
 <td>Ustekinumab</td>
 <td>Stelara</td>
 <td>Psoriasis, PsA (Psoriatic Arthritis), Crohns</td>
-<td>$15.2B</td>
 </tr>
 <tr class="even">
+<td>$14.5B</td>
 <td>Ibrutinib</td>
 <td>Imbruvica</td>
 <td>blood cancers such as CLL (Chronic Lymphocytic Leukemia), MCL (Mantle Cell Lymphoma), and WM (Waldenström’s Macroglobulinemia)</td>
-<td>$14.5B</td>
 </tr>
 <tr class="odd">
+<td>$12.1B</td>
 <td>Tiotropium Bromide</td>
 <td>Spiriva</td>
 <td>COPD (Chronic Obstructive Pulmonary Disease), Asthma (adjunct)</td>
-<td>$12.1B</td>
 </tr>
 <tr class="even">
+<td>$11.6B</td>
 <td>Liraglutide</td>
 <td>Victoza, Saxenda</td>
 <td>Type 2 Diabetes, Obesity</td>
-<td>$11.6B</td>
 </tr>
 </tbody>
 </table>

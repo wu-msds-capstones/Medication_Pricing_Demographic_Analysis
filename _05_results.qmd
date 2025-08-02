@@ -4,6 +4,52 @@ The plan information, once condensed, could be synthesized into the census infor
 
 Drug prices do in fact vary significantly regionally but even within some states.  As is clearly demonstrated in @fig-map-semaglutide, price varies significantly.
 
+```{r}
+#| label: fig-map1
+#| fig-cap: "Median Medicare Price for 30-day Supply of Semaglutide by US County"
+#| warning: false
+
+chosen_drug = "Semaglutide"
+
+# Load libraries
+library(tigris)
+library(sf)
+library(ggplot2)
+library(dplyr)
+
+summary_table <- readRDS("data/map_data.rds")
+
+# Use sf-compatible county shapefile (from tigris)
+options(tigris_use_cache = TRUE)
+counties_sf <- tigris::counties(cb = TRUE, class = "sf")
+
+# Change county_code to FIPS style
+# Choose drug of interest
+summary_table2 <- summary_table %>%
+  mutate(COUNTY_CODE = sprintf("%05s", COUNTY_CODE)) %>%
+  filter(drug_name_clean == chosen_drug)
+
+# Join median_cost to county map
+counties_joined <- counties_sf %>%
+  left_join(summary_table2, by = c("NAME" = "COUNTY", "STUSPS" = "STATE"))
+
+# Define bounding box for continental US
+bbox <- st_bbox(c(xmin = -125, xmax = -66, ymin = 23, ymax = 50), crs = st_crs(counties_joined))
+
+# Crop the map
+counties_cropped <- st_crop(counties_joined, bbox)
+
+# Plot it
+ggplot(counties_cropped) +
+  geom_sf(aes(fill = median_price)) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90") +
+  labs(
+    title = paste0("Median Medicare Price for 30-day Supply of ",  chosen_drug, " by US County "),
+    fill = "Median Cost"
+  ) +
+  theme_minimal()
+```
+
 ![Median Medicare Price for 30-day Supply of Semaglutide by US County](./images/map_semaglutide_727x375.png){#fig-map-semaglutide}
 
 **add plot of another very different price pattern drug**

@@ -93,6 +93,8 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
 <meta name="citation_reference" content="citation_title=Study finds oral semaglutide vastly reduces heart attacks, strokes;,citation_author=UNC Health;,citation_publication_date=2025;,citation_cover_date=2025;,citation_year=2025;,citation_fulltext_html_url=https://news.unchealthcare.org/2025/03/study-finds-oral-semaglutide-vastly-reduces-heart-attacks-strokes/;">
 <meta name="citation_reference" content="citation_title=Medicare drug price negotiation program: Negotiated prices for initial price applicability year 2026;,citation_author=Centers for Medicare &amp;amp;amp; Medicaid Services;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_fulltext_html_url=https://www.cms.gov/newsroom/fact-sheets/medicare-drug-price-negotiation-program-negotiated-prices-initial-price-applicability-year-2026;">
 <meta name="citation_reference" content="citation_title=HHS announces cost savings for 64 prescription drugs thanks to medicare prescription drug inflation rebate;,citation_author=Centers for Medicare &amp;amp;amp; Medicaid Services;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_fulltext_html_url=https://www.cms.gov/newsroom/press-releases/hhs-announces-cost-savings-64-prescription-drugs-thanks-medicare-prescription-drug-inflation-rebate;">
+<meta name="citation_reference" content="citation_title=Who’s eligible for medicare?;,citation_author=U.S. Department of Health &amp;amp;amp; Human Services;,citation_publication_date=2022;,citation_cover_date=2022;,citation_year=2022;,citation_fulltext_html_url=https://www.hhs.gov/answers/medicare-and-medicaid/who-is-eligible-for-medicare/index.html;">
+<meta name="citation_reference" content="citation_title=Change to county-equivalents in the state of connecticut;,citation_author=Federal Register: The Daily Journal of the United States Government;,citation_publication_date=2022;,citation_cover_date=2022;,citation_year=2022;,citation_fulltext_html_url=https://www.federalregister.gov/documents/2022/06/06/2022-12063/change-to-county-equivalents-in-the-state-of-connecticut;">
 </head>
 
 <body class="quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -373,36 +375,50 @@ Figure&nbsp;1: Top drugs by absolute Medicare spending in 2023
 </section>
 <section id="overview-of-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="overview-of-analysis">Overview of Analysis:</h2>
-<p>With the structure of our data, it was possible to map pricing to counties across the U.S., but it was not feasible to do every combination of contract, plan, and dose variation that existed within the formulary without some simplification. For example, the specific drugs with the most variance in unique prices across the country are shown in {<a href="#fig-uniqueprices" class="quarto-xref">Figure&nbsp;2</a>} below.</p>
+<p>With the structure of our data, it was possible to map pricing to counties across the U.S., but it was not feasible to do every combination of contract, plan, and dose variation that existed within the formulary without some simplification. For example, the specific drugs with the most variance in unique prices across the country are shown in {<a href="#fig-uniqueprices" class="quarto-xref">Figure&nbsp;3</a>} below.</p>
+<div id="cell-fig-pricevariance" class="cell">
+<div class="cell-output-display">
+<div id="fig-pricevariance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pricevariance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-pricevariance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Variance in price amongst the top drugs (by absolute spending) across the US"><img src="capstone_files/figure-html/fig-pricevariance-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pricevariance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Variance in price amongst the top drugs (by absolute spending) across the US
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <div id="fig-uniqueprices" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-uniqueprices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="./images/top_30_drug_ndcs_by_number_of_unique_prices_30_day.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Plot of the top 30 drugs by the number of unique prices across the nation for medicare patients (30-day supply only)"><img src="./images/top_30_drug_ndcs_by_number_of_unique_prices_30_day.png" class="img-fluid figure-img"></a>
+<a href="./images/top_30_drug_ndcs_by_number_of_unique_prices_30_day.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Plot of the top 30 drugs by the number of unique prices across the nation for medicare patients (30-day supply only)"><img src="./images/top_30_drug_ndcs_by_number_of_unique_prices_30_day.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uniqueprices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Plot of the top 30 drugs by the number of unique prices across the nation for medicare patients (30-day supply only)
+Figure&nbsp;3: Plot of the top 30 drugs by the number of unique prices across the nation for medicare patients (30-day supply only)
 </figcaption>
 </figure>
 </div>
-<p>The distribution of prices for the drug with the largest number of unique prices (NDC 71288-0410) is shown in (<a href="#fig-price1drug" class="quarto-xref">Figure&nbsp;3</a>).</p>
+<p>The distribution of prices for the drug with the largest number of unique prices (NDC 71288-0410) is shown in (<a href="#fig-price1drug" class="quarto-xref">Figure&nbsp;4</a>).</p>
 <div id="fig-price1drug" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-price1drug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="./images/price_distribution_for_drug_ndc_712880410.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Violin/Box plot of the variance in price for the drug (NDC 71288-0410) with the most unique quantity of prices across the US"><img src="./images/price_distribution_for_drug_ndc_712880410.png" class="img-fluid figure-img"></a>
+<a href="./images/price_distribution_for_drug_ndc_712880410.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Violin/Box plot of the variance in price for the drug (NDC 71288-0410) with the most unique quantity of prices across the US"><img src="./images/price_distribution_for_drug_ndc_712880410.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-price1drug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Violin/Box plot of the variance in price for the drug (NDC 71288-0410) with the most unique quantity of prices across the US
+Figure&nbsp;4: Violin/Box plot of the variance in price for the drug (NDC 71288-0410) with the most unique quantity of prices across the US
 </figcaption>
 </figure>
 </div>
-<p>It was decided to simplify this as much as possible. We first limited our data to only prices with a 30-day supply option (vs 60 and 90 supply options). Our team also elected to democratize the MA and PDP plans by counties in which they were available, ensuring that the data represented the greatest number of pricing options available to any particular county. This enabled us to see the true number of unique contract-plan combinations exist within a single county. (<a href="#fig-orplans" class="quarto-xref">Figure&nbsp;4</a>) From there, the median drug price was established for each 30-day supply of the medication across all dosages and delivery methods remaining from our selection for each county. This median reflects the price across all contracts and plans for a 30-day supply across all doses and delivery mechanisms within each U.S. counties. We took several approaches to condensing the data into a useful county-level structure and considered and preserved many other statistics related to plan density, contract density, and price spread, to name a few. Median price was explicitly selected as an alternative to the mean to resist any outlier prices across contracts and plans.</p>
+<p>It was decided to simplify this as much as possible. We first limited our data to only prices with a 30-day supply option (vs 60 and 90 supply options). Our team also elected to democratize the MA and PDP plans by counties in which they were available, ensuring that the data represented the greatest number of pricing options available to any particular county. This enabled us to see the true number of unique contract-plan combinations exist within a single county. (<a href="#fig-orplans" class="quarto-xref">Figure&nbsp;5</a>) From there, the median drug price was established for each 30-day supply of the medication across all dosages and delivery methods remaining from our selection for each county. This median reflects the price across all contracts and plans for a 30-day supply across all doses and delivery mechanisms within each U.S. counties. We took several approaches to condensing the data into a useful county-level structure and considered and preserved many other statistics related to plan density, contract density, and price spread, to name a few. Median price was explicitly selected as an alternative to the mean to resist any outlier prices across contracts and plans.</p>
 <div id="fig-orplans" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-orplans-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="./images/unique_contract-plan_combinations_by_county_in_oregon.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Number of unique combinations of contract &amp; plan IDs available across counties in Oregon"><img src="./images/unique_contract-plan_combinations_by_county_in_oregon.png" class="img-fluid figure-img"></a>
+<a href="./images/unique_contract-plan_combinations_by_county_in_oregon.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Number of unique combinations of contract &amp; plan IDs available across counties in Oregon"><img src="./images/unique_contract-plan_combinations_by_county_in_oregon.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-orplans-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Number of unique combinations of contract &amp; plan IDs available across counties in Oregon
+Figure&nbsp;5: Number of unique combinations of contract &amp; plan IDs available across counties in Oregon
 </figcaption>
 </figure>
 </div>
@@ -411,14 +427,28 @@ Figure&nbsp;4: Number of unique combinations of contract &amp; plan IDs availabl
 <section id="results" class="level1">
 <h1>Results</h1>
 <p>The plan information, once condensed, could be synthesized into the census information to start evaluating median price and other formulary statistics against the various demographic data available. An early concern in the development of this project was whether there would even be any price variation. A common misconception is that Medicare drug prices are the same everywhere, but they vary due to many factors outlined earlier. The results were surprising.</p>
-<p>Drug prices do in fact vary significantly regionally but even within some states. As is clearly demonstrated in <a href="#fig-map-semaglutide" class="quarto-xref">Figure&nbsp;5</a>, price varies significantly.</p>
+<p>Drug prices do in fact vary significantly regionally but even within some states. As is clearly demonstrated in <a href="#fig-map-semaglutide" class="quarto-xref">Figure&nbsp;7</a>, price varies significantly.</p>
+<div id="cell-fig-map1" class="cell">
+<div class="cell-output-display">
+<div id="fig-map1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-map1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-map1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Median Medicare Price for 30-day Supply of Semaglutide by US County"><img src="capstone_files/figure-html/fig-map1-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-map1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Median Medicare Price for 30-day Supply of Semaglutide by US County
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <div id="fig-map-semaglutide" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-map-semaglutide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="./images/map_semaglutide_727x375.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Median Medicare Price for 30-day Supply of Semaglutide by US County"><img src="./images/map_semaglutide_727x375.png" class="img-fluid figure-img"></a>
+<a href="./images/map_semaglutide_727x375.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Median Medicare Price for 30-day Supply of Semaglutide by US County"><img src="./images/map_semaglutide_727x375.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-map-semaglutide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Median Medicare Price for 30-day Supply of Semaglutide by US County
+Figure&nbsp;7: Median Medicare Price for 30-day Supply of Semaglutide by US County
 </figcaption>
 </figure>
 </div>
@@ -428,10 +458,10 @@ Figure&nbsp;5: Median Medicare Price for 30-day Supply of Semaglutide by US Coun
 <div id="fig-plans-vs-population" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-plans-vs-population-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="./images/number_contract_plans_vs_tot_population.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Correlation between the number of contract-plan combinations in a county vs the population"><img src="./images/number_contract_plans_vs_tot_population.png" class="img-fluid figure-img"></a>
+<a href="./images/number_contract_plans_vs_tot_population.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: Correlation between the number of contract-plan combinations in a county vs the population"><img src="./images/number_contract_plans_vs_tot_population.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plans-vs-population-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Correlation between the number of contract-plan combinations in a county vs the population
+Figure&nbsp;8: Correlation between the number of contract-plan combinations in a county vs the population
 </figcaption>
 </figure>
 </div>

@@ -71,6 +71,10 @@ ggplot(box_plot_table, aes(x = drug_label, y = UNIT_COST)) +
     # axis.title.y = element_text(size = 16)   # increase y-axis label font size
     axis.text.x = element_text(size = 10),
     axis.text.y = element_text(size = 10)
+  ) + 
+  theme(
+    plot.title.position = "plot",       # aligns title with plot area
+    plot.title = element_text(hjust = 0) # hjust = 0 means left-align
   )
 
 ```

@@ -373,13 +373,13 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
 <p>One of the first goals was to understand the connected data at a high level by condensing and aggregating details. Due to the granularity of the formulary data, it was necessary to narrow the focus rather than analyze all 6,000+ medications. The CMS spending datasets (Part B, Part D, and Medicaid) provided a clearer, structured view and helped identify high-impact drugs. Using this data, we generated top drug lists by total spend, claims, and doses (<strong>?@fig-topspend</strong>), ultimately selecting a few key medications for deeper analysis.</p>
 <p><strong>TRAVIS TO UPDATE THIS PLOT WITH CODE</strong></p>
 <p><img src="./images/Top_Spend.jpg" id="fig-topspend" class="img-fluid" alt="Top drugs by absolute Medicare spending in 2023"> For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what these medications treat, see the table below. <span class="citation" data-cites="table-top-meds">(<a href="#ref-table-top-meds" role="doc-biblioref"><strong>table-top-meds?</strong></a>)</span></p>
-<table class="caption-top table">
-<caption>Table 1 - Top medications by absolute spend and the treatment condistions</caption>
+<table class="table-striped table-hover caption-top table">
+<caption>Top medications by absolute spend and the treatment conditions {#table-top-meds}</caption>
 <colgroup>
-<col style="width: 10%">
-<col style="width: 12%">
-<col style="width: 15%">
-<col style="width: 61%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 40%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -514,7 +514,7 @@ Figure&nbsp;2: Unique Medicare Plan Counts by Oregon County
 <section id="results" class="level1">
 <h1>Results</h1>
 <p>Our main hypothesis was that there is likely some demographic that is facing more hardship due to medication price inflation in counties with these demographics within the US. Can we use the demographics of a specific county along with the now know medication prices within said county to develop a model to predict the medication prices? If yes, we could in the short term advise people with specific medical condistions to move to counties with demographics that provide more favorable medication prices and long term influence the industry to fix such inequities.</p>
-<p>An early concern in the development of this project was whether there would even be any price variation based on location. A common misconception is that Medicare drug prices are the same across the US, given that Medicare is a public national medical insurance. The results were surprising. Drug prices do, in fact, vary significantly regionally, sometimes at the state level and sometimes at the county level. Semaglutide is one drug that stands out at the state level as shown in {<a href="#fig-map-semaglutide" class="quarto-xref">Figure&nbsp;3</a>}. New York state has the lowest median 30-day supply price compared to every other stat in the country.</p>
+<p>An early concern in the development of this project was whether there would even be any price variation based on location. A common misconception is that Medicare drug prices are the same across the US, given that Medicare is a public national medical insurance. The results were surprising. Drug prices do, in fact, vary significantly regionally, sometimes at the state level and sometimes at the county level. Semaglutide is one drug that stands out at the state level as shown in <a href="#fig-map-semaglutide" class="quarto-xref">Figure&nbsp;3</a>. New York state has the lowest median 30-day supply price compared to every other stat in the country.</p>
 <div id="cell-fig-map-semaglutide" class="cell">
 <div class="cell-output-display">
 <div id="fig-map-semaglutide" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -529,7 +529,7 @@ Figure&nbsp;3: Median Medicare Price for 30-day Supply of Semaglutide by US Coun
 </div>
 </div>
 </div>
-<p>Liraglutide is unique in that it has a clear state-wide price impact like in New Mexico and Minnesota, but a county level price delta in some counties scattered across other states such as Nebraska, Oregon, Washington, Tennessee, Missouri, and Virginia. {<a href="#fig-map-liraglutide" class="quarto-xref">Figure&nbsp;4</a>}</p>
+<p>Liraglutide is unique in that it has a clear state-wide price impact like in New Mexico and Minnesota, but a county level price delta in some counties scattered across other states such as Nebraska, Oregon, Washington, Tennessee, Missouri, and Virginia. (See <a href="#fig-map-liraglutide" class="quarto-xref">Figure&nbsp;4</a>).</p>
 <div id="cell-fig-map-liraglutide" class="cell">
 <div class="cell-output-display">
 <div id="fig-map-liraglutide" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -545,7 +545,7 @@ Figure&nbsp;4: Median Medicare Price for 30-day Supply of Liraglutide by US Coun
 </div>
 </div>
 <p>Our team was surprised by what we observed once the median prices were applied to map plots. There are clearly patterns here, but they vary geographically and the pattern is not the same with different drugs. To see maps for many more drugs, see this <a href="https://gpc1.shinyapps.io/shiny_maps_drug_median_price/">shiny app</a>.</p>
-<p>Given the pattern for medication prices across the maps, we started a deep dive into the demographics. Can we find any demographic data that can help predict thes prices? Our first dive was into the population. Do counties with a larger population have more Medicare plan options and this competition leads to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {<a href="#fig-plans-vs-population" class="quarto-xref">Figure&nbsp;5</a>} While there is a slight trend, it is a not a great fit.</p>
+<p>Given the pattern for medication prices across the maps, we started a deep dive into the demographics. Can we find any demographic data that can help predict thes prices? Our first dive was into the population. Do counties with a larger population have more Medicare plan options and this competition leads to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. (See <a href="#fig-plans-vs-population" class="quarto-xref">Figure&nbsp;5</a>). While there is a slight trend, it is a not a great fit.</p>
 <div id="cell-fig-plans-vs-population" class="cell">
 <div class="cell-output-display">
 <div id="fig-plans-vs-population" class="quarto-float quarto-figure quarto-figure-center anchored">

@@ -2,7 +2,7 @@
 
 Our main hypothesis was that there is likely some demographic that is facing more hardship due to medication price inflation in counties with these demographics within the US. Can we use the demographics of a specific county along with the now know medication prices within said county to develop a model to predict the medication prices? If yes, we could in the short term advise people with specific medical condistions to move to counties with demographics that provide more favorable medication prices and long term influence the industry to fix such inequities. 
 
- An early concern in the development of this project was whether there would even be any price variation based on location.  A common misconception is that Medicare drug prices are the same across the US, given that Medicare is a public national medical insurance. The results were surprising. Drug prices do, in fact, vary significantly regionally, sometimes at the state level and sometimes at the county level. Semaglutide is one drug that stands out at the state level as shown in {@fig-map-semaglutide}. New York state has the lowest median 30-day supply price compared to every other stat in the country.
+ An early concern in the development of this project was whether there would even be any price variation based on location.  A common misconception is that Medicare drug prices are the same across the US, given that Medicare is a public national medical insurance. The results were surprising. Drug prices do, in fact, vary significantly regionally, sometimes at the state level and sometimes at the county level. Semaglutide is one drug that stands out at the state level as shown in @fig-map-semaglutide. New York state has the lowest median 30-day supply price compared to every other stat in the country.
 
 ```{r}
 #| label: fig-map-semaglutide
@@ -51,7 +51,7 @@ ggplot(counties_cropped) +
   theme_minimal(base_size = 10)
 ```
 
-Liraglutide is unique in that it has a clear state-wide price impact like in New Mexico and Minnesota, but a county level price delta in some counties scattered across other states such as Nebraska, Oregon, Washington, Tennessee, Missouri, and Virginia. {@fig-map-liraglutide}
+Liraglutide is unique in that it has a clear state-wide price impact like in New Mexico and Minnesota, but a county level price delta in some counties scattered across other states such as Nebraska, Oregon, Washington, Tennessee, Missouri, and Virginia. (See @fig-map-liraglutide).
 
 ```{r}
 #| label: fig-map-liraglutide
@@ -107,7 +107,7 @@ ggplot(counties_cropped) +
 
 Our team was surprised by what we observed once the median prices were applied to map plots.  There are clearly patterns here, but they vary geographically and the pattern is not the same with different drugs. To see maps for many more drugs, see this [shiny app](https://gpc1.shinyapps.io/shiny_maps_drug_median_price/). 
 
-Given the pattern for medication prices across the maps, we started a deep dive into the demographics. Can we find any demographic data that can help predict thes prices? Our first dive was into the population. Do counties with a larger population have more Medicare plan options and this competition leads to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {@fig-plans-vs-population} While there is a slight trend, it is a not a great fit. 
+Given the pattern for medication prices across the maps, we started a deep dive into the demographics. Can we find any demographic data that can help predict thes prices? Our first dive was into the population. Do counties with a larger population have more Medicare plan options and this competition leads to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. (See @fig-plans-vs-population). While there is a slight trend, it is a not a great fit. 
 
 ```{r}
 #| label: fig-plans-vs-population

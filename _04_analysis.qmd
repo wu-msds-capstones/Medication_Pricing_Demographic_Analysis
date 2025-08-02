@@ -9,6 +9,8 @@ One of the first goals was to understand the connected data at a high level by c
 For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what these medications treat, see the table below. [@table-top-meds]
 
 
+Table: Top medications by absolute spend and the treatment conditions {#table-top-meds .striped .hover tbl-colwidths="[20,20,20,40]"}  
+
 | Total Spend (USD) | Generic Name          | Brand Name(s)              | Common Conditions                                                                                                 |
 |-------------------|-----------------------|----------------------------|------------------------------------------------------------------------------------------------------------------|
 | $67.3B            | Apixaban              | Eliquis                    | AFib (Atrial Fibrillation), DVT/PE (Deep Vein Thrombosis / Pulmonary Embolism), Post-surgery Prophylaxis          |
@@ -26,8 +28,6 @@ For the rest of the analysis, we plan to use these top drugs by the most absolut
 | $12.1B            | Tiotropium Bromide    | Spiriva                    | COPD (Chronic Obstructive Pulmonary Disease), Asthma (adjunct)                                                  |
 | $11.6B            | Liraglutide           | Victoza, Saxenda           | Type 2 Diabetes, Obesity                                                                                        |
 
-
-: Table 1 - Top medications by absolute spend and the treatment condistions {.striped .hover tbl-colwidths = "[20, 20, 20, 40]" #table-top-meds }
 
 
 ## Overview of Analysis:

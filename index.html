@@ -372,9 +372,14 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
 <h2 class="anchored" data-anchor-id="scope-of-analysis">Scope of Analysis:</h2>
 <p>One of the first goals was to understand the connected data at a high level by condensing and aggregating details. Due to the granularity of the formulary data, it was necessary to narrow the focus rather than analyze all 6,000+ medications. The CMS spending datasets (Part B, Part D, and Medicaid) provided a clearer, structured view and helped identify high-impact drugs. Using this data, we generated top drug lists by total spend, claims, and doses (<strong>?@fig-topspend</strong>), ultimately selecting a few key medications for deeper analysis.</p>
 <p><strong>TRAVIS TO UPDATE THIS PLOT WITH CODE</strong></p>
-<p><img src="./images/Top_Spend.jpg" id="fig-topspend" class="img-fluid" alt="Top drugs by absolute Medicare spending in 2023"> For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what conditions these medications treat, see the table below. See <strong>?@tbl-top-meds</strong></p>
-<div class="table striped hover" data-tbl-colwidths="[20,20,20,40]">
-<table class="caption-top table">
+<p><img src="./images/Top_Spend.jpg" id="fig-topspend" class="img-fluid" alt="Top drugs by absolute Medicare spending in 2023"> For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what conditions these medications treat, see the table below. See <a href="#tbl-topmeds" class="quarto-xref">Table&nbsp;1</a></p>
+<div id="tbl-topmeds" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,20,20,40]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-topmeds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Table 1 - Top medications by absolute spend and the treatment conditions
+</figcaption>
+<div aria-describedby="tbl-topmeds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table-striped table-hover caption-top table">
 <colgroup>
 <col style="width: 20%">
 <col style="width: 20%">
@@ -477,7 +482,8 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
 </tbody>
 </table>
 </div>
-<p>Table 1: Top medications by absolute spend and the treatment conditions {#tbl-top-meds}</p>
+</figure>
+</div>
 </section>
 <section id="overview-of-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="overview-of-analysis">Overview of Analysis:</h2>

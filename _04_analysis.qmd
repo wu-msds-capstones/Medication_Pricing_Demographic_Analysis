@@ -1,24 +1,40 @@
 # Analysis
 
 ## Scope of Analysis:
-One of the first goals was to get an overall look at the data available for exploration, once it was connected in a relational way.  The initial strategy involved attempting to condense and aggregate details.  An issue that was understood and would prove to be a significant challenge was how granular the formulary data was.  An extensive analysis of the formulary data was required just to determine which descriptive statistics would best relate to the census data.  Another key consideration was trying to determine which medications to focus on.  It was not feasible to attempt to evaluate all 6000 medications in the formulary across all plans and contracts.  An appropriate solution was to focus on one or a few medications within the formulary.  The addition of the CMS spending data proved to be invaluable.  This data proved to be simple and well-structured, allowing for quick analysis.  Many approaches were tested.  The most robust and informative version of this exploration was the result of combining the spending data from Part B, Part D, and Medicaid.  This allowed for the identification of high-impact drugs that would warrant exploration.  Our team created lists of the top 10 (@fig-topspend) and top 25 drugs by spending across these three pools of coverage.  Additionally, beneficiary counts, claim counts, and dose counts were added for additional texture.  After reviewing some of these medications, several medications of interest were selected for further analysis. 
+One of the first goals was to understand the connected data at a high level by condensing and aggregating details. Due to the granularity of the formulary data, it was necessary to narrow the focus rather than analyze all 6,000+ medications. The CMS spending datasets (Part B, Part D, and Medicaid) provided a clearer, structured view and helped identify high-impact drugs. Using this data, we generated top drug lists by total spend, claims, and doses (@fig-topspend), ultimately selecting a few key medications for deeper analysis.
+ 
+**TRAVIS TO UPDATE THIS PLOT WITH CODE**
 
 ![Top drugs by absolute Medicare spending in 2023](./images/Top_Spend.jpg){#fig-topspend}
 
 ## Overview of Analysis:
-With the structure of our data, it was possible to map pricing to counties across the U.S., but it was not feasible to do every combination of contract, plan, and dose variation that existed within the formulary without some simplification. For example, the specific drugs with the most variance in unique prices across the country are shown in {@fig-uniqueprices} below. 
+Afte mapping individual medication prices to counties across the U.S. by way of which Medicare plans were available in each county, we discovered that drugs can have a lot more variance in pricing than we even imagined. The most variable drug had over 6k unique prices across the country, with many in the 4k range. To statistically simplify, we took the median across all 30-day supply prices for each drug (9-digit NDC code) within each county. Note: 60-day and 90-day prices were also available, but were filtered out to simplify the overall analysis. A box plot of the top medications by total spend are shown below descending from the most spend to the least spend.  {@fig-pricevariance} This shows the variance in drug prices. Note that the absolute cost of the medication doesn’t correlate with the total nationwide spend for that medication. The drug with the top overall spend (Apixaban) is one of the cheapest at ~$10 per 30-day supply, while another drug in the top overall spend is VERY expensive at ~$26k per 30-day supply.
+
 
 ```{r echo=FALSE}
 #| label: fig-pricevariance
-#| fig-cap: "Variance in price amongst the top drugs (by absolute spending) across the US"
+#| fig-cap: "Variance in price amongst the top drugs /n (descending by absolute spending) across the US"
 #| warning: false
+#| echo: false
+#| message: false 
 
-# Load libraries
 library(ggplot2)
 library(dplyr)
 library(scales)
 
 box_plot_table <- readRDS("data/box_plot_table.rds")
+spending_all_billions <- readRDS("data/spending_all_billions.rds")
+
+# Make sure the key column names match for join
+# Assuming spending_all_billions has 'Generic' and 'Spending_Billions' columns
+# and box_plot_table has 'drug_name_clean' for the drug name
+
+# Join spending info by drug name
+box_plot_table <- box_plot_table %>%
+  left_join(spending_all_billions, by = c("drug_name_clean" = "Generic")) %>%
+  mutate(
+    drug_label = paste0(drug_name_clean, " ($", round(Spending_Billions, 1), "B)")
+  )
 
 # Descending order of drugs by total spend
 custom_order <- c(    "Apixaban", 
@@ -36,28 +52,55 @@ custom_order <- c(    "Apixaban",
                       "Tiotropium Bromide", 
                       "Liraglutide")
 
-# Reorder the factor
+# Reorder the factor using the new label
 box_plot_table <- box_plot_table %>%
-  mutate(drug_name_clean = factor(drug_name_clean, levels = rev(custom_order)))
+  mutate(drug_label = factor(drug_label, levels = rev(paste0(custom_order, " ($", round(spending_all_billions$Spending_Billions[match(custom_order, spending_all_billions$Generic)], 1), "B)"))))
 
-# Create the box plot
-ggplot(box_plot_table, aes(x = drug_name_clean, y = UNIT_COST)) +
+# Plot using the drug_label on the x-axis
+ggplot(box_plot_table, aes(x = drug_label, y = UNIT_COST)) +
   geom_boxplot() + 
-  labs(title = "Variance in price amongst the top drugs (by absolute spending descending order)",
+  labs(title = "Variance in price amongst the top drugs
+(descending by total absolute spending between 2019-2023 )",
        x = "",
        y = "Price (USD, log scale)") +
   scale_y_log10(labels = comma) +
   theme_minimal() +
-  coord_flip() # Flip coordinates for better readability
+  coord_flip()  +
+  theme(
+    # axis.title.x = element_text(size = 16),  # increase x-axis label font size
+    # axis.title.y = element_text(size = 16)   # increase y-axis label font size
+    axis.text.x = element_text(size = 10),
+    axis.text.y = element_text(size = 10)
+  )
+
 ```
 
-![Plot of the top 30 drugs by the number of unique prices across the nation for medicare patients (30-day supply only)](./images/top_30_drug_ndcs_by_number_of_unique_prices_30_day.png){#fig-uniqueprices}
+Not all these prices are available to every Medicare patient in the US. An individual’s price options depend on their county of residence. To further showcase the variance at a county level, below is a bar chart showing the number of medicare plans available within a sample state by county. (@fig-ORplans) 
 
-The distribution of prices for the drug with the largest number of unique prices (NDC 71288-0410) is shown in (@fig-price1drug). 
+```{r echo=FALSE}
+#| label: fig-ORplans
+#| fig-cap: "Unique Medicare Plan Counts by Oregon County"
+#| warning: false
+#| echo: false
+#| message: false 
+#|
+# Load libraries
+library(dplyr)
+library(ggplot2)
+library(forcats)
 
-![Violin/Box plot of the variance in price for the drug (NDC 71288-0410) with the most unique quantity of prices across the US](./images/price_distribution_for_drug_ndc_712880410.png){#fig-price1drug}
+# Load data
+or_contracts <- readRDS("data/or_medicare_plans_by_county.rds")
 
-It was decided to simplify this as much as possible.  We first limited our data to only prices with a 30-day supply option (vs 60 and 90 supply options).  Our team also elected to democratize the MA and PDP plans by counties in which they were available, ensuring that the data represented the greatest number of pricing options available to any particular county. This enabled us to see the true number of unique contract-plan combinations exist within a single county. (@fig-orplans) From there, the median drug price was established for each 30-day supply of the medication across all dosages and delivery methods remaining from our selection for each county. This median reflects the price across all contracts and plans for a 30-day supply across all doses and delivery mechanisms within each U.S. counties.  We took several approaches to condensing the data into a useful county-level structure and considered and preserved many other statistics related to plan density, contract density, and price spread, to name a few.  Median price was explicitly selected as an alternative to the mean to resist any outlier prices across contracts and plans. 
+# Plot
+ggplot(or_contracts, aes(x = fct_reorder(COUNTY, unique_contract_plans), y = unique_contract_plans)) +
+  geom_bar(stat = "identity", fill = "darkgray") +
+  coord_flip() +
+  labs(
+    title = "Unique Medicare Plan Counts by Oregon County",
+    x = "County",
+    y = "Unique Number of Medicare Plans Available to Residencents",
+  ) +
+  theme_minimal(base_size = 14)
 
-![Number of unique combinations of contract & plan IDs available across counties in Oregon](./images/unique_contract-plan_combinations_by_county_in_oregon.png){#fig-orplans}
-
+```

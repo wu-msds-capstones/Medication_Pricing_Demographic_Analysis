@@ -8,18 +8,32 @@ One of the first goals was to get an overall look at the data available for expl
 ## Overview of Analysis:
 With the structure of our data, it was possible to map pricing to counties across the U.S., but it was not feasible to do every combination of contract, plan, and dose variation that existed within the formulary without some simplification. For example, the specific drugs with the most variance in unique prices across the country are shown in {@fig-uniqueprices} below. 
 
-```{r}
+```{r echo=FALSE}
 #| label: fig-pricevariance
-#| fig-cap: "Variance in price amongst the top drugs (by absolute spending) across the US"
+#| fig-cap: "Variance in price amongst the top drugs /n (descending by absolute spending) across the US"
 #| warning: false
-
-# Load libraries
+#| echo: false
+#| message: false 
+#| 
 library(ggplot2)
 library(dplyr)
+library(scales)
 
 box_plot_table <- readRDS("data/box_plot_table.rds")
+spending_all_billions <- readRDS("data/spending_all_billions.rds")
 
-# Define your custom order
+# Make sure the key column names match for join
+# Assuming spending_all_billions has 'Generic' and 'Spending_Billions' columns
+# and box_plot_table has 'drug_name_clean' for the drug name
+
+# Join spending info by drug name
+box_plot_table <- box_plot_table %>%
+  left_join(spending_all_billions, by = c("drug_name_clean" = "Generic")) %>%
+  mutate(
+    drug_label = paste0(drug_name_clean, " ($", round(Spending_Billions, 1), "B)")
+  )
+
+# Descending order of drugs by total spend
 custom_order <- c(    "Apixaban", 
                       "Adalimumab", 
                       "Dulaglutide", 
@@ -35,19 +49,27 @@ custom_order <- c(    "Apixaban",
                       "Tiotropium Bromide", 
                       "Liraglutide")
 
-# Reorder the factor
+# Reorder the factor using the new label
 box_plot_table <- box_plot_table %>%
-  mutate(drug_name_clean = factor(drug_name_clean, levels = rev(custom_order)))
+  mutate(drug_label = factor(drug_label, levels = rev(paste0(custom_order, " ($", round(spending_all_billions$Spending_Billions[match(custom_order, spending_all_billions$Generic)], 1), "B)"))))
 
-# Create the box plot
-ggplot(box_plot_table, aes(x = drug_name_clean, y = UNIT_COST)) +
+# Plot using the drug_label on the x-axis
+ggplot(box_plot_table, aes(x = drug_label, y = UNIT_COST)) +
   geom_boxplot() + 
-  labs(title = "Variance in price amongst the top drugs (by absolute spending)",
+  labs(title = "Variance in price amongst the top drugs
+(descending by total absolute spending between 2019-2023 )",
        x = "",
        y = "Price (USD, log scale)") +
   scale_y_log10(labels = comma) +
   theme_minimal() +
-  coord_flip() # Flip coordinates for better readability
+  coord_flip()  +
+  theme(
+    # axis.title.x = element_text(size = 16),  # increase x-axis label font size
+    # axis.title.y = element_text(size = 16)   # increase y-axis label font size
+    axis.text.x = element_text(size = 10),
+    axis.text.y = element_text(size = 10)
+  )
+
 ```
 
 ![Plot of the top 30 drugs by the number of unique prices across the nation for medicare patients (30-day supply only)](./images/top_30_drug_ndcs_by_number_of_unique_prices_30_day.png){#fig-uniqueprices}

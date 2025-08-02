@@ -41,7 +41,7 @@ counties_cropped <- st_crop(counties_joined, bbox)
 
 # Plot it
 ggplot(counties_cropped) +
-  geom_sf(aes(fill = median_cost)) +
+  geom_sf(aes(fill = median_price)) +
   scale_fill_viridis_c(option = "plasma", na.value = "grey90") +
   labs(
     title = paste0("Median Medicare Price for 30-day Supply of ",  chosen_drug, " by US County "),

@@ -8,23 +8,24 @@ One of the first goals was to understand the connected data at a high level by c
 ![Top drugs by absolute Medicare spending in 2023](./images/Top_Spend.jpg){#fig-topspend}
 For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what these medications treat, see the table below. 
 
-| Medication Generic Name | Brand Name(s)            | Common Conditions                                                                                                         | Total Spend (USD) |
-|------------------------|--------------------------|--------------------------------------------------------------------------------------------------------------------------|------------------|
-| Apixaban               | Eliquis                  | AFib (Atrial Fibrillation), DVT/PE (Deep Vein Thrombosis / Pulmonary Embolism), Post-surgery Prophylaxis                   | $67.3B           |
-| Adalimumab             | Humira, Biosimilars      | Chronic inflammatory or autoimmune conditions such as RA (Rheumatoid Arthritis), PsA (Psoriatic Arthritis), AS (Ankylosing Spondylitis), CD (Crohn’s Disease), UC (Ulcerative Colitis), Psoriasis, JIA (Juvenile Idiopathic Arthritis), Uveitis | $43.1B           |
-| Dulaglutide            | Trulicity                | Type 2 Diabetes                                                                                                           | $30.9B           |
-| Lenalidomide           | Revlimid                 | Multiple Myeloma, MDS (Myelodysplastic Syndromes)                                                                          | $29.9B           |
-| Rivaroxaban            | Xarelto                  | AFib (Atrial Fibrillation), DVT/PE (Deep Vein Thrombosis / Pulmonary Embolism)                                            | $28.4B           |
-| Empagliflozin          | Jardiance                | Type 2 Diabetes, CV risk                                                                                                   | $26.9B           |
-| Semaglutide            | Ozempic, Wegovy          | Type 2 Diabetes, Obesity                                                                                                   | $26.7B           |
-| Paliperidone Palmitate | Invega Sustenna, Trinza  | Schizophrenia                                                                                                             | $18.4B           |
-| Etanercept             | Enbrel                   | RA (Rheumatoid Arthritis), PsA (Psoriatic Arthritis), AS (Ankylosing Spondylitis), Psoriasis                              | $16.7B           |
-| Insulin Aspart         | Novolog, Fiasp           | Type 1 & 2 Diabetes                                                                                                        | $15.7B           |
-| Ustekinumab            | Stelara                  | Psoriasis, PsA (Psoriatic Arthritis), Crohn’s Disease                                                                      | $15.2B           |
-| Ibrutinib              | Imbruvica                | Blood cancers such as CLL (Chronic Lymphocytic Leukemia), MCL (Mantle Cell Lymphoma), and WM (Waldenström's Macroglobulinemia) | $14.5B           |
-| Tiotropium Bromide     | Spiriva                  | COPD (Chronic Obstructive Pulmonary Disease), Asthma (adjunct)                                                            | $12.1B           |
-| Liraglutide            | Victoza, Saxenda         | Type 2 Diabetes, Obesity                                                                                                   | $11.6B           |
-
+```{=markdown}
+| Medication Generic Name | Brand Name(s) | Common Conditions | Total Spend (USD) |
+| ---- | ----- | ---- | ---- |
+| Apixaban | Elinquis | AFib (Atrial Fibrillation), DVT/PE (Deep Vein Thrombosis / Pulmonary Embolism), Post-surgery Prophylaxis | $67.3B |
+| Adalimumab | Humira, Biosimilars | chronic inflammatory or autoimmune conditions such as RA (Rheumatoid Arthritis), PsA (Psoriatic Arthritis), AS (Ankylosing Spondylitis), CD (Crohn's Disease), UC (Ulcerative Colitis), Psoriasis, JIA (Juvenile Idiopathic Arthritis), uveitis | $43.1B |
+| Dulaglutide | Trulicity | Type 2 Diabetes | $30.9B |
+| Lenalidomide | Revlimid | Multiple Myeloma, MDS (Myelodysplastic Syndromes) | $29.9B |
+| Rivaroxaban | Xarelto | AFib (Atrial Fibrillation), DVT/PE (Deep Vein Thrombosis / Pulmonary Embolism) | $28.4B |
+| Empagliflozin | Jardiance | Type 2 Diabetes, CV risk | $26.9B |
+| Semaglutide | Ozempic, Wegovy | Type 2 diabetes, Obesity | $26.7B |
+| Paliperidone Palmitate | Invega Sustenna/Trinza | Schizophrenia | $18.4B |
+| Etanercept | Enbrel |RA (Rheumatoid Arthritis), PsA (Psoriatic Arthritis), AS (Ankylosing Spondylitis), Psoriasis | $16.7B |
+| Insulin Aspart | Novolog, Fiasp | Type 1 & 2 Diabetes | $15.7B |
+| Ustekinumab | Stelara | Psoriasis, PsA (Psoriatic Arthritis), Crohns | $15.2B |
+| Ibrutinib | Imbruvica | blood cancers such as CLL (Chronic Lymphocytic Leukemia), MCL (Mantle Cell Lymphoma),  and WM (Waldenström's Macroglobulinemia) | $14.5B |
+| Tiotropium Bromide | Spiriva | COPD (Chronic Obstructive Pulmonary Disease), Asthma (adjunct) | $12.1B |
+| Liraglutide | Victoza, Saxenda | Type 2 Diabetes, Obesity | $11.6B |
+```
 
 
 ## Overview of Analysis:

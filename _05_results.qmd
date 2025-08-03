@@ -1,194 +1,11 @@
 # Results
 
-Our main hypothesis was that there is likely some demographic that is facing more hardship due to medication price inflation in counties with these demographics within the US. Can we use the demographics of a specific county along with the now know medication prices within said county to develop a model to predict the medication prices? If yes, we could in the short term advise people with specific medical condistions to move to counties with demographics that provide more favorable medication prices and long term influence the industry to fix such inequities. 
+Our main hypothesis was that there is likely some demographic that is facing more hardship due to medication price inflation in counties with these demographics within the US. Can we use the demographics of a specific county, along with the median medication prices within said county, to develop a model to predict the medication prices? If yes, we could in the short term advise people with specific medical conditions to move to counties with demographics that provide more favorable medication prices and long-term influence the industry to fix such inequities. 
 
- An early concern in the development of this project was whether there would even be any price variation based on location.  A common misconception is that Medicare drug prices are the same across the US, given that Medicare is a public national medical insurance. The results were surprising. Drug prices do, in fact, vary significantly regionally, sometimes at the state level and sometimes at the county level. Semaglutide is one drug that stands out at the state level as shown in @fig-map-semaglutide. New York state has the lowest median 30-day supply price compared to every other state in the country.
+## Population vs Number of Available Medicare Plans
 
-```{r}
-#| label: fig-map-semaglutide
-#| fig-cap: "Median Medicare Price for 30-day Supply of Semaglutide by US County"
-#| warning: false
-#| echo: false
+Given the lack of clear patterns for medication prices across the maps, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {@fig-plans-vs-population} 
 
-chosen_drug = "Semaglutide"
-
-# Load libraries
-library(tigris)
-library(sf)
-library(ggplot2)
-library(dplyr)
-
-summary_table <- readRDS("data/map_data.rds")
-
-# Use sf-compatible county shapefile (from tigris)
-options(tigris_use_cache = TRUE)
-counties_sf <- tigris::counties(cb = TRUE, class = "sf")
-
-# Change county_code to FIPS style
-# Choose drug of interest
-summary_table2 <- summary_table %>%
-  mutate(COUNTY_CODE = sprintf("%05s", COUNTY_CODE)) %>%
-  filter(drug_name_clean == chosen_drug)
-
-# Join median_cost to county map
-counties_joined <- counties_sf %>%
-  left_join(summary_table2, by = c("NAME" = "COUNTY", "STUSPS" = "STATE"))
-
-# Define bounding box for continental US
-bbox <- st_bbox(c(xmin = -125, xmax = -66, ymin = 23, ymax = 50), crs = st_crs(counties_joined))
-
-# Crop the map
-counties_cropped <- st_crop(counties_joined, bbox)
-
-# Plot it
-ggplot(counties_cropped) +
-  geom_sf(aes(fill = median_price)) +
-  scale_fill_viridis_c(option = "plasma", na.value = "grey90") +
-  labs(
-    title = paste0("Median Medicare Price for 30-day Supply of ",  chosen_drug, " by US County "),
-    fill = "Median Cost"
-  ) +
-  theme_minimal(base_size = 10)
-```
-
-Liraglutide is unique in that it has a clear state-wide price impact like in New Mexico and Minnesota, but a county level price delta in some counties scattered across other states such as Nebraska, Oregon, Washington, Tennessee, Missouri, and Virginia. (See @fig-map-liraglutide).
-
-```{r}
-#| label: fig-map-liraglutide
-#| fig-cap: "Median Medicare Price for 30-day Supply of Liraglutide by US County"
-#| warning: false
-#| echo: false
-
-chosen_drug = "Liraglutide"
-
-# Load libraries
-library(tigris)
-library(sf)
-library(ggplot2)
-library(dplyr)
-
-summary_table <- readRDS("data/map_data.rds")
-
-# Use sf-compatible county shapefile (from tigris)
-options(tigris_use_cache = TRUE)
-counties_sf <- tigris::counties(cb = TRUE, class = "sf")
-
-# Change county_code to FIPS style
-# Choose drug of interest
-summary_table2 <- summary_table %>%
-  mutate(COUNTY_CODE = sprintf("%05s", COUNTY_CODE)) %>%
-  filter(drug_name_clean == chosen_drug)
-
-# Join median_cost to county map
-counties_joined <- counties_sf %>%
-  left_join(summary_table2, by = c("NAME" = "COUNTY", "STUSPS" = "STATE"))
-
-# Define bounding box for continental US
-bbox <- st_bbox(c(xmin = -125, xmax = -66, ymin = 23, ymax = 50), crs = st_crs(counties_joined))
-
-# Crop the map
-counties_cropped <- st_crop(counties_joined, bbox)
-
-# Plot it
-ggplot(counties_cropped) +
-  geom_sf(aes(fill = median_price)) +
-  scale_fill_viridis_c(option = "plasma", na.value = "grey90") +
-  labs(
-    title = paste0("Median Medicare Price for 30-day Supply of ",  chosen_drug, " by US County "),
-    fill = "Median Cost"
-  ) +
-  theme_minimal(base_size = 10) + 
-  theme(
-    plot.title.position = "plot",       # aligns title with plot area
-    plot.title = element_text(hjust = 0) # hjust = 0 means left-align
-  )
-
-```
-
-A quick scan over many of the drugs shows the lack of geographic patterns for many of the drugs. (See @fig-map-facet).  The maps show the median price for a 30-day supply of each drug by county. The color scale is different for each drug, with the highest value for each drug shown in yellow and the lowest in purple.
-
-``` {r}
-#| label: fig-map-facet
-#| fig-cap: "Median drug prices by US County for 14 drugs. Note: The color scale is differnet for every drug. The highest value for each drug is yellow while the lowest value is purple."
-#| warning: false
-#| echo: false
-
-
-library(tigris)
-library(sf)
-library(ggplot2)
-library(dplyr)
-library(patchwork)  # for arranging multiple plots
-
-# Load data
-summary_table <- readRDS("data/map_data.rds")
-
-chosen_drugs <- c("Apixaban", 
-                  "Adalimumab", 
-                  "Dulaglutide",
-                  "Lenalidomide", 
-                  "Rivaroxaban",
-                  "Empagliflozin",
-                  "Semaglutide",
-                  "Paliperidone Palmitate", 
-                  "Etanercept", 
-                  "Insulin Aspart",
-                  "Ustekinumab", 
-                  "Ibrutinib", 
-                  "Tiotropium Bromide", 
-                  "Liraglutide")
-
-# Prepare data
-summary_table2 <- summary_table %>%
-  mutate(COUNTY_CODE = sprintf("%05s", COUNTY_CODE)) %>%
-  filter(drug_name_clean %in% chosen_drugs)
-
-options(tigris_use_cache = TRUE)
-counties_sf <- tigris::counties(cb = TRUE, class = "sf")
-
-counties_joined <- counties_sf %>%
-  left_join(summary_table2, by = c("NAME" = "COUNTY", "STUSPS" = "STATE"))
-
-bbox <- st_bbox(c(xmin = -125, xmax = -66, ymin = 23, ymax = 50), crs = st_crs(counties_joined))
-counties_cropped <- st_crop(counties_joined, bbox)
-
-# Function to create a plot for one drug
-plot_one_drug <- function(drug) {
-  df <- counties_cropped %>% filter(drug_name_clean == drug)
-  
-  # Calculate min and max median_price for this drug for scale limits
-  min_price <- min(df$median_price, na.rm = TRUE)
-  max_price <- max(df$median_price, na.rm = TRUE)
-  
-  ggplot(df) +
-    geom_sf(aes(fill = median_price), color = NA) +
-    scale_fill_viridis_c(option = "plasma", na.value = "grey90",
-                         limits = c(min_price, max_price)) +
-    labs(title = drug, fill = "Median Cost") +
-    theme_minimal() +
-    theme(
-      axis.text = element_blank(),
-      axis.ticks = element_blank(),
-      panel.grid = element_blank(),
-      plot.title = element_text(hjust = 0.5), 
-      legend.position = "none" 
-    )
-}
-
-# Create a list of plots, one for each drug
-plots <- lapply(chosen_drugs, plot_one_drug)
-
-# Combine all plots in a grid: 2 columns, 7 rows (for 14 drugs)
-final_plot <- wrap_plots(plots, ncol = 4)
-
-# Print final combined plot
-print(final_plot)
-
-```
-
-Our team was surprised by what we observed once the median prices were applied to map plots.  There are clearly patterns here, but they vary geographically and the pattern is not the same with different drugs. To see maps for many more drugs, see this [shiny app](https://gpc1.shinyapps.io/shiny_maps_drug_median_price/). 
-
-Given the pattern for medication prices across the maps, we started a deep dive into the demographics. Can we find any demographic data that can help predict thes prices? Our first dive was into the population. Do counties with a larger population have more Medicare plan options and this competition leads to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. (See @fig-plans-vs-population). While there is a slight trend, it is a not a great fit. 
 
 ```{r}
 #| label: fig-plans-vs-population
@@ -223,13 +40,11 @@ ggplot(summary_table2, aes(x = num_contract_plans, y = total_popE)) +
 
 ```
 
-While there is a slight trend, it is not a great fit overall. The model is statistically significant (p-vaule < 0.05) and shows a moderate positive relationship (slope = 0.0195) between number of Medicare plans and population. But it's not a strong fit, two-thirds of the variation in population is left unexplained (adjusted R-squared = 0.3444), so we don’t wnat over-interpret this model as being predictive.
+While there is a slight trend, it is not a great fit overall. The model is statistically significant (p-value < 0.05) and shows a moderate positive relationship (slope = 0.0195, or 1 more medicare plan with a 1.95% increase in the population) between the number of Medicare plans and population. But it's not a strong fit. Two-thirds of the variation in population is left unexplained (adjusted R-squared = 0.3444), so we don’t want to over-interpret this model as being predictive. Given the limited correlation between the number of available plans and population, we don’t think this demographic measure is having much of an impact on medication prices. 
  
-From here, we jumped into creating a model across all our demographics (age, education, gender, median income, and percent below poverty line). 
+From here, we jumped into creating a model across all our demographics (age, education, gender, and racial breakdowns, as well as median income, and percent below the poverty line). 
 
 ***ADD MACHINE LEARNING STUFF***
-
-This regional variation underscores the importance of localized analysis. It also raises important questions about equity and access—particularly for beneficiaries in high-cost areas who may face greater financial burdens for the same treatments available at lower costs elsewhere. These disparities suggest that systemic inefficiencies or market imbalances may be at play, warranting further investigation and policy attention.
 
 This regional variation underscores the importance of localized analysis. It also raises important questions about equity and access—particularly for beneficiaries in high-cost areas who may face greater financial burdens for the same treatments available at lower costs elsewhere. These disparities suggest that systemic inefficiencies or market imbalances may be at play, warranting further investigation and policy attention.
 

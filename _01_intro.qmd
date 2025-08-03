@@ -1,3 +1,5 @@
+# Abstract
+
 # Introduction
 
 Escalating pharmaceutical prices in the U.S. are reshaping public health policy, widening healthcare disparities, and straining the financial well-being of millions. A recent KFF poll found that 60% of adults take at least one prescription, and 25% take four or more [@KFF2024]. Yet, as pharmaceutical technology advances, affordability remains a significant concern. Even with coverage through Medicare, Medicaid, or private insurance, many patients face high out-of-pocket costs that contribute to financial stress and, in some cases, treatment avoidance. 
@@ -9,5 +11,3 @@ While medications are only one aspect of medical care, they are essential in pre
 This project examines the costs associated with Medicare prescription drug plans and their impact on different demographic groups across the U.S. By analyzing how plan pricing varies by state and county, we aim to better understand the financial burden on underserved populations. The findings will illuminate geographic and socioeconomic disparities in medication affordability and may inform policy changes or targeted interventions to advance health equity.
 
 To support this analysis, we integrated publicly available data from the Centers for Medicare & Medicaid Services (CMS), the U.S. Census Bureau, and the Food and Drug Administration (FDA). These datasets provide detailed information on drug pricing, clinical use, demographic characteristics, and public insurance coverage specifically for Medicare patients (aka patients over the age of 65).  We consolidated the data into a unified DuckDB instance hosted on AWS S3, enabling efficient, scalable querying across the large and diverse datasets. This infrastructure underpins a comprehensive analysis of pharmaceutical spending and supports demographically informed cost modeling.
-
-

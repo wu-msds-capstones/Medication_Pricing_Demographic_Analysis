@@ -64,7 +64,7 @@ From here, we jumped into creating a model across all our demographics (age, edu
       x = "Variable",
       y = "Pearson Correlation"
     ) +
-    theme_minimal()
+    theme_minimal(base_size = 10)
 ```
 
 ***ADD MACHINE LEARNING STUFF***
@@ -93,7 +93,7 @@ This regional variation underscores the importance of localized analysis. It als
       name = "Pearson\nCorrelation"
     ) +
     coord_flip() +
-    theme_minimal() +
+    theme_minimal(base_size = 10) +
     theme(
       axis.text.x = element_text(angle = 90, hjust = 1),
       axis.text.y = element_text(size = 10), 

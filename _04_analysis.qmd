@@ -2,8 +2,38 @@
 ## Scope Reduction By Starting with National Data
 One of the first goals was to understand the connected data at a high level by condensing and aggregating details. Due to the granularity of the formulary data, it was necessary to narrow the focus rather than analyze all 6,000+ medications. The CMS spending datasets (Part B, Part D, and Medicaid) provided a clearer, structured view and helped identify high-impact drugs. Using this data, we generated top drug lists by total spend, claims, and doses (@fig-topspend), ultimately selecting a few key medications for deeper analysis.
 
-**TRAVIS TO UPDATE THIS PLOT WITH CODE**
-![Top drugs by absolute Medicare spending in 2023](./images/Top_Spend.jpg){#fig-topspend}
+```{r}
+#| label: fig-topspend
+#| fig-cap: "Top Medication Spending from 2019 - 2022 across Medicare Part B, D and Medicaid"
+#| warning: false
+#| echo: false
+
+library(tidyverse)
+library(ggrepel)
+
+med_spend_dose_trim = readRDS("data/top_med_spend.rds")
+
+g1 = med_spend_dose_trim%>%
+  filter(Doses_All>10000000)%>%
+  ggplot(aes(x=Doses_All, y=Spending_All))+
+  geom_point(aes(size=size_bucket), alpha=.7)+
+  geom_text_repel(data = head(med_spend_dose_trim, 10), aes(label=Generic), 
+                   nudge_x = 0.1, nudge_y = 0.2, show.legend = FALSE)+
+  scale_x_log10(labels = scales::label_number(scale = 1e-6, suffix = "M", big.mark = ","))+
+  scale_y_continuous(labels = scales::label_dollar(scale = 1e-6, suffix = "M"))+
+  scale_size_manual(values = c("<50M"=2, "50–150M"=4, "150–300M"=6, ">300M"=8))+
+  labs(title = "Medicare Part B, D & Medicaid Drug Spending",
+       subtitle = "2019 - 2022",
+       x="Doses Prescribed (Millions)",
+       y="Total Spending (Millions)",
+       size="Claims",
+       caption="Limited to medications with at least 10 million doses"
+       )+
+  theme_minimal(base_size = 10)
+
+print(g1)
+
+```
 
 For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what conditions these medications treat, see the table below. (@tbl-topmeds)
 

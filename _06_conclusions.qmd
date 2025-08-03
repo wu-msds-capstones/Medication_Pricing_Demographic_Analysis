@@ -12,4 +12,12 @@ Price normalization across Medicare Part D plans could have far-reaching benefit
 
 Normalized pricing could help curb overall healthcare spending by discouraging price inflation and promoting competitive pricing among pharmaceutical manufacturers. When drug prices are consistent and transparent, it becomes easier for policymakers and researchers to evaluate cost-effectiveness, identify inefficiencies, and implement targeted reforms. This could lead to better resource allocation and improved public health outcomes.
 
+## Ethical Considerations
+
+## Privacy
+
+## Biases
+
+## Further research
+Trends over time. Looking at more demographics. Bring in rural vs urban classifications. Political leanings, etc.
 

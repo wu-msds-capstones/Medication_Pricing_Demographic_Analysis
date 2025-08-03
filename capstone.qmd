@@ -1,11 +1,14 @@
 ---
-title: "Drug Pharmacy Costs Across US Demographics"
-subtitle: |
-  ![](images/W_compass.png){height=0.5in}
-  Data Science Capstone
+title: "Predicting Medicare Medication Costs Across US Demographics"
+subtitle: | 
+  Can demographic information predict medication costs for Medicare pateints?
+  <!-- ![](images/W_compass.png){height=0.5in} -->
+  <!-- Data Science Capstone -->
 authors: "Ellann Cohen and Travis McKenzie"
 bibliography: references.bib
 title-block-banner: true
+number-sections: true
+number-depth: 3
 format: 
   html:
     theme:
@@ -13,12 +16,12 @@ format:
       dark: darkly
     title-block-banner: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);
     title-block-banner-color: "#D8DEE9"
-runtime: shiny
+# runtime: shiny
 ---
 
 {{< include _01_intro.qmd >}}
-{{< include _02_background_and_data_collection.qmd >}}
-{{< include _03_data_engineering.qmd >}}
+{{< include _02_background.qmd >}}
+{{< include _03_data.qmd >}}
 {{< include _04_analysis.qmd >}}
 {{< include _05_results.qmd >}}
 {{< include _06_conclusions.qmd >}}

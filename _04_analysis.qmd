@@ -1,34 +1,35 @@
 # Analysis
-
-## Scope of Analysis:
+## Scope Reduction By Starting with National Data
 One of the first goals was to understand the connected data at a high level by condensing and aggregating details. Due to the granularity of the formulary data, it was necessary to narrow the focus rather than analyze all 6,000+ medications. The CMS spending datasets (Part B, Part D, and Medicaid) provided a clearer, structured view and helped identify high-impact drugs. Using this data, we generated top drug lists by total spend, claims, and doses (@fig-topspend), ultimately selecting a few key medications for deeper analysis.
- 
+
 **TRAVIS TO UPDATE THIS PLOT WITH CODE**
-
 ![Top drugs by absolute Medicare spending in 2023](./images/Top_Spend.jpg){#fig-topspend}
-For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what these medications treat, see the table below. 
 
-| Medication Generic Name | Brand Name(s)            | Common Conditions                                                                                                         | Total Spend (USD) |
-|------------------------|--------------------------|--------------------------------------------------------------------------------------------------------------------------|------------------|
-| Apixaban               | Eliquis                  | AFib (Atrial Fibrillation), DVT/PE (Deep Vein Thrombosis / Pulmonary Embolism), Post-surgery Prophylaxis                   | $67.3B           |
-| Adalimumab             | Humira, Biosimilars      | Chronic inflammatory or autoimmune conditions such as RA (Rheumatoid Arthritis), PsA (Psoriatic Arthritis), AS (Ankylosing Spondylitis), CD (Crohn’s Disease), UC (Ulcerative Colitis), Psoriasis, JIA (Juvenile Idiopathic Arthritis), Uveitis | $43.1B           |
-| Dulaglutide            | Trulicity                | Type 2 Diabetes                                                                                                           | $30.9B           |
-| Lenalidomide           | Revlimid                 | Multiple Myeloma, MDS (Myelodysplastic Syndromes)                                                                          | $29.9B           |
-| Rivaroxaban            | Xarelto                  | AFib (Atrial Fibrillation), DVT/PE (Deep Vein Thrombosis / Pulmonary Embolism)                                            | $28.4B           |
-| Empagliflozin          | Jardiance                | Type 2 Diabetes, CV risk                                                                                                   | $26.9B           |
-| Semaglutide            | Ozempic, Wegovy          | Type 2 Diabetes, Obesity                                                                                                   | $26.7B           |
-| Paliperidone Palmitate | Invega Sustenna, Trinza  | Schizophrenia                                                                                                             | $18.4B           |
-| Etanercept             | Enbrel                   | RA (Rheumatoid Arthritis), PsA (Psoriatic Arthritis), AS (Ankylosing Spondylitis), Psoriasis                              | $16.7B           |
-| Insulin Aspart         | Novolog, Fiasp           | Type 1 & 2 Diabetes                                                                                                        | $15.7B           |
-| Ustekinumab            | Stelara                  | Psoriasis, PsA (Psoriatic Arthritis), Crohn’s Disease                                                                      | $15.2B           |
-| Ibrutinib              | Imbruvica                | Blood cancers such as CLL (Chronic Lymphocytic Leukemia), MCL (Mantle Cell Lymphoma), and WM (Waldenström's Macroglobulinemia) | $14.5B           |
-| Tiotropium Bromide     | Spiriva                  | COPD (Chronic Obstructive Pulmonary Disease), Asthma (adjunct)                                                            | $12.1B           |
-| Liraglutide            | Victoza, Saxenda         | Type 2 Diabetes, Obesity                                                                                                   | $11.6B           |
+For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what conditions these medications treat, see the table below. (@tbl-topmeds)
 
 
+| Total Spend (USD) | Generic Name          | Brand Name(s)              | Common Treatment Conditions                                                                                                 |
+|-------------------|-----------------------|----------------------------|------------------------------------------------------------------------------------------------------------------|
+| $67.3B            | Apixaban              | Eliquis                    | AFib (Atrial Fibrillation), DVT/PE (Deep Vein Thrombosis / Pulmonary Embolism), Post-surgery Prophylaxis          |
+| $43.1B            | Adalimumab            | Humira, Biosimilars        | chronic inflammatory or autoimmune conditions such as RA (Rheumatoid Arthritis), PsA (Psoriatic Arthritis), AS (Ankylosing Spondylitis), CD (Crohn's Disease), UC (Ulcerative Colitis), Psoriasis, JIA (Juvenile Idiopathic Arthritis), uveitis |
+| $30.9B            | Dulaglutide           | Trulicity                  | Type 2 Diabetes                                                                                                  |
+| $29.9B            | Lenalidomide          | Revlimid                   | Multiple Myeloma, MDS (Myelodysplastic Syndromes)                                                                |
+| $28.4B            | Rivaroxaban           | Xarelto                   | AFib (Atrial Fibrillation), DVT/PE (Deep Vein Thrombosis / Pulmonary Embolism)                                  |
+| $26.9B            | Empagliflozin         | Jardiance                  | Type 2 Diabetes, CV risk                                                                                         |
+| $26.7B            | Semaglutide           | Ozempic, Wegovy            | Type 2 diabetes, Obesity                                                                                        |
+| $18.4B            | Paliperidone Palmitate| Invega Sustenna/Trinza     | Schizophrenia                                                                                                    |
+| $16.7B            | Etanercept            | Enbrel                     | RA (Rheumatoid Arthritis), PsA (Psoriatic Arthritis), AS (Ankylosing Spondylitis), Psoriasis                      |
+| $15.7B            | Insulin Aspart        | Novolog, Fiasp             | Type 1 & 2 Diabetes                                                                                              |
+| $15.2B            | Ustekinumab           | Stelara                    | Psoriasis, PsA (Psoriatic Arthritis), Crohns                                                                     |
+| $14.5B            | Ibrutinib             | Imbruvica                  | blood cancers such as CLL (Chronic Lymphocytic Leukemia), MCL (Mantle Cell Lymphoma), and WM (Waldenström's Macroglobulinemia) |
+| $12.1B            | Tiotropium Bromide    | Spiriva                    | COPD (Chronic Obstructive Pulmonary Disease), Asthma (adjunct)                                                  |
+| $11.6B            | Liraglutide           | Victoza, Saxenda           | Type 2 Diabetes, Obesity                                                                  |
 
-## Overview of Analysis:
-Afte mapping individual medication prices to counties across the U.S. by way of which Medicare plans were available in each county, we discovered that drugs can have a lot more variance in pricing than we even imagined. The most variable drug had over 6k unique prices across the country, with many in the 4k range. To statistically simplify, we took the median across all 30-day supply prices for each drug (9-digit NDC code) within each county. Note: 60-day and 90-day prices were also available, but were filtered out to simplify the overall analysis. A box plot of the top medications by total spend are shown below descending from the most spend to the least spend.  {@fig-pricevariance} This shows the variance in drug prices. Note that the absolute cost of the medication doesn’t correlate with the total nationwide spend for that medication. The drug with the top overall spend (Apixaban) is one of the cheapest at ~$10 per 30-day supply, while another drug in the top overall spend is VERY expensive at ~$26k per 30-day supply.
+: Table 1 -  Top medications by absolute spend and the treatment conditions {#tbl-topmeds .striped .hover tbl-colwidths="[20,20,20,40]"}  
+
+## Exploratory Data Analysis
+### Large medication price variance across counties and Medicare plans 
+After mapping individual medication prices to U.S. counties where Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure {@fig-pricevariance}. This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.
 
 
 ```{r}
@@ -99,7 +100,10 @@ ggplot(box_plot_table, aes(x = drug_label, y = UNIT_COST)) +
 
 ```
 
-Not all these prices are available to every Medicare patient in the US. An individual’s price options depend on their county of residence. To further showcase the variance at a county level, below is a bar chart showing the number of medicare plans available within a sample state by county. (@fig-ORplans) 
+### Quantity of Medicare plans available within individual counties
+
+One contributing factor to the wide range of drug prices is the number of Medicare plans available within a given county. Not all prices shown in the previous figure are accessible to every Medicare patient, as plan availability varies by location. To further illustrate this variability at the county level, the bar chart below displays the number of Medicare plans available in each county within a sample state (@fig-ORplans).
+
 
 ```{r}
 #| label: fig-ORplans
@@ -130,3 +134,199 @@ ggplot(or_contracts, aes(x = fct_reorder(COUNTY, unique_contract_plans), y = uni
   theme_minimal(base_size = 12)
 
 ```
+
+### Data summary simplifications
+
+Given the number of plans within each county (and the variation in drug prices by plan, pharmacy, dosage, and delivery mechanism), we chose to simplify the data by calculating the median 30-day supply price for each drug (based on the 9-digit NDC code) within each county. While 60-day and 90-day supply prices were also available, they were excluded to streamline the analysis. For much of the subsequent work, this median county-level price per drug will serve as our primary target variable.
+
+### Geographic Medication Price Patterns
+
+Our ultimate goal is to use demographic data (tied to geographic location) to predict drug prices in order to figure out which demographic factors have the largest impact on medication prices. Before jumping into the demographic data, we looked at the geographic data. 
+
+An early concern in the development of this project was whether there would even be any price variation based on location.  A common misconception is that Medicare drug prices are the same across the US, given that Medicare is a public national medical insurance. The results were surprising. Drug prices do vary significantly regionally, sometimes at the state level and sometimes at the county level. A quick scan over many of the drugs shows the lack of geographic patterns for many of the drugs. (See @fig-map-facet).  The maps show the median price for a 30-day supply of each drug by county. The color scale is different for each drug, with the highest value for each drug shown in yellow and the lowest in purple.
+
+``` {r}
+#| label: fig-map-facet
+#| fig-cap: "Median drug prices by US County for 14 drugs. Note: The color scale is differnet for every drug. The highest value for each drug is yellow while the lowest value is purple."
+#| warning: false
+#| echo: false
+
+
+library(tigris)
+library(sf)
+library(ggplot2)
+library(dplyr)
+library(patchwork)  # for arranging multiple plots
+
+# Load data
+summary_table <- readRDS("data/map_data.rds")
+
+chosen_drugs <- c("Apixaban", 
+                  "Adalimumab", 
+                  "Dulaglutide",
+                  "Lenalidomide", 
+                  "Rivaroxaban",
+                  "Empagliflozin",
+                  "Semaglutide",
+                  "Paliperidone Palmitate", 
+                  "Etanercept", 
+                  "Insulin Aspart",
+                  "Ustekinumab", 
+                  "Ibrutinib", 
+                  "Tiotropium Bromide", 
+                  "Liraglutide")
+
+# Prepare data
+summary_table2 <- summary_table %>%
+  mutate(COUNTY_CODE = sprintf("%05s", COUNTY_CODE)) %>%
+  filter(drug_name_clean %in% chosen_drugs)
+
+options(tigris_use_cache = TRUE)
+counties_sf <- tigris::counties(cb = TRUE, class = "sf")
+
+counties_joined <- counties_sf %>%
+  left_join(summary_table2, by = c("NAME" = "COUNTY", "STUSPS" = "STATE"))
+
+bbox <- st_bbox(c(xmin = -125, xmax = -66, ymin = 23, ymax = 50), crs = st_crs(counties_joined))
+counties_cropped <- st_crop(counties_joined, bbox)
+
+# Function to create a plot for one drug
+plot_one_drug <- function(drug) {
+  df <- counties_cropped %>% filter(drug_name_clean == drug)
+  
+  # Calculate min and max median_price for this drug for scale limits
+  min_price <- min(df$median_price, na.rm = TRUE)
+  max_price <- max(df$median_price, na.rm = TRUE)
+  
+  ggplot(df) +
+    geom_sf(aes(fill = median_price), color = NA) +
+    scale_fill_viridis_c(option = "plasma", na.value = "grey90",
+                         limits = c(min_price, max_price)) +
+    labs(title = drug, fill = "Median Cost") +
+    theme_minimal() +
+    theme(
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      panel.grid = element_blank(),
+      plot.title = element_text(hjust = 0.5), 
+      legend.position = "none" 
+    )
+}
+
+# Create a list of plots, one for each drug
+plots <- lapply(chosen_drugs, plot_one_drug)
+
+# Combine all plots in a grid: 2 columns, 7 rows (for 14 drugs)
+final_plot <- wrap_plots(plots, ncol = 4)
+
+# Print final combined plot
+print(final_plot)
+
+```
+
+
+Taking a closer look at two drugs, Semaglutide is one drug that stands out at the state level, as shown in @fig-map-semaglutide. New York state has the lowest median 30-day supply price compared to every other state in the country.
+
+```{r}
+#| label: fig-map-semaglutide
+#| fig-cap: "Median Medicare Price for 30-day Supply of Semaglutide by US County"
+#| warning: false
+#| echo: false
+
+chosen_drug = "Semaglutide"
+
+# Load libraries
+library(tigris)
+library(sf)
+library(ggplot2)
+library(dplyr)
+
+summary_table <- readRDS("data/map_data.rds")
+
+# Use sf-compatible county shapefile (from tigris)
+options(tigris_use_cache = TRUE)
+counties_sf <- tigris::counties(cb = TRUE, class = "sf")
+
+# Change county_code to FIPS style
+# Choose drug of interest
+summary_table2 <- summary_table %>%
+  mutate(COUNTY_CODE = sprintf("%05s", COUNTY_CODE)) %>%
+  filter(drug_name_clean == chosen_drug)
+
+# Join median_cost to county map
+counties_joined <- counties_sf %>%
+  left_join(summary_table2, by = c("NAME" = "COUNTY", "STUSPS" = "STATE"))
+
+# Define bounding box for continental US
+bbox <- st_bbox(c(xmin = -125, xmax = -66, ymin = 23, ymax = 50), crs = st_crs(counties_joined))
+
+# Crop the map
+counties_cropped <- st_crop(counties_joined, bbox)
+
+# Plot it
+ggplot(counties_cropped) +
+  geom_sf(aes(fill = median_price)) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90") +
+  labs(
+    title = paste0("Median Medicare Price for 30-day Supply of ",  chosen_drug, " by US County "),
+    fill = "Median Cost"
+  ) +
+  theme_minimal(base_size = 10)
+```
+
+Liraglutide is another that stands out in that it has a clear state-wide price impact, like in New Mexico and Minnesota, but a county-level price delta in some counties scattered across other states such as Nebraska, Oregon, Washington, Tennessee, Missouri, and Virginia. (@fig-map-liraglutide)
+
+
+```{r}
+#| label: fig-map-liraglutide
+#| fig-cap: "Median Medicare Price for 30-day Supply of Liraglutide by US County"
+#| warning: false
+#| echo: false
+
+chosen_drug = "Liraglutide"
+
+# Load libraries
+library(tigris)
+library(sf)
+library(ggplot2)
+library(dplyr)
+
+summary_table <- readRDS("data/map_data.rds")
+
+# Use sf-compatible county shapefile (from tigris)
+options(tigris_use_cache = TRUE)
+counties_sf <- tigris::counties(cb = TRUE, class = "sf")
+
+# Change county_code to FIPS style
+# Choose drug of interest
+summary_table2 <- summary_table %>%
+  mutate(COUNTY_CODE = sprintf("%05s", COUNTY_CODE)) %>%
+  filter(drug_name_clean == chosen_drug)
+
+# Join median_cost to county map
+counties_joined <- counties_sf %>%
+  left_join(summary_table2, by = c("NAME" = "COUNTY", "STUSPS" = "STATE"))
+
+# Define bounding box for continental US
+bbox <- st_bbox(c(xmin = -125, xmax = -66, ymin = 23, ymax = 50), crs = st_crs(counties_joined))
+
+# Crop the map
+counties_cropped <- st_crop(counties_joined, bbox)
+
+# Plot it
+ggplot(counties_cropped) +
+  geom_sf(aes(fill = median_price)) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90") +
+  labs(
+    title = paste0("Median Medicare Price for 30-day Supply of ",  chosen_drug, " by US County "),
+    fill = "Median Cost"
+  ) +
+  theme_minimal(base_size = 10) + 
+  theme(
+    plot.title.position = "plot",       # aligns title with plot area
+    plot.title = element_text(hjust = 0) # hjust = 0 means left-align
+  )
+
+```
+
+Our team was surprised by what we observed once the median prices were applied to map plots.  There are patterns here, but they vary geographically, and the pattern is not the same for different drugs. To see large maps for all of the top drugs, go to this [shiny app](https://gpc1.shinyapps.io/shiny_maps_drug_median_price/). 

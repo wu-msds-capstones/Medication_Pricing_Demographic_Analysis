@@ -665,8 +665,36 @@ Figure&nbsp;6: Correlation between the number of Medicare Plan Options and Total
 </div>
 <p>While there is a slight trend, it is not a great fit overall. The model is statistically significant (p-value &lt; 0.05) and shows a moderate positive relationship (slope = 0.0195, or 1 more medicare plan with a 1.95% increase in the population) between the number of Medicare plans and population. But it’s not a strong fit. Two-thirds of the variation in population is left unexplained (adjusted R-squared = 0.3444), so we don’t want to over-interpret this model as being predictive. Given the limited correlation between the number of available plans and population, we don’t think this demographic measure is having much of an impact on medication prices.</p>
 <p>From here, we jumped into creating a model across all our demographics (age, education, gender, and racial breakdowns, as well as median income, and percent below the poverty line).</p>
+<div id="cell-fig-affordability-correlations" class="cell">
+<div class="cell-output-display">
+<div id="fig-affordability-correlations" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-affordability-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-affordability-correlations-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Pearson Correlations between Demographic VFeatures and Affordability"><img src="capstone_files/figure-html/fig-affordability-correlations-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-affordability-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Pearson Correlations between Demographic VFeatures and Affordability
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p><strong><em>ADD MACHINE LEARNING STUFF</em></strong></p>
 <p>This regional variation underscores the importance of localized analysis. It also raises important questions about equity and access—particularly for beneficiaries in high-cost areas who may face greater financial burdens for the same treatments available at lower costs elsewhere. These disparities suggest that systemic inefficiencies or market imbalances may be at play, warranting further investigation and policy attention.</p>
+<div id="cell-fig-by-drug-correlations" class="cell">
+<div class="cell-output-display">
+<div id="fig-by-drug-correlations" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-by-drug-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-by-drug-correlations-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: Heatmap of Pearson Correlations Between Demographics and Drug Prices where Pearson Correaltion > 0.1"><img src="capstone_files/figure-html/fig-by-drug-correlations-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-by-drug-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Heatmap of Pearson Correlations Between Demographics and Drug Prices where Pearson Correaltion &gt; 0.1
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="conclusions" class="level1" data-number="7">

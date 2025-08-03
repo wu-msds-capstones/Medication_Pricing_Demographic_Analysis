@@ -44,8 +44,71 @@ While there is a slight trend, it is not a great fit overall. The model is stati
  
 From here, we jumped into creating a model across all our demographics (age, education, gender, and racial breakdowns, as well as median income, and percent below the poverty line). 
 
+```{r}
+#| label: fig-affordability-correlations
+#| fig-cap: "Pearson Correlations between Demographic VFeatures and Affordability"
+#| warning: false
+
+  library(ggplot2)
+  afford_df = readRDS("data/affordability_correlations.rds")
+  # Filter for strong correlations
+  afford_df <- afford_df %>%
+    filter(Correlation > 0.02 | Correlation < -0.02) %>%
+    arrange(desc(abs(Correlation)))  # reorder by strength
+  # Plot
+  ggplot(afford_df, aes(x = reorder(Variable, Correlation), y = Correlation)) +
+    geom_col(fill = "darkgray") +
+    coord_flip() +
+    labs(
+      title = "Correlation with Affordability",
+      x = "Variable",
+      y = "Pearson Correlation"
+    ) +
+    theme_minimal()
+```
+
 ***ADD MACHINE LEARNING STUFF***
 
 This regional variation underscores the importance of localized analysis. It also raises important questions about equity and access—particularly for beneficiaries in high-cost areas who may face greater financial burdens for the same treatments available at lower costs elsewhere. These disparities suggest that systemic inefficiencies or market imbalances may be at play, warranting further investigation and policy attention.
+
+
+```{r}
+#| label: fig-by-drug-correlations
+#| fig-cap: "Heatmap of Pearson Correlations Between Demographics and Drug Prices where Pearson Correaltion > 0.1"
+#| warning: false
+#| fig-height: 8 
+
+ cor_by_drug = readRDS("data/correlations_by_drug.rds")
+ 
+   cor_by_drug_filtered <- cor_by_drug %>%
+    filter(abs(Correlation) > 0.1) %>%
+    filter(!is.na(Variable))
+  
+  ggplot(cor_by_drug_filtered, aes(x = Variable, y = drug, fill = Correlation)) +
+    geom_tile(color = "white") +
+    geom_text(aes(label = round(Correlation, 2)), size = 3) +  # Add text labels
+    scale_fill_gradient2(
+      low = "blue", mid = "white", high = "red", 
+      midpoint = 0, limit = c(-1, 1), 
+      name = "Pearson\nCorrelation"
+    ) +
+    coord_flip() +
+    theme_minimal() +
+    theme(
+      axis.text.x = element_text(angle = 90, hjust = 1),
+      axis.text.y = element_text(size = 10), 
+      plot.title = element_text(hjust = 0.75)
+    ) +
+    labs(
+      title = "Heatmap of Pearson Correlations Between Demographics and Drug Prices",
+      x = "Demographic Variable",
+      y = "Drug"
+    )
+  
+  
+  
+
+```
+
 
 

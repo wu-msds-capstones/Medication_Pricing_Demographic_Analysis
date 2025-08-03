@@ -64,7 +64,7 @@ From here, we jumped into creating a model across all our demographics (age, edu
       x = "Variable",
       y = "Pearson Correlation"
     ) +
-    theme_minimal()
+    theme_minimal(base_size = 10)
 ```
 
 ***ADD MACHINE LEARNING STUFF***
@@ -76,6 +76,7 @@ This regional variation underscores the importance of localized analysis. It als
 #| label: fig-by-drug-correlations
 #| fig-cap: "Heatmap of Pearson Correlations Between Demographics and Drug Prices where Pearson Correaltion > 0.1"
 #| warning: false
+#| fig-height: 8 
 
  cor_by_drug = readRDS("data/correlations_by_drug.rds")
  
@@ -85,21 +86,26 @@ This regional variation underscores the importance of localized analysis. It als
   
   ggplot(cor_by_drug_filtered, aes(x = Variable, y = drug, fill = Correlation)) +
     geom_tile(color = "white") +
+    geom_text(aes(label = round(Correlation, 2)), size = 3) +  # Add text labels
     scale_fill_gradient2(
-      low = "blue", high = "red", mid = "white",
-      midpoint = 0, limit = c(-1, 1),
+      low = "blue", mid = "white", high = "red", 
+      midpoint = 0, limit = c(-1, 1), 
       name = "Pearson\nCorrelation"
+    ) +
+    coord_flip() +
+    theme_minimal(base_size = 10) +
+    theme(
+      axis.text.x = element_text(angle = 90, hjust = 1),
+      axis.text.y = element_text(size = 10), 
+      plot.title = element_text(hjust = 0.75)
     ) +
     labs(
       title = "Heatmap of Pearson Correlations Between Demographics and Drug Prices",
       x = "Demographic Variable",
       y = "Drug"
-    ) +
-    theme_minimal(base_size = 10) +
-    theme(
-      axis.text.x = element_text(angle = 90, hjust = 1),
-      panel.grid = element_blank()
     )
+  
+  
   
 
 ```

@@ -333,11 +333,24 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
   <li><a href="#quantity-of-medicare-plans-available-within-individual-counties" id="toc-quantity-of-medicare-plans-available-within-individual-counties" class="nav-link" data-scroll-target="#quantity-of-medicare-plans-available-within-individual-counties"><span class="header-section-number">5.2.2</span> Quantity of Medicare plans available within individual counties</a></li>
   <li><a href="#data-summary-simplifications" id="toc-data-summary-simplifications" class="nav-link" data-scroll-target="#data-summary-simplifications"><span class="header-section-number">5.2.3</span> Data summary simplifications</a></li>
   <li><a href="#geographic-medication-price-patterns" id="toc-geographic-medication-price-patterns" class="nav-link" data-scroll-target="#geographic-medication-price-patterns"><span class="header-section-number">5.2.4</span> Geographic Medication Price Patterns</a></li>
+  <li><a href="#correlations" id="toc-correlations" class="nav-link" data-scroll-target="#correlations"><span class="header-section-number">5.2.5</span> Correlations</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">6</span> Results</a>
   <ul class="collapse">
-  <li><a href="#population-vs-number-of-available-medicare-plans" id="toc-population-vs-number-of-available-medicare-plans" class="nav-link" data-scroll-target="#population-vs-number-of-available-medicare-plans"><span class="header-section-number">6.1</span> Population vs Number of Available Medicare Plans</a></li>
+  <li><a href="#statistical-testing" id="toc-statistical-testing" class="nav-link" data-scroll-target="#statistical-testing"><span class="header-section-number">6.1</span> Statistical Testing</a>
+  <ul class="collapse">
+  <li><a href="#hypothesis-1" id="toc-hypothesis-1" class="nav-link" data-scroll-target="#hypothesis-1"><span class="header-section-number">6.1.1</span> Hypothesis 1:</a></li>
+  <li><a href="#hypothesis-2" id="toc-hypothesis-2" class="nav-link" data-scroll-target="#hypothesis-2"><span class="header-section-number">6.1.2</span> Hypothesis 2:</a></li>
+  </ul></li>
+  <li><a href="#population-vs-number-of-available-medicare-plans" id="toc-population-vs-number-of-available-medicare-plans" class="nav-link" data-scroll-target="#population-vs-number-of-available-medicare-plans"><span class="header-section-number">6.2</span> Population vs Number of Available Medicare Plans</a></li>
+  <li><a href="#machine-learning" id="toc-machine-learning" class="nav-link" data-scroll-target="#machine-learning"><span class="header-section-number">6.3</span> Machine Learning</a>
+  <ul class="collapse">
+  <li><a href="#check-for-gaussian-distributions" id="toc-check-for-gaussian-distributions" class="nav-link" data-scroll-target="#check-for-gaussian-distributions"><span class="header-section-number">6.3.1</span> Check for Gaussian Distributions</a></li>
+  <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection"><span class="header-section-number">6.3.2</span> Model Selection</a></li>
+  <li><a href="#model-performance" id="toc-model-performance" class="nav-link" data-scroll-target="#model-performance"><span class="header-section-number">6.3.3</span> Model Performance</a></li>
+  <li><a href="#feature-importance" id="toc-feature-importance" class="nav-link" data-scroll-target="#feature-importance"><span class="header-section-number">6.3.4</span> Feature Importance</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">7</span> Conclusions</a>
   <ul class="collapse">
@@ -434,9 +447,22 @@ In conclusion, the formulary dataset offered a rare combination of granularity a
 <h1 data-number="5"><span class="header-section-number">5</span> Analysis</h1>
 <section id="scope-reduction-by-starting-with-national-data" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="scope-reduction-by-starting-with-national-data"><span class="header-section-number">5.1</span> Scope Reduction By Starting with National Data</h2>
-<p>One of the first goals was to understand the connected data at a high level by condensing and aggregating details. Due to the granularity of the formulary data, it was necessary to narrow the focus rather than analyze all 6,000+ medications. The CMS spending datasets (Part B, Part D, and Medicaid) provided a clearer, structured view and helped identify high-impact drugs. Using this data, we generated top drug lists by total spend, claims, and doses (<strong>?@fig-topspend</strong>), ultimately selecting a few key medications for deeper analysis.</p>
-<p><strong>TRAVIS TO UPDATE THIS PLOT WITH CODE</strong> <img src="./images/Top_Spend.jpg" id="fig-topspend" class="img-fluid" alt="Top drugs by absolute Medicare spending in 2023"></p>
-<p>For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what conditions these medications treat, see the table below. (<a href="#tbl-topmeds" class="quarto-xref">Table&nbsp;1</a>)</p>
+<p>One of the first goals was to understand the connected data at a high level by condensing and aggregating details. Due to the granularity of the formulary data, it was necessary to narrow the focus rather than analyze all 6,000+ medications. The CMS spending datasets (Part B, Part D, and Medicaid) provided a clearer, structured view and helped identify high-impact drugs. Using this data, we generated top drug lists by total spend, claims, and doses (<a href="#fig-topspend" class="quarto-xref">Figure&nbsp;1</a>), ultimately selecting a few key medications for deeper analysis.</p>
+<div id="cell-fig-topspend" class="cell">
+<div class="cell-output-display">
+<div id="fig-topspend" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-topspend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-topspend-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Top Medication Spending from 2019 - 2022 across Medicare Part B, D and Medicaid"><img src="capstone_files/figure-html/fig-topspend-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-topspend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Top Medication Spending from 2019 - 2022 across Medicare Part B, D and Medicaid
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. We were not able to match all the top 25 drugs to our dataset, so we used only the ones that had full matches, which ended up being the 14 medications below. To help contextualize what conditions these medications treat, see the table below. (<a href="#tbl-topmeds" class="quarto-xref">Table&nbsp;1</a>)</p>
 <div id="tbl-topmeds" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,20,20,40]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-topmeds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -553,16 +579,16 @@ Table&nbsp;1: Table 1 - Top medications by absolute spend and the treatment cond
 <h2 data-number="5.2" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">5.2</span> Exploratory Data Analysis</h2>
 <section id="large-medication-price-variance-across-counties-and-medicare-plans" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="large-medication-price-variance-across-counties-and-medicare-plans"><span class="header-section-number">5.2.1</span> Large medication price variance across counties and Medicare plans</h3>
-<p>After mapping individual medication prices to U.S. counties where Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure {<a href="#fig-pricevariance" class="quarto-xref">Figure&nbsp;1</a>}. This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.</p>
+<p>After mapping individual medication prices to U.S. counties where Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure {<a href="#fig-pricevariance" class="quarto-xref">Figure&nbsp;2</a>}. This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.</p>
 <div id="cell-fig-pricevariance" class="cell">
 <div class="cell-output-display">
 <div id="fig-pricevariance" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pricevariance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-pricevariance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Variance in price amongst the top drugs /n (descending by absolute spending) across the US"><img src="capstone_files/figure-html/fig-pricevariance-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-pricevariance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Variance in price amongst the top drugs /n (descending by absolute spending) across the US"><img src="capstone_files/figure-html/fig-pricevariance-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pricevariance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Variance in price amongst the top drugs /n (descending by absolute spending) across the US
+Figure&nbsp;2: Variance in price amongst the top drugs /n (descending by absolute spending) across the US
 </figcaption>
 </figure>
 </div>
@@ -571,16 +597,16 @@ Figure&nbsp;1: Variance in price amongst the top drugs /n (descending by absolut
 </section>
 <section id="quantity-of-medicare-plans-available-within-individual-counties" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="quantity-of-medicare-plans-available-within-individual-counties"><span class="header-section-number">5.2.2</span> Quantity of Medicare plans available within individual counties</h3>
-<p>One contributing factor to the wide range of drug prices is the number of Medicare plans available within a given county. Not all prices shown in the previous figure are accessible to every Medicare patient, as plan availability varies by location. To further illustrate this variability at the county level, the bar chart below displays the number of Medicare plans available in each county within a sample state (<a href="#fig-ORplans" class="quarto-xref">Figure&nbsp;2</a>).</p>
+<p>One contributing factor to the wide range of drug prices is the number of Medicare plans available within a given county. Not all prices shown in the previous figure are accessible to every Medicare patient, as plan availability varies by location. To further illustrate this variability at the county level, the bar chart below displays the number of Medicare plans available in each county within a sample state (<a href="#fig-ORplans" class="quarto-xref">Figure&nbsp;3</a>).</p>
 <div id="cell-fig-ORplans" class="cell">
 <div class="cell-output-display">
 <div id="fig-ORplans" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ORplans-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-ORplans-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Unique Medicare Plan Counts by Oregon County"><img src="capstone_files/figure-html/fig-ORplans-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-ORplans-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Unique Medicare Plan Counts by Oregon County"><img src="capstone_files/figure-html/fig-ORplans-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ORplans-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Unique Medicare Plan Counts by Oregon County
+Figure&nbsp;3: Unique Medicare Plan Counts by Oregon County
 </figcaption>
 </figure>
 </div>
@@ -594,46 +620,46 @@ Figure&nbsp;2: Unique Medicare Plan Counts by Oregon County
 <section id="geographic-medication-price-patterns" class="level3" data-number="5.2.4">
 <h3 data-number="5.2.4" class="anchored" data-anchor-id="geographic-medication-price-patterns"><span class="header-section-number">5.2.4</span> Geographic Medication Price Patterns</h3>
 <p>Our ultimate goal is to use demographic data (tied to geographic location) to predict drug prices in order to figure out which demographic factors have the largest impact on medication prices. Before jumping into the demographic data, we looked at the geographic data.</p>
-<p>An early concern in the development of this project was whether there would even be any price variation based on location. A common misconception is that Medicare drug prices are the same across the US, given that Medicare is a public national medical insurance. The results were surprising. Drug prices do vary significantly regionally, sometimes at the state level and sometimes at the county level. A quick scan over many of the drugs shows the lack of geographic patterns for many of the drugs. (See <a href="#fig-map-facet" class="quarto-xref">Figure&nbsp;3</a>). The maps show the median price for a 30-day supply of each drug by county. The color scale is different for each drug, with the highest value for each drug shown in yellow and the lowest in purple.</p>
+<p>An early concern in the development of this project was whether there would even be any price variation based on location. A common misconception is that Medicare drug prices are the same across the US, given that Medicare is a public national medical insurance. The results were surprising. Drug prices do vary significantly regionally, sometimes at the state level and sometimes at the county level. A quick scan over many of the drugs shows the lack of geographic patterns for many of the drugs. (See <a href="#fig-map-facet" class="quarto-xref">Figure&nbsp;4</a>). The maps show the median price for a 30-day supply of each drug by county. The color scale is different for each drug, with the highest value for each drug shown in yellow and the lowest in purple.</p>
 <div id="cell-fig-map-facet" class="cell">
 <div class="cell-output-display">
 <div id="fig-map-facet" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-map-facet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-map-facet-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Median drug prices by US County for 14 drugs. Note: The color scale is differnet for every drug. The highest value for each drug is yellow while the lowest value is purple."><img src="capstone_files/figure-html/fig-map-facet-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-map-facet-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Median drug prices by US County for 14 drugs. Note: The color scale is differnet for every drug. The highest value for each drug is yellow while the lowest value is purple."><img src="capstone_files/figure-html/fig-map-facet-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-map-facet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Median drug prices by US County for 14 drugs. Note: The color scale is differnet for every drug. The highest value for each drug is yellow while the lowest value is purple.
+Figure&nbsp;4: Median drug prices by US County for 14 drugs. Note: The color scale is differnet for every drug. The highest value for each drug is yellow while the lowest value is purple.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Taking a closer look at two drugs, Semaglutide is one drug that stands out at the state level, as shown in <a href="#fig-map-semaglutide" class="quarto-xref">Figure&nbsp;4</a>. New York state has the lowest median 30-day supply price compared to every other state in the country.</p>
+<p>Taking a closer look at two drugs, Semaglutide is one drug that stands out at the state level, as shown in <a href="#fig-map-semaglutide" class="quarto-xref">Figure&nbsp;5</a>. New York state has the lowest median 30-day supply price compared to every other state in the country.</p>
 <div id="cell-fig-map-semaglutide" class="cell">
 <div class="cell-output-display">
 <div id="fig-map-semaglutide" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-map-semaglutide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-map-semaglutide-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Median Medicare Price for 30-day Supply of Semaglutide by US County"><img src="capstone_files/figure-html/fig-map-semaglutide-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-map-semaglutide-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Median Medicare Price for 30-day Supply of Semaglutide by US County"><img src="capstone_files/figure-html/fig-map-semaglutide-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-map-semaglutide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Median Medicare Price for 30-day Supply of Semaglutide by US County
+Figure&nbsp;5: Median Medicare Price for 30-day Supply of Semaglutide by US County
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Liraglutide is another that stands out in that it has a clear state-wide price impact, like in New Mexico and Minnesota, but a county-level price delta in some counties scattered across other states such as Nebraska, Oregon, Washington, Tennessee, Missouri, and Virginia. (<a href="#fig-map-liraglutide" class="quarto-xref">Figure&nbsp;5</a>)</p>
+<p>Liraglutide is another that stands out in that it has a clear state-wide price impact, like in New Mexico and Minnesota, but a county-level price delta in some counties scattered across other states such as Nebraska, Oregon, Washington, Tennessee, Missouri, and Virginia. (<a href="#fig-map-liraglutide" class="quarto-xref">Figure&nbsp;6</a>)</p>
 <div id="cell-fig-map-liraglutide" class="cell">
 <div class="cell-output-display">
 <div id="fig-map-liraglutide" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-map-liraglutide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-map-liraglutide-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Median Medicare Price for 30-day Supply of Liraglutide by US County"><img src="capstone_files/figure-html/fig-map-liraglutide-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-map-liraglutide-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Median Medicare Price for 30-day Supply of Liraglutide by US County"><img src="capstone_files/figure-html/fig-map-liraglutide-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-map-liraglutide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Median Medicare Price for 30-day Supply of Liraglutide by US County
+Figure&nbsp;6: Median Medicare Price for 30-day Supply of Liraglutide by US County
 </figcaption>
 </figure>
 </div>
@@ -641,23 +667,82 @@ Figure&nbsp;5: Median Medicare Price for 30-day Supply of Liraglutide by US Coun
 </div>
 <p>Our team was surprised by what we observed once the median prices were applied to map plots. There are patterns here, but they vary geographically, and the pattern is not the same for different drugs. To see large maps for all of the top drugs, go to this <a href="https://gpc1.shinyapps.io/shiny_maps_drug_median_price/">shiny app</a>.</p>
 </section>
+<section id="correlations" class="level3" data-number="5.2.5">
+<h3 data-number="5.2.5" class="anchored" data-anchor-id="correlations"><span class="header-section-number">5.2.5</span> Correlations</h3>
+<p>The age, education, racial, and gender data from the Census are provided as absolute values. We normalized those by dividing each metric by the total population to convert them to percentages. We then explored which demographic metrics most closely correlate to the prices for each medication in <strong>?@fig-by-drug-correlation</strong>. If all the medications are correlated with similar demographic metrics, all drugs can be modeled together. If not, the individual drugs will need to be modeled separately. In this case, we filtered out weak correlations, keeping only those with Pearson correlation coefficients less than -0.1 or greater than 0.1. There is no clear pattern among all the top drugs for correlations with the demographic metrics.</p>
+<div id="cell-fig-by-drug-correlations" class="cell">
+<div class="cell-output-display">
+<div id="fig-by-drug-correlations" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-by-drug-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-by-drug-correlations-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Heatmap of Pearson Correlations Between Demographics and Drug Prices where |Pearson Correlation| > 0.1"><img src="capstone_files/figure-html/fig-by-drug-correlations-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-by-drug-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Heatmap of Pearson Correlations Between Demographics and Drug Prices where |Pearson Correlation| &gt; 0.1
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>At one point, we also added a new feature called “Affordability,” which was the median_medication_price divided by the per_capita_income. Unfortunately, using this new affordability feature showed very little correlation with other demographic features. Looking at the most positively and negatively correlated features, the Pearson correlation (<a href="#fig-affordability-correlations" class="quarto-xref">Figure&nbsp;8</a>) is still less than 0.04, which is practically negligible. Going forward, we dropped this feature.</p>
+<div id="cell-fig-affordability-correlations" class="cell">
+<div class="cell-output-display">
+<div id="fig-affordability-correlations" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-affordability-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-affordability-correlations-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: Pearson Correlations between Demographic VFeatures and Affordability"><img src="capstone_files/figure-html/fig-affordability-correlations-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-affordability-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Pearson Correlations between Demographic VFeatures and Affordability
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>At one point, we also added a new feature called “Affordability,” which was the median_medication_price divided by the per_capita_income. Unfortunately, using this new affordability feature showed very little correlation with other demographic features. Looking at the most positively and negatively correlated features, the Pearson correlation (<a href="#fig-affordability-correlations" class="quarto-xref">Figure&nbsp;8</a>) is still less than 0.04, which is practically negligible. Going forward, we dropped this feature.</p>
+</section>
 </section>
 </section>
 <section id="results" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Results</h1>
 <p>Our main hypothesis was that there is likely some demographic that is facing more hardship due to medication price inflation in counties with these demographics within the US. Can we use the demographics of a specific county, along with the median medication prices within said county, to develop a model to predict the medication prices? If yes, we could in the short term advise people with specific medical conditions to move to counties with demographics that provide more favorable medication prices and long-term influence the industry to fix such inequities.</p>
-<section id="population-vs-number-of-available-medicare-plans" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="population-vs-number-of-available-medicare-plans"><span class="header-section-number">6.1</span> Population vs Number of Available Medicare Plans</h2>
-<p>Given the lack of clear patterns for medication prices across the maps, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {<a href="#fig-plans-vs-population" class="quarto-xref">Figure&nbsp;6</a>}</p>
+<section id="statistical-testing" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="statistical-testing"><span class="header-section-number">6.1</span> Statistical Testing</h2>
+<section id="hypothesis-1" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="hypothesis-1"><span class="header-section-number">6.1.1</span> Hypothesis 1:</h3>
+<p><em>Null Hypothesis:</em> <em>Alternative Hypothesis:</em> <em>Assumptions:</em></p>
+<ol type="1">
+<li>–</li>
+<li>–</li>
+<li>–</li>
+<li>–</li>
+<li>–</li>
+</ol>
+</section>
+<section id="hypothesis-2" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="hypothesis-2"><span class="header-section-number">6.1.2</span> Hypothesis 2:</h3>
+<p><em>Null Hypothesis:</em> <em>Alternative Hypothesis:</em> <em>Assumptions:</em></p>
+<ol type="1">
+<li>–</li>
+<li>–</li>
+<li>–</li>
+<li>–</li>
+<li>–</li>
+</ol>
+</section>
+</section>
+<section id="population-vs-number-of-available-medicare-plans" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="population-vs-number-of-available-medicare-plans"><span class="header-section-number">6.2</span> Population vs Number of Available Medicare Plans</h2>
+<p>Given the lack of clear patterns for medication prices across the maps, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {<a href="#fig-plans-vs-population" class="quarto-xref">Figure&nbsp;9</a>}</p>
 <div id="cell-fig-plans-vs-population" class="cell">
 <div class="cell-output-display">
 <div id="fig-plans-vs-population" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-plans-vs-population-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-plans-vs-population-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Correlation between the number of Medicare Plan Options and Total Population by US County in 23Q4"><img src="capstone_files/figure-html/fig-plans-vs-population-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-plans-vs-population-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: Correlation between the number of Medicare Plan Options and Total Population by US County in 23Q4"><img src="capstone_files/figure-html/fig-plans-vs-population-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plans-vs-population-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Correlation between the number of Medicare Plan Options and Total Population by US County in 23Q4
+Figure&nbsp;9: Correlation between the number of Medicare Plan Options and Total Population by US County in 23Q4
 </figcaption>
 </figure>
 </div>
@@ -665,36 +750,90 @@ Figure&nbsp;6: Correlation between the number of Medicare Plan Options and Total
 </div>
 <p>While there is a slight trend, it is not a great fit overall. The model is statistically significant (p-value &lt; 0.05) and shows a moderate positive relationship (slope = 0.0195, or 1 more medicare plan with a 1.95% increase in the population) between the number of Medicare plans and population. But it’s not a strong fit. Two-thirds of the variation in population is left unexplained (adjusted R-squared = 0.3444), so we don’t want to over-interpret this model as being predictive. Given the limited correlation between the number of available plans and population, we don’t think this demographic measure is having much of an impact on medication prices.</p>
 <p>From here, we jumped into creating a model across all our demographics (age, education, gender, and racial breakdowns, as well as median income, and percent below the poverty line).</p>
-<div id="cell-fig-affordability-correlations" class="cell">
+</section>
+<section id="machine-learning" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="machine-learning"><span class="header-section-number">6.3</span> Machine Learning</h2>
+<section id="check-for-gaussian-distributions" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="check-for-gaussian-distributions"><span class="header-section-number">6.3.1</span> Check for Gaussian Distributions</h3>
+<p>Before jumping into any modeling, one must check the distribution of the variables. For this particular dataset, if all the medications are looked at simultaneously, one needs to take the log of the median prices to have the histogram show a more Gaussian distribution. (See <a href="#fig-hist-price-all-drugs" class="quarto-xref">Figure&nbsp;10</a>). This is due to the fact that the median drug price varies greatly depending on the actual drug being considered.</p>
+<div id="cell-fig-hist-price-all-drugs" class="cell">
 <div class="cell-output-display">
-<div id="fig-affordability-correlations" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-hist-price-all-drugs" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-affordability-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-affordability-correlations-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Pearson Correlations between Demographic VFeatures and Affordability"><img src="capstone_files/figure-html/fig-affordability-correlations-1.png" class="img-fluid figure-img" width="672"></a>
+<div aria-describedby="fig-hist-price-all-drugs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-hist-price-all-drugs-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;10: Histogram of Median Drug Prices and Log-Transformed Median Drug Prices across All Drugs"><img src="capstone_files/figure-html/fig-hist-price-all-drugs-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-affordability-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Pearson Correlations between Demographic VFeatures and Affordability
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist-price-all-drugs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Histogram of Median Drug Prices and Log-Transformed Median Drug Prices across All Drugs
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><strong><em>ADD MACHINE LEARNING STUFF</em></strong></p>
+<p>If the medications are reviewed independently (<a href="#fig-hist-price-per-drug" class="quarto-xref">Figure&nbsp;11</a>), then we do not need to take the log of the medication prices. The distribution shape doesn’t change with or without the log of the price. Our plan is to look at each drug independently due to the lack of patterns in the correlation heatmaps earlier (<a href="#fig-by-drug-correlations" class="quarto-xref">Figure&nbsp;7</a>).</p>
+<div id="cell-fig-hist-price-per-drug" class="cell">
+<div class="cell-output-display">
+<div id="fig-hist-price-per-drug" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hist-price-per-drug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-hist-price-per-drug-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: Histogram of Median Drug Prices by Drug"><img src="capstone_files/figure-html/fig-hist-price-per-drug-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist-price-per-drug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Histogram of Median Drug Prices by Drug
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="model-selection" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="model-selection"><span class="header-section-number">6.3.2</span> Model Selection</h3>
+<p>In order to model the relationship between medication prices and demographic features, we employed a variety of machine learning algorithms, each with unique strengths and assumptions. Below is a brief overview of the algorithms explored:</p>
+<p><strong>Linear Model (LM):</strong> Linear regression is a fundamental technique used to model the relationship between a continuous outcome variable and one or more predictors, assuming a linear relationship. It is interpretable and computationally efficient but may underperform when the underlying patterns are nonlinear or complex.</p>
+<p><strong>Elastic Net (ENET):</strong> Elastic Net is a regularized regression method that combines both L1 (Lasso) and L2 (Ridge) penalties. It is particularly effective when dealing with multicollinearity or when performing variable selection in high-dimensional datasets. Elastic Net encourages sparsity while maintaining group stability among correlated features.</p>
+<p><strong>Gradient Boosting Machine (GBM):</strong> GBM is an ensemble technique that builds models sequentially, with each new model correcting the errors of the previous one. It is capable of capturing complex nonlinear relationships and is known for its high predictive performance, although it can be prone to overfitting if not properly tuned.</p>
+<p><strong>K-Nearest Neighbors (KNN):</strong> KNN is a non-parametric algorithm that classifies or predicts outcomes based on the average value (or majority class) of the k closest observations in the feature space. It is simple and intuitive but can struggle with high-dimensional data and is sensitive to the choice of distance metric and value of k.</p>
+<p><strong>Random Forest (RF):</strong> Random Forest is an ensemble method that constructs a large number of decision trees during training and outputs the average prediction (for regression) or majority vote (for classification). It offers good performance with low risk of overfitting, handles missing data well, and provides insights into feature importance.</p>
+<p><strong>Support Vector Machine (SVM):</strong> SVM is a powerful classifier and regressor that aims to find the optimal hyperplane that maximally separates classes or fits data with minimal error (via support vectors). It works well in high-dimensional spaces and with complex boundaries but can be computationally intensive and sensitive to kernel and parameter choices.</p>
+<p><strong>Extreme Gradient Boosting (XGBoost):</strong> XGBoost is an optimized and scalable implementation of gradient boosting. It includes advanced features such as regularization, parallel processing, and handling of missing values. XGBoost typically outperforms many other algorithms in structured data problems and is widely used in machine learning competitions and real-world applications.</p>
+</section>
+<section id="model-performance" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="model-performance"><span class="header-section-number">6.3.3</span> Model Performance</h3>
+<p>Looping over every drug, we trained all the previously described models. A heatmap of the resulting model performance is provided below in <a href="#fig-heatmap-models-performance" class="quarto-xref">Figure&nbsp;12</a>. Note that all models for Ustekinumab have outlier RMSE and MAE results and are thus gray to make the difference between the other drug results more differentiated visually. For all other drugs, the random forest model has the lowest RMSE and MAE values. Fortunately, the random forest model also provides insight into feature importance.</p>
+<div id="cell-fig-heatmap-models-performance" class="cell">
+<div class="cell-output-display">
+<div id="fig-heatmap-models-performance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-heatmap-models-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-heatmap-models-performance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;12: Histogram of Median Drug Prices by Drug"><img src="capstone_files/figure-html/fig-heatmap-models-performance-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-heatmap-models-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Histogram of Median Drug Prices by Drug
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="feature-importance" class="level3" data-number="6.3.4">
+<h3 data-number="6.3.4" class="anchored" data-anchor-id="feature-importance"><span class="header-section-number">6.3.4</span> Feature Importance</h3>
+<p>The most important features for the random forest models across all drugs are shown in the heatmap below (<a href="#fig-heatmap-rf-variable-importance" class="quarto-xref">Figure&nbsp;13</a>). The most obvious pattern here is that the num_contract_plans (aka the quantity of available Medicare plans) is the most important feature for 10 out of the 14 top drugs. We already looked at the connection between total_population and the quantity of available plans in a county previously, and only saw a mild correlation. For the other four drugs, the top features were percent of residences with an associate’s degree as their maximum education level, the median household income, the percentage of the population that is black, and the percentage of the population where the highest level of education is a master’s degree.</p>
+<div id="cell-fig-heatmap-rf-variable-importance" class="cell">
+<div class="cell-output-display">
+<div id="fig-heatmap-rf-variable-importance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-heatmap-rf-variable-importance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-heatmap-rf-variable-importance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13: Random Forest Variable Importance Heatmap by Drug"><img src="capstone_files/figure-html/fig-heatmap-rf-variable-importance-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-heatmap-rf-variable-importance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13: Random Forest Variable Importance Heatmap by Drug
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p>This regional variation underscores the importance of localized analysis. It also raises important questions about equity and access—particularly for beneficiaries in high-cost areas who may face greater financial burdens for the same treatments available at lower costs elsewhere. These disparities suggest that systemic inefficiencies or market imbalances may be at play, warranting further investigation and policy attention.</p>
-<div id="cell-fig-by-drug-correlations" class="cell">
-<div class="cell-output-display">
-<div id="fig-by-drug-correlations" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-by-drug-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-by-drug-correlations-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: Heatmap of Pearson Correlations Between Demographics and Drug Prices where Pearson Correaltion > 0.1"><img src="capstone_files/figure-html/fig-by-drug-correlations-1.png" class="img-fluid figure-img" width="672"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-by-drug-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: Heatmap of Pearson Correlations Between Demographics and Drug Prices where Pearson Correaltion &gt; 0.1
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
+</section>
 </section>
 </section>
 <section id="conclusions" class="level1" data-number="7">

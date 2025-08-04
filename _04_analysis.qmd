@@ -2,10 +2,40 @@
 ## Scope Reduction By Starting with National Data
 One of the first goals was to understand the connected data at a high level by condensing and aggregating details. Due to the granularity of the formulary data, it was necessary to narrow the focus rather than analyze all 6,000+ medications. The CMS spending datasets (Part B, Part D, and Medicaid) provided a clearer, structured view and helped identify high-impact drugs. Using this data, we generated top drug lists by total spend, claims, and doses (@fig-topspend), ultimately selecting a few key medications for deeper analysis.
 
-**TRAVIS TO UPDATE THIS PLOT WITH CODE**
-![Top drugs by absolute Medicare spending in 2023](./images/Top_Spend.jpg){#fig-topspend}
+```{r}
+#| label: fig-topspend
+#| fig-cap: "Top Medication Spending from 2019 - 2022 across Medicare Part B, D and Medicaid"
+#| warning: false
+#| echo: false
 
-For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. To help contextualize what conditions these medications treat, see the table below. (@tbl-topmeds)
+library(tidyverse)
+library(ggrepel)
+
+med_spend_dose_trim = readRDS("data/top_med_spend.rds")
+
+g1 = med_spend_dose_trim%>%
+  filter(Doses_All>10000000)%>%
+  ggplot(aes(x=Doses_All, y=Spending_All))+
+  geom_point(aes(size=size_bucket), alpha=.7)+
+  geom_text_repel(data = head(med_spend_dose_trim, 10), aes(label=Generic), 
+                   nudge_x = 0.1, nudge_y = 0.2, show.legend = FALSE)+
+  scale_x_log10(labels = scales::label_number(scale = 1e-6, suffix = "M", big.mark = ","))+
+  scale_y_continuous(labels = scales::label_dollar(scale = 1e-6, suffix = "M"))+
+  scale_size_manual(values = c("<50M"=2, "50–150M"=4, "150–300M"=6, ">300M"=8))+
+  labs(title = "Medicare Part B, D & Medicaid Drug Spending",
+       subtitle = "2019 - 2022",
+       x="Doses Prescribed (Millions)",
+       y="Total Spending (Millions)",
+       size="Claims",
+       caption="Limited to medications with at least 10 million doses"
+       )+
+  theme_minimal(base_size = 10)
+
+print(g1)
+
+```
+
+For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. We were not able to match all the top 25 drugs to our dataset, so we used only the ones that had full matches, which ended up being the 14 medications below. To help contextualize what conditions these medications treat, see the table below. (@tbl-topmeds)
 
 
 | Total Spend (USD) | Generic Name          | Brand Name(s)              | Common Treatment Conditions                                                                                                 |
@@ -28,7 +58,9 @@ For the rest of the analysis, we plan to use these top drugs by the most absolut
 : Table 1 -  Top medications by absolute spend and the treatment conditions {#tbl-topmeds .striped .hover tbl-colwidths="[20,20,20,40]"}  
 
 ## Exploratory Data Analysis
+
 ### Large medication price variance across counties and Medicare plans 
+
 After mapping individual medication prices to U.S. counties where Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure {@fig-pricevariance}. This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.
 
 
@@ -330,3 +362,75 @@ ggplot(counties_cropped) +
 ```
 
 Our team was surprised by what we observed once the median prices were applied to map plots.  There are patterns here, but they vary geographically, and the pattern is not the same for different drugs. To see large maps for all of the top drugs, go to this [shiny app](https://gpc1.shinyapps.io/shiny_maps_drug_median_price/). 
+
+### Correlations
+
+The age, education, racial, and gender data from the Census are provided as absolute values. We normalized those by dividing each metric by the total population to convert them to percentages. We then explored which demographic metrics most closely correlate to the prices for each medication in @fig-by-drug-correlation. If all the medications are correlated with similar demographic metrics, all drugs can be modeled together. If not, the individual drugs will need to be modeled separately. In this case, we filtered out weak correlations, keeping only those with Pearson correlation coefficients less than -0.1 or greater than 0.1. There is no clear pattern among all the top drugs for correlations with the demographic metrics. 
+
+```{r}
+#| label: fig-by-drug-correlations
+#| fig-cap: "Heatmap of Pearson Correlations Between Demographics and Drug Prices where |Pearson Correlation| > 0.1"
+#| warning: false
+#| fig-height: 8 
+#| echo: false
+
+ cor_by_drug = readRDS("data/correlations_by_drug.rds")
+ 
+   cor_by_drug_filtered <- cor_by_drug %>%
+    filter(abs(Correlation) > 0.1) %>%
+    filter(!is.na(Variable))
+  
+  ggplot(cor_by_drug_filtered, aes(x = Variable, y = drug, fill = Correlation)) +
+    geom_tile(color = "white") +
+    geom_text(aes(label = round(Correlation, 2)), size = 3) +  # Add text labels
+    scale_fill_gradient2(
+      low = "blue", mid = "white", high = "red", 
+      midpoint = 0, limit = c(-1, 1), 
+      name = "Pearson\nCorrelation"
+    ) +
+    coord_flip() +
+    theme_minimal(base_size = 10) +
+    theme(
+      axis.text.x = element_text(angle = 90, hjust = 1),
+      axis.text.y = element_text(size = 10), 
+      plot.title = element_text(hjust = 0.75)
+    ) +
+    labs(
+      title = "Heatmap of Pearson Correlations (|r| > 0.1) Between Demographics and Drug Prices",
+      x = "Demographic Variable",
+      y = "Drug"
+    )
+  
+```
+
+At one point, we also added a new feature called “Affordability,” which was the median_medication_price divided by the per_capita_income. Unfortunately, using this new affordability feature showed very little correlation with other demographic features. Looking at the most positively and negatively correlated features, the Pearson correlation (@fig-affordability-correlations) is still less than 0.04, which is practically negligible. Going forward, we dropped this feature. 
+
+
+```{r}
+#| label: fig-affordability-correlations
+#| fig-cap: "Pearson Correlations between Demographic VFeatures and Affordability"
+#| warning: false
+#| echo: false
+
+
+  library(ggplot2)
+  afford_df = readRDS("data/affordability_correlations.rds")
+  # Filter for strong correlations
+  afford_df <- afford_df %>%
+    filter(Correlation > 0.02 | Correlation < -0.02) %>%
+    arrange(desc(abs(Correlation)))  # reorder by strength
+  # Plot
+  ggplot(afford_df, aes(x = reorder(Variable, Correlation), y = Correlation)) +
+    geom_col(fill = "darkgray") +
+    coord_flip() +
+    labs(
+      title = "Correlation with Affordability",
+      x = "Variable",
+      y = "Pearson Correlation"
+    ) +
+    theme_minimal(base_size = 10)
+```
+
+At one point, we also added a new feature called “Affordability,” which was the median_medication_price divided by the per_capita_income. Unfortunately, using this new affordability feature showed very little correlation with other demographic features. Looking at the most positively and negatively correlated features, the Pearson correlation (@fig-affordability-correlations) is still less than 0.04, which is practically negligible. Going forward, we dropped this feature. 
+
+

@@ -2,6 +2,34 @@
 
 Our main hypothesis was that there is likely some demographic that is facing more hardship due to medication price inflation in counties with these demographics within the US. Can we use the demographics of a specific county, along with the median medication prices within said county, to develop a model to predict the medication prices? If yes, we could in the short term advise people with specific medical conditions to move to counties with demographics that provide more favorable medication prices and long-term influence the industry to fix such inequities. 
 
+## Statistical Testing
+
+### Hypothesis 1:
+
+*Null Hypothesis:* 
+*Alternative Hypothesis:*
+*Assumptions:*
+
+1. –
+2. –
+3. –
+4. –
+5. –
+
+### Hypothesis 2:
+
+*Null Hypothesis:* 
+*Alternative Hypothesis:*
+*Assumptions:*
+
+1. –
+2. –
+3. –
+4. –
+5. –
+
+
+
 ## Population vs Number of Available Medicare Plans
 
 Given the lack of clear patterns for medication prices across the maps, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {@fig-plans-vs-population} 
@@ -11,6 +39,7 @@ Given the lack of clear patterns for medication prices across the maps, we turne
 #| label: fig-plans-vs-population
 #| fig-cap: "Correlation between the number of Medicare Plan Options and Total Population by US County in 23Q4"
 #| warning: false
+#| echo: false
 
 
 library(tidyverse)
@@ -44,71 +73,197 @@ While there is a slight trend, it is not a great fit overall. The model is stati
  
 From here, we jumped into creating a model across all our demographics (age, education, gender, and racial breakdowns, as well as median income, and percent below the poverty line). 
 
-```{r}
-#| label: fig-affordability-correlations
-#| fig-cap: "Pearson Correlations between Demographic VFeatures and Affordability"
-#| warning: false
 
-  library(ggplot2)
-  afford_df = readRDS("data/affordability_correlations.rds")
-  # Filter for strong correlations
-  afford_df <- afford_df %>%
-    filter(Correlation > 0.02 | Correlation < -0.02) %>%
-    arrange(desc(abs(Correlation)))  # reorder by strength
-  # Plot
-  ggplot(afford_df, aes(x = reorder(Variable, Correlation), y = Correlation)) +
-    geom_col(fill = "darkgray") +
-    coord_flip() +
-    labs(
-      title = "Correlation with Affordability",
-      x = "Variable",
-      y = "Pearson Correlation"
-    ) +
-    theme_minimal(base_size = 10)
+
+## Machine Learning
+
+### Check for Gaussian Distributions
+
+Before jumping into any modeling, one must check the distribution of the variables. For this particular dataset, if all the medications are looked at simultaneously, one needs to take the log of the median prices to have the histogram show a more Gaussian distribution. (See @fig-hist-price-all-drugs). This is due to the fact that the median drug price varies greatly depending on the actual drug being considered. 
+
+```{r}
+#| label: fig-hist-price-all-drugs
+#| fig-cap: "Histogram of Median Drug Prices and Log-Transformed Median Drug Prices across All Drugs"
+#| warning: false
+#| fig-height: 4
+#| echo: false
+
+
+summary_table2 = readRDS("data/summary_table2.rds")
+
+# Set up a 1-row, 2-column layout
+par(mfrow = c(1, 2))
+# Histogram of raw median_price
+hist(summary_table2$median_price, 
+     breaks = 50, 
+     main = "Median Price - All Drugs", 
+     xlab = "Price",
+     col = "darkgray")
+# Histogram of log-transformed median_price
+hist(log(summary_table2$median_price), 
+     breaks = 50, 
+     main = "Log(Median Price) - All Drugs", 
+     xlab = "log(Price)",
+     col = "lightgray")
+# Reset plotting layout
+par(mfrow = c(1, 1))
 ```
 
-***ADD MACHINE LEARNING STUFF***
+If the medications are reviewed independently (@fig-hist-price-per-drug), then we do not need to take the log of the medication prices. The distribution shape doesn’t change with or without the log of the price. Our plan is to look at each drug independently due to the lack of patterns in the correlation heatmaps earlier (@fig-by-drug-correlations).
+
+```{r}
+#| label: fig-hist-price-per-drug
+#| fig-cap: "Histogram of Median Drug Prices by Drug"
+#| warning: false
+#| echo: false
+#| fig-height: 8
+
+summary_table2 = readRDS("data/summary_table2.rds") %>% filter(!is.na(drug_name_clean))
+
+library(dplyr)
+library(ggplot2)
+# Plot faceted histograms
+ggplot(summary_table2, aes(x = median_price)) +
+  geom_histogram(bins = 50, fill = "darkgray") +
+  facet_wrap(~ drug_name_clean, scales = "free", ncol = 3) +
+  labs(
+    title = "Distribution of Median Price by Drug",
+    x = "Median Price",
+    y = "Count"
+  ) +
+  theme_minimal()
+
+```
+
+### Model Selection
+In order to model the relationship between medication prices and demographic features, we employed a variety of machine learning algorithms, each with unique strengths and assumptions. Below is a brief overview of the algorithms explored:
+
+**Linear Model (LM):**
+Linear regression is a fundamental technique used to model the relationship between a continuous outcome variable and one or more predictors, assuming a linear relationship. It is interpretable and computationally efficient but may underperform when the underlying patterns are nonlinear or complex.
+
+
+**Elastic Net (ENET):**
+Elastic Net is a regularized regression method that combines both L1 (Lasso) and L2 (Ridge) penalties. It is particularly effective when dealing with multicollinearity or when performing variable selection in high-dimensional datasets. Elastic Net encourages sparsity while maintaining group stability among correlated features.
+
+
+**Gradient Boosting Machine (GBM):**
+GBM is an ensemble technique that builds models sequentially, with each new model correcting the errors of the previous one. It is capable of capturing complex nonlinear relationships and is known for its high predictive performance, although it can be prone to overfitting if not properly tuned.
+
+
+**K-Nearest Neighbors (KNN):**
+KNN is a non-parametric algorithm that classifies or predicts outcomes based on the average value (or majority class) of the k closest observations in the feature space. It is simple and intuitive but can struggle with high-dimensional data and is sensitive to the choice of distance metric and value of k.
+
+
+**Random Forest (RF):**
+Random Forest is an ensemble method that constructs a large number of decision trees during training and outputs the average prediction (for regression) or majority vote (for classification). It offers good performance with low risk of overfitting, handles missing data well, and provides insights into feature importance.
+
+
+**Support Vector Machine (SVM):**
+SVM is a powerful classifier and regressor that aims to find the optimal hyperplane that maximally separates classes or fits data with minimal error (via support vectors). It works well in high-dimensional spaces and with complex boundaries but can be computationally intensive and sensitive to kernel and parameter choices.
+
+
+**Extreme Gradient Boosting (XGBoost):**
+XGBoost is an optimized and scalable implementation of gradient boosting. It includes advanced features such as regularization, parallel processing, and handling of missing values. XGBoost typically outperforms many other algorithms in structured data problems and is widely used in machine learning competitions and real-world applications.
+
+
+### Model Performance
+
+Looping over every drug, we trained all the previously described models. A heatmap of the resulting model performance is provided below in @fig-heatmap-models-performance. Note that all models for Ustekinumab have outlier RMSE and MAE results and are thus gray to make the difference between the other drug results more differentiated visually. For all other drugs, the random forest model has the lowest RMSE and MAE values. Fortunately, the random forest model also provides insight into feature importance. 
+
+
+```{r}
+#| label: fig-heatmap-models-performance
+#| fig-cap: "Histogram of Median Drug Prices by Drug"
+#| warning: false
+#| echo: false
+#| fig-height: 6
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(scales)
+
+# Load and prepare data
+model_metrics_df <- readRDS("data/model_metrics_summary.rds")
+
+metrics_long <- model_metrics_df %>%
+  pivot_longer(cols = c(RMSE, MAE), names_to = "Metric", values_to = "Value") %>%
+  # Normalize Value to [0,1] to assess brightness
+  mutate(fill_norm = rescale(Value),
+         text_color = ifelse(fill_norm > 0.05, "white", "black"))  # text is black if background is light
+
+ggplot(metrics_long, aes(x = model, y = drug, fill = Value)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = signif(Value, 2), color = text_color), size = 3, angle = 45, show.legend = FALSE) +
+  scale_color_identity() +  # use colors as-is from the column
+  scale_fill_viridis_c(option = "magma", direction = -1, name = "Metric Value",     
+                       limits = c(min(metrics_long$Value, na.rm = TRUE), 
+                                  quantile(metrics_long$Value, 0.90, na.rm = TRUE))) +
+  facet_wrap(~ Metric, ncol = 2) +
+  labs(
+    title = "Model Performance by Drug (Dynamic Text Contrast)",
+    x = NULL, #"Model",
+    y = NULL #"Drug"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0),
+    plot.title.position = "plot"
+  )
+```
+
+
+### Feature Importance
+ The most important features for the random forest models across all drugs are shown in the heatmap below (@fig-heatmap-rf-variable-importance). The most obvious pattern here is that the num_contract_plans (aka the quantity of available Medicare plans) is the most important feature for 10 out of the 14 top drugs. We already looked at the connection between total_population and the quantity of available plans in a county previously, and only saw a mild correlation. For the other four drugs, the top features were percent of residences with an associate's degree as their maximum education level, the median household income, the percentage of the population that is black, and the percentage of the population where the highest level of education is a master’s degree.
+
+
+``` {r}
+#| label: fig-heatmap-rf-variable-importance
+#| fig-cap: "Random Forest Variable Importance Heatmap by Drug"
+#| warning: false
+#| echo: false
+#| fig-height: 6
+
+library(ggplot2)
+top_rf_vars2 <- readRDS("data/top_rf_vars2.rds")
+
+ggplot(top_rf_vars2, aes(x = Variable, y = Drug, fill = Overall)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = signif(Overall, 2), color = label_color), size = 3) +
+  scale_color_identity() +  # use colors directly from label_color
+  scale_fill_viridis_c(option = "magma", name = "Importance") +
+  coord_flip() +
+  labs(
+    title = "Random Forest Variable Importance Heatmap by Drug",
+    x = NULL, #"Variable",
+    y = NULL #"Drug"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1)
+  )
+
+```
+
+
+
 
 This regional variation underscores the importance of localized analysis. It also raises important questions about equity and access—particularly for beneficiaries in high-cost areas who may face greater financial burdens for the same treatments available at lower costs elsewhere. These disparities suggest that systemic inefficiencies or market imbalances may be at play, warranting further investigation and policy attention.
 
 
-```{r}
-#| label: fig-by-drug-correlations
-#| fig-cap: "Heatmap of Pearson Correlations Between Demographics and Drug Prices where Pearson Correaltion > 0.1"
-#| warning: false
-#| fig-height: 8 
 
- cor_by_drug = readRDS("data/correlations_by_drug.rds")
- 
-   cor_by_drug_filtered <- cor_by_drug %>%
-    filter(abs(Correlation) > 0.1) %>%
-    filter(!is.na(Variable))
-  
-  ggplot(cor_by_drug_filtered, aes(x = Variable, y = drug, fill = Correlation)) +
-    geom_tile(color = "white") +
-    geom_text(aes(label = round(Correlation, 2)), size = 3) +  # Add text labels
-    scale_fill_gradient2(
-      low = "blue", mid = "white", high = "red", 
-      midpoint = 0, limit = c(-1, 1), 
-      name = "Pearson\nCorrelation"
-    ) +
-    coord_flip() +
-    theme_minimal(base_size = 10) +
-    theme(
-      axis.text.x = element_text(angle = 90, hjust = 1),
-      axis.text.y = element_text(size = 10), 
-      plot.title = element_text(hjust = 0.75)
-    ) +
-    labs(
-      title = "Heatmap of Pearson Correlations Between Demographics and Drug Prices",
-      x = "Demographic Variable",
-      y = "Drug"
-    )
-  
-  
-  
 
-```
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -246,13 +246,13 @@ ggplot(top_rf_vars2, aes(x = Variable, y = Drug, fill = Overall)) +
 
 ```
 
+### Machine Learning (ML) Conclusions
 
+The application of diverse machine learning algorithms provided valuable insights into the complex relationships between demographic factors and medication prices across U.S. counties. Despite the initial hypothesis that demographic variables might strongly predict drug pricing disparities, our results indicate that the quantity of Medicare plans available within a county is the most consistent and influential predictor across the majority of the top-spending medications. Other demographic features, such as education level, income, and racial composition, showed variable importance depending on the specific drug but did not emerge as universally strong predictors.
 
+The superior performance of random forest modelling highlights the nonlinear and multifaceted nature of drug pricing patterns, which simpler linear models struggled to capture effectively. This complexity underscores the challenge of modeling medication prices purely based on demographics and points to the potential influence of additional factors not captured in our current dataset.
 
-This regional variation underscores the importance of localized analysis. It also raises important questions about equity and access—particularly for beneficiaries in high-cost areas who may face greater financial burdens for the same treatments available at lower costs elsewhere. These disparities suggest that systemic inefficiencies or market imbalances may be at play, warranting further investigation and policy attention.
-
-
-
+Overall, these findings suggest that while demographic characteristics contribute to medication price variation, market dynamics (reflected by Medicare plan availability) play a pivotal role. Future work may benefit from incorporating additional economic, regulatory, and supply-chain data to better explain and predict geographic disparities in medication costs. This knowledge could ultimately inform policies aimed at improving affordability and equity in drug pricing.
 
 
 

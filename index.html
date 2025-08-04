@@ -350,6 +350,7 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
   <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection"><span class="header-section-number">6.3.2</span> Model Selection</a></li>
   <li><a href="#model-performance" id="toc-model-performance" class="nav-link" data-scroll-target="#model-performance"><span class="header-section-number">6.3.3</span> Model Performance</a></li>
   <li><a href="#feature-importance" id="toc-feature-importance" class="nav-link" data-scroll-target="#feature-importance"><span class="header-section-number">6.3.4</span> Feature Importance</a></li>
+  <li><a href="#machine-learning-ml-conclusions" id="toc-machine-learning-ml-conclusions" class="nav-link" data-scroll-target="#machine-learning-ml-conclusions"><span class="header-section-number">6.3.5</span> Machine Learning (ML) Conclusions</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">7</span> Conclusions</a>
@@ -832,7 +833,12 @@ Figure&nbsp;13: Random Forest Variable Importance Heatmap by Drug
 </div>
 </div>
 </div>
-<p>This regional variation underscores the importance of localized analysis. It also raises important questions about equity and access—particularly for beneficiaries in high-cost areas who may face greater financial burdens for the same treatments available at lower costs elsewhere. These disparities suggest that systemic inefficiencies or market imbalances may be at play, warranting further investigation and policy attention.</p>
+</section>
+<section id="machine-learning-ml-conclusions" class="level3" data-number="6.3.5">
+<h3 data-number="6.3.5" class="anchored" data-anchor-id="machine-learning-ml-conclusions"><span class="header-section-number">6.3.5</span> Machine Learning (ML) Conclusions</h3>
+<p>The application of diverse machine learning algorithms provided valuable insights into the complex relationships between demographic factors and medication prices across U.S. counties. Despite the initial hypothesis that demographic variables might strongly predict drug pricing disparities, our results indicate that the quantity of Medicare plans available within a county is the most consistent and influential predictor across the majority of the top-spending medications. Other demographic features, such as education level, income, and racial composition, showed variable importance depending on the specific drug but did not emerge as universally strong predictors.</p>
+<p>The superior performance of random forest modelling highlights the nonlinear and multifaceted nature of drug pricing patterns, which simpler linear models struggled to capture effectively. This complexity underscores the challenge of modeling medication prices purely based on demographics and points to the potential influence of additional factors not captured in our current dataset.</p>
+<p>Overall, these findings suggest that while demographic characteristics contribute to medication price variation, market dynamics (reflected by Medicare plan availability) play a pivotal role. Future work may benefit from incorporating additional economic, regulatory, and supply-chain data to better explain and predict geographic disparities in medication costs. This knowledge could ultimately inform policies aimed at improving affordability and equity in drug pricing.</p>
 </section>
 </section>
 </section>

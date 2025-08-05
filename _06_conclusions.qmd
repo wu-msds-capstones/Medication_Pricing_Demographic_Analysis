@@ -1,23 +1,74 @@
 # Conclusions
 
+## Insights and Recommendations
+
 Our analysis reveals significant geographic disparities in Medicare Part D drug pricing across the United States. While our data does not conclusively demonstrate that these pricing variations disproportionately affect any single demographic group, the inconsistencies raise serious concerns about the effectiveness and equity of Medicare’s price negotiation mechanisms. The observed variation suggests that drug costs could be more uniformly regulated, pointing to inefficiencies in the current system.
 
-For many Medicare beneficiaries—particularly older adults and individuals with limited resources—the burden of navigating complex plan options to secure affordable coverage is substantial. Despite the availability of plan finder tools and licensed advisors, the process remains daunting for a population that the program is intended to support. This complexity undermines the accessibility and fairness of Medicare Part D.  
+For many Medicare beneficiaries—particularly older adults and individuals with limited financial resources—the challenge of navigating complex plan options to secure affordable coverage remains significant. Despite the availability of plan finder tools and licensed advisors, the process is often overwhelming for the very population the program is designed to support. This complexity undermines both the accessibility and fairness of Medicare Part D, highlighting a need for more user-friendly systems and clearer guidance to ensure equitable and affordable access to prescription drug coverage. 
 
-The Inflation Reduction Act of 2022 marked a pivotal step toward addressing unsustainable drug pricing. Regulatory intervention, as demonstrated by the U.S. Department of Health and Human Services (HHS) and the CMS [@cms2025negotiation], has shown potential to curb excessive price increases. In December 2024, CMS [@cms2024inflationrebate] announced cost savings for 64 drugs whose prices had outpaced inflation—an encouraging sign of progress. However, the full impact of these measures remains uncertain. Much of the projected savings will not materialize until 2026, and their effectiveness will depend on pharmaceutical industry responses, future pricing trends, and the extent to which affected medications are utilized.
+The Inflation Reduction Act of 2022 represents a pivotal step toward addressing the long-standing issue of unsustainable drug pricing in the United States. Regulatory actions by the U.S. Department of Health and Human Services (HHS) and the Centers for Medicare & Medicaid Services (CMS) [@cms2025negotiation] have demonstrated promising potential to curb excessive price increases. Notably, in December 2024, CMS [@cms2024inflationrebate] announced cost savings for 64 drugs whose prices had risen faster than inflation—an encouraging indicator of progress.
 
-To promote greater equity and transparency, federal and state policymakers could collaborate to ensure that the lowest negotiated drug prices are made broadly accessible, rather than confined to specific plans or contracts. There is a clear opportunity to advance price normalization and improve the transparency of treatment costs, which would better serve Medicare beneficiaries and strengthen the integrity of the program.
+However, the full impact of these measures remains to be seen. Much of the projected savings will not be realized until 2026, and their effectiveness will depend on several factors, including pharmaceutical industry responses, future pricing trends, and the extent to which the affected medications are utilized by beneficiaries. Continued monitoring and evaluation will be essential to ensure these reforms translate into meaningful improvements in affordability and access.
 
-Price normalization across Medicare Part D plans could have far-reaching benefits beyond the immediate Medicare population. By reducing regional and plan-based disparities, normalization would help create a more predictable and equitable pricing environment for all stakeholders, including providers, pharmacies, and insurers. It could also reduce administrative overhead associated with managing complex pricing structures and improve the efficiency of healthcare delivery.
+To promote greater equity and transparency in Medicare Part D, federal and state policymakers could collaborate to ensure that the lowest negotiated drug prices are made broadly accessible—rather than restricted to specific plans or contracts. This approach presents a clear opportunity to advance price normalization and improve the visibility of treatment costs. By making pricing more consistent and transparent, policymakers can better serve Medicare beneficiaries and reinforce the integrity and fairness of the program.
 
-Normalized pricing could help curb overall healthcare spending by discouraging price inflation and promoting competitive pricing among pharmaceutical manufacturers. When drug prices are consistent and transparent, it becomes easier for policymakers and researchers to evaluate cost-effectiveness, identify inefficiencies, and implement targeted reforms. This could lead to better resource allocation and improved public health outcomes.
+Price normalization across Medicare Part D plans could yield far-reaching benefits that extend beyond the immediate Medicare population. By reducing regional and plan-based disparities, normalization would foster a more predictable and equitable pricing environment for all stakeholders—including healthcare providers, pharmacies, and insurers. It could also streamline administrative processes by minimizing the complexity of managing varied pricing structures, thereby enhancing the efficiency of healthcare delivery and reducing operational costs.
+
+Fortunately, many private companies (like GoodRx and CostPlusDrugs) are actively working to promote price transparency and secure the best possible prices for commonly prescribed medications. Their efforts demonstrate that innovation in medication pricing structures is feasible. Policymakers must embrace these emerging modern approaches and support initiatives that promote consistent and transparent pricing across the healthcare system. This is not about enforcing rigid price controls, but rather about ensuring fairness, clarity, and accessibility in how drug prices are determined and communicated.
+
+Normalized drug pricing across Medicare Part D plans could play a critical role in curbing overall healthcare spending by discouraging price inflation and fostering competitive pricing among pharmaceutical manufacturers. When prices are consistent and transparent, it becomes significantly easier for policymakers, researchers, and healthcare administrators to evaluate cost-effectiveness, identify inefficiencies, and implement targeted reforms. This clarity can lead to more strategic resource allocation, improved public health outcomes, and a more sustainable healthcare system.
+
+The movement toward transparent and normalized drug pricing offers a promising path forward for consumers and the healthcare system alike. With private companies paving the way, policymakers have a unique chance to foster a more equitable pricing landscape—one built on clarity, consistency, and shared benefit.
 
 ## Ethical Considerations
 
-## Privacy
+### Equity and Fairness
 
-## Biases
+Leveraging census data introduces inherent biases, as certain populations—such as undocumented individuals, transient communities, or those with limited access to digital infrastructure—may be underrepresented. Throughout our data collection, cleaning, and analysis processes, we have taken deliberate steps to avoid stigmatizing or overgeneralizing any group.
 
-## Further research
-Trends over time. Looking at more demographics. Bring in rural vs urban classifications. Political leanings, etc.
+We recognize that systemic disparities in healthcare access—driven by socioeconomic status, geography, race, and other factors—can influence both the availability and affordability of medications. Additionally, using Medicare pricing as a proxy for broader drug costs may obscure trends that would be more visible with commercial or retail pricing data. This methodological choice, while practical, may limit the general applicability of our findings and should be interpreted with caution.
+
+### Purpose and Impact
+
+The primary goal of this project is to contribute to a more equitable and transparent healthcare system in the United States. By linking CMS formulary data with demographic insights from the census, we aim to uncover patterns that can inform future research, policy development, and targeted interventions. We hope that this work serves as a foundation for ongoing efforts to address longstanding inequities in healthcare accessibility and affordability.
+
+### Privacy
+
+All data used in this project was sourced from publicly available datasets that do not contain personally identifiable information. No attempt was made to re-identify individuals through data linkage or analysis. Our approach prioritizes responsible data handling and respects the privacy of all individuals that might be represented.
+
+## Future Research
+
+One of the most significant challenges encountered in this project was the sheer size and complexity of the datasets. To make the analysis feasible, data had to be condensed and aggregated, which limited the granularity of insights. However, this also highlights the substantial potential for deeper and more nuanced analysis using these connected datasets in future work.
+
+### Longitudinal Analysis
+
+The CMS formulary data that was collected is published quarterly, offering a valuable opportunity to evaluate trends over time. Future research could explore:
+
+ - Price fluctuations within specific contracts and plans.
+ - Temporal shifts in drug availability or coverage.
+ - Policy impacts on pricing and access over time. This longitudinal approach could reveal how changes in healthcare policy, market dynamics, or demographic shifts influence drug pricing and accessibility.
+ 
+### Expanded Demographic Analysis
+
+While this project incorporated basic demographic overlays, future work could benefit from:
+
+ - More granular demographic segmentation.
+ - Intersectional analysis to understand how overlapping identities affect access to medications and plan availability.
+ 
+### Geographic and Environmental Context
+
+Incorporating spatial and environmental factors could enhance understanding of healthcare access disparities:
+
+ - Rural vs. urban classifications to assess geographic inequities in drug coverage and pricing.
+ - Healthcare infrastructure mapping, such as proximity to pharmacies or providers, to contextualize formulary access.
+
+### Sociopolitical Context
+
+Exploring the influence of sociopolitical factors could add depth to the analysis:
+
+ - Political leanings of regions (e.g., voting patterns) to examine correlations with healthcare policy adoption or plan availability.
+ - State-level policy differences, such as Medicaid expansion or drug pricing regulations, to assess their impact on formulary design.
+ 
+
+
 

@@ -9,3 +9,5 @@ To update the gh-pages branch (aka the published webpage), you can use the follo
 ```bash/terminal
 quarto publish gh-pages
 ```
+
+Link to published site: [https://wu-msds-capstones.github.io/project-writeup-ellann-travis-capstone/](https://wu-msds-capstones.github.io/project-writeup-ellann-travis-capstone/)

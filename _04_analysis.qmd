@@ -23,7 +23,7 @@ g1 = med_spend_dose_trim%>%
   scale_y_continuous(labels = scales::label_dollar(scale = 1e-6, suffix = "M"))+
   scale_size_manual(values = c("<50M"=2, "50–150M"=4, "150–300M"=6, ">300M"=8))+
   labs(title = "Medicare Part B, D & Medicaid Drug Spending",
-       subtitle = "2019 - 2022",
+       subtitle = "2019 - 2023",
        x="Doses Prescribed (Millions)",
        y="Total Spending (Millions)",
        size="Claims",

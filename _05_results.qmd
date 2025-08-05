@@ -4,31 +4,147 @@ Our main hypothesis was that there is likely some demographic that is facing mor
 
 ## Statistical Testing
 
+To consider the impact to different demographics by varying prices for the selected drugs, our team constructed a series of hypotheses.  The first consideration was towards race.  The majority of U.S. counties contain percentages which heavily tilt towards individuals who identify as white.  In fact, when evaluating the percentages across all counties throughout the US, counties are 95% white at the median and 93% at the mean.  For our first test, we elected to evaluate counties that were at least 95% white and those below that threshold.
+
+Before proceeding, we had to address assumptions which would be critical to determining which tests could actually apply.  We did not initially feel confident applying the assumption of normality to our data.  The spread of the median and mean price values across counties and within various medication groups did visually appear normal.  However, after applying the Shapiro-Wilk test, Shapiro p-values were all significantly below 0.05 which indicated a lack of normalcy.  Accordingly our team chose a non-parametric test to evaluate our hypotheses.  The Anderson-Darling test was explored as an alternative to the Shapiro-Wilk test, but the results were similar, with high AD statistic values, suggesting a lack of normality. 
+
+The Wilcoxon rank-sum (Mann-Whitney U) test was selected to evaluate two independent groups, specified by the hypothesis threshold.  We considered the observations to be independent of each other since the census is completed at the county level, with no counties overlapping.
+
+Ultimately, the Mann-Whitney U Test is less powerful than parametric tests when assumptions are met.  It also lacks confidence intervals and is only comparing the ranks and not the actual values.  The benefit of taking this approach for our data is that fewer overall assumptions are necessary.  Since our team was condensing a number of variables, this approach was preferred to starting with an excessive number of assumptions.
+
 ### Hypothesis 1:
 
-*Null Hypothesis:* 
-*Alternative Hypothesis:*
-*Assumptions:*
+*Null Hypothesis:* The distribution of medication costs in counties with >=95% white population is not statistically different from the distribution in counties with <95% white population.
 
-1. –
-2. –
-3. –
-4. –
-5. –
+*Alternative Hypothesis:* The distribution of medication costs in counties with >= 95% white population is statistically different from that in counties with <95% white population.
+
+*Assumptions:* 
+
+1. – Independent groups
+2. – Ordinal or continuous data
+3. – Same Shape of Distribution (when comparing medians)
+4. – Random Sampling
+5. – Independence within each group
+
+Accordingly, our team elected to compare mean prices, which notably exposes our analysis to outlier pricing.  The assumption independence within each group is stretched, considering the manner in which the data was procured, which we have discussed in great detail.
+
+| Drug Name               | p-value        |
+|------------------------|----------------|
+| Adalimumab             | 3.37e-21        |
+| Apixaban               | 5.46e-21        |
+| Insulin Aspart         | 6.31e-18        |
+| Semaglutide            | 2.53e-13        |
+| Paliperidone Palmitate | 6.19e-13        |
+| Rivaroxaban            | 4.67e-12        |
+| Liraglutide            | 1.44e-10        |
+| Empagliflozin          | 4.23e-04        |
+| Tiotropium Bromide     | 1.16e-02        |
+| Dulaglutide            | 1.30e-02        |
+| Lenalidomide           | 6.55e-02        |
+| Etanercept             | 7.12e-02        |
+| Ustekinumab            | 7.29e-02        |
+| Ibrutinib              | 4.93e-01        |
+
+We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications.  To dive deeper, our team constructed density plots to compare the direction of this difference.  As observed in {@fig-h1}, where we evaluate two of these medications.  We can clearly see that the direction shifts at different price ranks and depends on the medication.
+
+```{r}
+#| label: fig-h1
+#| fig-cap: "Hypothesis 1 - Comparing GLP-1 receptor agonists, primarily used for type 2 diabetes management"
+#| warning: false
+#| echo: false
+
+library(tidyverse)
+
+h_df_clean = readRDS("data/h_df_clean.rds")
+
+h_df_clean%>%
+  filter(drug_name_clean %in% c("Dulaglutide", "Semaglutide"))%>%
+  ggplot(aes(x = median_price, fill = white_95)) +
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = c("blue", "orange"),
+                    labels = c("<95% White", "≥95% White")) +
+  labs(
+    title = "Density Plots of Mean Drug Prices by County Demographics",
+    x = "Mean Price",
+    y = "Density",
+    fill = "County Group"
+  ) +
+  facet_grid(.~ drug_name_clean, scales = "free") +
+  theme_minimal()
+
+
+```
+
+Drilling down again, with these two medications in focus, actual values are compared:
+
+| Drug Name   | >=95% White | Mean of Mean Price | SD Mean Price |
+|-------------|----------|----------------|----------------|
+| Dulaglutide | FALSE    | 444.00          | 3.74           |
+| Dulaglutide | TRUE     | 444.00          | 3.71           |
+| Semaglutide | FALSE    | 168.00          | 2.58           |
+| Semaglutide | TRUE     | 167.00          | 1.84           |
+
+The findings are interesting but have issues.  In the plot, we can clearly see that advantages are given to certain groups at certain prices.  The mean of the mean prices, as well as the standard deviations show practically no difference for Dulaglutide and only some difference for Semaglutide.  Unfortunately, this does not provide much clarity regarding any particular advantage afforded to counties where more than 95% of the population identifies as white.  The findings are hardly definitive and lack confidence intervals.  This does demonstrate the limitations of using the Mann-Whitney U Test.
 
 ### Hypothesis 2:
 
-*Null Hypothesis:* 
-*Alternative Hypothesis:*
-*Assumptions:*
+Using the same assumptions, another consideration involves fully removing the racial aspect and instead considering the percentage of the population that is below the poverty level.  Within the census data, the median is 13% below the poverty level, across all counties and 14% at the mean.  We establish a new hypothesis.
 
-1. –
-2. –
-3. –
-4. –
-5. –
+*Null Hypothesis:* The distribution of medication costs in counties with >=13% below poverty population is not statistically different from the distribution in counties with <13% below poverty population.
+
+*Alternative Hypothesis:* The distribution of medication costs in counties with >= 13% below poverty population is statistically different from that in counties with <13% below poverty population.
+
+| Drug Name               | p-value        |
+|------------------------|----------------|
+| Semaglutide            | 1.43e-20        |
+| Dulaglutide            | 2.49e-16        |
+| Ibrutinib              | 4.41e-13        |
+| Insulin Aspart         | 2.34e-10        |
+| Adalimumab             | 3.46e-10        |
+| Etanercept             | 2.40e-08        |
+| Ustekinumab            | 8.88e-08        |
+| Apixaban               | 1.90e-06        |
+| Empagliflozin          | 6.70e-06        |
+| Liraglutide            | 1.12e-03        |
+| Lenalidomide           | 1.43e-03        |
+| Paliperidone Palmitate | 2.70e-02        |
+| Tiotropium Bromide     | 8.55e-02        |
+| Rivaroxaban            | 1.54e-01        |
+
+Again, we find that there are statistically significant outcomes for many of the selected medications.  Twelve of the fourteen medications yield p-values below 0.05 suggesting that the null hypothesis be rejected.
+
+In {@fig-h2} we look closer at six medications, to expand the investigation into these differences and the direction of any potential advantage.
+
+```{r}
+#| label: fig-h2
+#| fig-cap: "Hypothesis 2 - Comparing six medications which were indicated for statistically significant differences in price for two poverty groups"
+#| warning: false
+#| echo: false
+
+library(tidyverse)
+
+h_df_clean = readRDS("data/h_df_clean.rds")
+
+h_df_clean%>%
+  filter(drug_name_clean %in% c("Semaglutide", "Dulaglutide", "Ibrutinib", "Insulin Aspart",
+                                "Adalimumab", "Etanercept"))%>%
+  ggplot(aes(x = mean_price, fill = poverty_13)) +
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = c("blue", "orange"),
+                    labels = c("<13% Below Poverty", "≥13% Below Poverty")) +
+  labs(
+    title = "Density Plots of Mean Drug Prices by County Demographics",
+    x = "Mean Price",
+    y = "Density",
+    fill = "County Group"
+  ) +
+  facet_wrap(~ drug_name_clean, scales = "free") +
+  theme_minimal()
 
 
+```
+
+Similar to hypothesis 1, we see that the price differences are contextual to the medication and price rank position.  While the null hypothesis is rejected, the challenge of approaching multiple medications is clearly demonstrated.  For both hypotheses, by rejecting the null, this may result in a type 1 error, or false positive.  There are clearly price differences relative to certain demographic groups.  Whether those differences are being driven by the demographics remains unclear.
 
 ## Population vs Number of Available Medicare Plans
 

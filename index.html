@@ -355,10 +355,20 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
   </ul></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">7</span> Conclusions</a>
   <ul class="collapse">
-  <li><a href="#ethical-considerations" id="toc-ethical-considerations" class="nav-link" data-scroll-target="#ethical-considerations"><span class="header-section-number">7.1</span> Ethical Considerations</a></li>
-  <li><a href="#privacy" id="toc-privacy" class="nav-link" data-scroll-target="#privacy"><span class="header-section-number">7.2</span> Privacy</a></li>
-  <li><a href="#biases" id="toc-biases" class="nav-link" data-scroll-target="#biases"><span class="header-section-number">7.3</span> Biases</a></li>
-  <li><a href="#further-research" id="toc-further-research" class="nav-link" data-scroll-target="#further-research"><span class="header-section-number">7.4</span> Further research</a></li>
+  <li><a href="#insights-and-recommendations" id="toc-insights-and-recommendations" class="nav-link" data-scroll-target="#insights-and-recommendations"><span class="header-section-number">7.1</span> Insights and Recommendations</a></li>
+  <li><a href="#ethical-considerations" id="toc-ethical-considerations" class="nav-link" data-scroll-target="#ethical-considerations"><span class="header-section-number">7.2</span> Ethical Considerations</a>
+  <ul class="collapse">
+  <li><a href="#equity-and-fairness" id="toc-equity-and-fairness" class="nav-link" data-scroll-target="#equity-and-fairness"><span class="header-section-number">7.2.1</span> Equity and Fairness</a></li>
+  <li><a href="#purpose-and-impact" id="toc-purpose-and-impact" class="nav-link" data-scroll-target="#purpose-and-impact"><span class="header-section-number">7.2.2</span> Purpose and Impact</a></li>
+  <li><a href="#privacy" id="toc-privacy" class="nav-link" data-scroll-target="#privacy"><span class="header-section-number">7.2.3</span> Privacy</a></li>
+  </ul></li>
+  <li><a href="#future-research" id="toc-future-research" class="nav-link" data-scroll-target="#future-research"><span class="header-section-number">7.3</span> Future Research</a>
+  <ul class="collapse">
+  <li><a href="#longitudinal-analysis" id="toc-longitudinal-analysis" class="nav-link" data-scroll-target="#longitudinal-analysis"><span class="header-section-number">7.3.1</span> Longitudinal Analysis</a></li>
+  <li><a href="#expanded-demographic-analysis" id="toc-expanded-demographic-analysis" class="nav-link" data-scroll-target="#expanded-demographic-analysis"><span class="header-section-number">7.3.2</span> Expanded Demographic Analysis</a></li>
+  <li><a href="#geographic-and-environmental-context" id="toc-geographic-and-environmental-context" class="nav-link" data-scroll-target="#geographic-and-environmental-context"><span class="header-section-number">7.3.3</span> Geographic and Environmental Context</a></li>
+  <li><a href="#sociopolitical-context" id="toc-sociopolitical-context" class="nav-link" data-scroll-target="#sociopolitical-context"><span class="header-section-number">7.3.4</span> Sociopolitical Context</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">8</span> References</a></li>
   </ul>
@@ -376,7 +386,7 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
 
 <section id="abstract" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Abstract</h1>
-<p>Escalating pharmaceutical prices in the United States present a significant barrier to healthcare access and exacerbate financial strain on patients. This study investigates geographic and demographic disparities in prescription drug costs by analyzing Medicare Part D plan pricing at the county level. To manage and analyze over 100 GB of complex data, we developed a robust data engineering pipeline leveraging AWS S3, DuckDB, and the Parquet file format, integrating datasets from the Centers for Medicare &amp; Medicaid Services (CMS), the U.S. Census Bureau, and the FDA. Using machine learning models to predict the median county-level price for 14 top-spending medications, our analysis found that a Random Forest model provided the highest predictive performance. The results reveal that the number of available Medicare plans in a county is the most influential predictor of price for the majority of drugs studied, highlighting the role of market dynamics over direct demographic factors. While specific demographic features—including median income, education level, and the percentage of Black residents—showed predictive importance for certain medications, no single demographic consistently predicted price variations across all drugs. Ultimately, our analysis does not conclusively show that pricing variations disproportionately affect any one demographic group, but rather uncovers a complex and inequitable system. These findings challenge the effectiveness of current Medicare price negotiation mechanisms and suggest that federal and state policymakers should pursue price normalization to ensure the lowest negotiated drug prices are broadly accessible, thereby improving transparency and affordability for all beneficiaries.</p>
+<p>Escalating pharmaceutical prices in the United States present a significant barrier to healthcare access and exacerbate financial strain on patients. This study investigates geographic and demographic disparities in prescription drug costs by analyzing Medicare Part D plan pricing at the county level. To manage and analyze over 100 GB of complex data, we developed a robust data engineering pipeline leveraging AWS S3, DuckDB, and the Parquet file format, integrating datasets from the Centers for Medicare &amp; Medicaid Services (CMS), the U.S. Census Bureau, and the FDA. Using machine learning models to predict the median county-level price for 14 top-spending medications, our analysis found that a Random Forest model provided the highest predictive performance. The results reveal that the number of available Medicare plans in a county is the most influential predictor of price for the majority of drugs studied, highlighting the role of market dynamics over direct demographic factors. While specific demographic features, including median income, education level, and the percentage of Black residents, showed predictive importance for certain medications, no single demographic consistently predicted price variations across all drugs. Ultimately, our analysis does not conclusively show that pricing variations disproportionately affect any one demographic group, but rather uncovers a complex and inequitable system. These findings challenge the effectiveness of current Medicare price negotiation mechanisms and suggest that federal and state policymakers should pursue price normalization to ensure the lowest negotiated drug prices are broadly accessible, thereby improving transparency and affordability for all beneficiaries.</p>
 </section>
 <section id="introduction" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Introduction</h1>
@@ -710,41 +720,245 @@ Figure&nbsp;8: Pearson Correlations between Demographic VFeatures and Affordabil
 <p>Our main hypothesis was that there is likely some demographic that is facing more hardship due to medication price inflation in counties with these demographics within the US. Can we use the demographics of a specific county, along with the median medication prices within said county, to develop a model to predict the medication prices? If yes, we could in the short term advise people with specific medical conditions to move to counties with demographics that provide more favorable medication prices and long-term influence the industry to fix such inequities.</p>
 <section id="statistical-testing" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="statistical-testing"><span class="header-section-number">6.1</span> Statistical Testing</h2>
+<p>To consider the impact to different demographics by varying prices for the selected drugs, our team constructed a series of hypotheses. The first consideration was towards race. The majority of U.S. counties contain percentages which heavily tilt towards individuals who identify as white. In fact, when evaluating the percentages across all counties throughout the US, counties are 95% white at the median and 93% at the mean. For our first test, we elected to evaluate counties that were at least 95% white and those below that threshold.</p>
+<p>Before proceeding, we had to address assumptions which would be critical to determining which tests could actually apply. We did not initially feel confident applying the assumption of normality to our data. The spread of the median and mean price values across counties and within various medication groups did visually appear normal. However, after applying the Shapiro-Wilk test, Shapiro p-values were all significantly below 0.05 which indicated a lack of normalcy. Accordingly our team chose a non-parametric test to evaluate our hypotheses. The Anderson-Darling test was explored as an alternative to the Shapiro-Wilk test, but the results were similar, with high AD statistic values, suggesting a lack of normality.</p>
+<p>The Wilcoxon rank-sum (Mann-Whitney U) test was selected to evaluate two independent groups, specified by the hypothesis threshold. We considered the observations to be independent of each other since the census is completed at the county level, with no counties overlapping.</p>
+<p>Ultimately, the Mann-Whitney U Test is less powerful than parametric tests when assumptions are met. It also lacks confidence intervals and is only comparing the ranks and not the actual values. The benefit of taking this approach for our data is that fewer overall assumptions are necessary. Since our team was condensing a number of variables, this approach was preferred to starting with an excessive number of assumptions.</p>
 <section id="hypothesis-1" class="level3" data-number="6.1.1">
 <h3 data-number="6.1.1" class="anchored" data-anchor-id="hypothesis-1"><span class="header-section-number">6.1.1</span> Hypothesis 1:</h3>
-<p><em>Null Hypothesis:</em> <em>Alternative Hypothesis:</em> <em>Assumptions:</em></p>
+<p><em>Null Hypothesis:</em> The distribution of medication costs in counties with &gt;=95% white population is not statistically different from the distribution in counties with &lt;95% white population.</p>
+<p><em>Alternative Hypothesis:</em> The distribution of medication costs in counties with &gt;= 95% white population is statistically different from that in counties with &lt;95% white population.</p>
+<p><em>Assumptions:</em></p>
 <ol type="1">
-<li>–</li>
-<li>–</li>
-<li>–</li>
-<li>–</li>
-<li>–</li>
+<li>– Independent groups</li>
+<li>– Ordinal or continuous data</li>
+<li>– Same Shape of Distribution (when comparing medians)</li>
+<li>– Random Sampling</li>
+<li>– Independence within each group</li>
 </ol>
+<p>Accordingly, our team elected to compare mean prices, which notably exposes our analysis to outlier pricing. The assumption independence within each group is stretched, considering the manner in which the data was procured, which we have discussed in great detail.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Drug Name</th>
+<th>p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Adalimumab</td>
+<td>3.37e-21</td>
+</tr>
+<tr class="even">
+<td>Apixaban</td>
+<td>5.46e-21</td>
+</tr>
+<tr class="odd">
+<td>Insulin Aspart</td>
+<td>6.31e-18</td>
+</tr>
+<tr class="even">
+<td>Semaglutide</td>
+<td>2.53e-13</td>
+</tr>
+<tr class="odd">
+<td>Paliperidone Palmitate</td>
+<td>6.19e-13</td>
+</tr>
+<tr class="even">
+<td>Rivaroxaban</td>
+<td>4.67e-12</td>
+</tr>
+<tr class="odd">
+<td>Liraglutide</td>
+<td>1.44e-10</td>
+</tr>
+<tr class="even">
+<td>Empagliflozin</td>
+<td>4.23e-04</td>
+</tr>
+<tr class="odd">
+<td>Tiotropium Bromide</td>
+<td>1.16e-02</td>
+</tr>
+<tr class="even">
+<td>Dulaglutide</td>
+<td>1.30e-02</td>
+</tr>
+<tr class="odd">
+<td>Lenalidomide</td>
+<td>6.55e-02</td>
+</tr>
+<tr class="even">
+<td>Etanercept</td>
+<td>7.12e-02</td>
+</tr>
+<tr class="odd">
+<td>Ustekinumab</td>
+<td>7.29e-02</td>
+</tr>
+<tr class="even">
+<td>Ibrutinib</td>
+<td>4.93e-01</td>
+</tr>
+</tbody>
+</table>
+<p>We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. To dive deeper, our team constructed density plots to compare the direction of this difference. As observed in {<a href="#fig-h1" class="quarto-xref">Figure&nbsp;9</a>}, where we evaluate two of these medications. We can clearly see that the direction shifts at different price ranks and depends on the medication.</p>
+<div id="cell-fig-h1" class="cell">
+<div class="cell-output-display">
+<div id="fig-h1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-h1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-h1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: Hypothesis 1 - Comparing GLP-1 receptor agonists, primarily used for type 2 diabetes management"><img src="capstone_files/figure-html/fig-h1-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-h1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Hypothesis 1 - Comparing GLP-1 receptor agonists, primarily used for type 2 diabetes management
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Drilling down again, with these two medications in focus, actual values are compared:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Drug Name</th>
+<th>&gt;=95% White</th>
+<th>Mean of Mean Price</th>
+<th>SD Mean Price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dulaglutide</td>
+<td>FALSE</td>
+<td>444.00</td>
+<td>3.74</td>
+</tr>
+<tr class="even">
+<td>Dulaglutide</td>
+<td>TRUE</td>
+<td>444.00</td>
+<td>3.71</td>
+</tr>
+<tr class="odd">
+<td>Semaglutide</td>
+<td>FALSE</td>
+<td>168.00</td>
+<td>2.58</td>
+</tr>
+<tr class="even">
+<td>Semaglutide</td>
+<td>TRUE</td>
+<td>167.00</td>
+<td>1.84</td>
+</tr>
+</tbody>
+</table>
+<p>The findings are interesting but have issues. In the plot, we can clearly see that advantages are given to certain groups at certain prices. The mean of the mean prices, as well as the standard deviations show practically no difference for Dulaglutide and only some difference for Semaglutide. Unfortunately, this does not provide much clarity regarding any particular advantage afforded to counties where more than 95% of the population identifies as white. The findings are hardly definitive and lack confidence intervals. This does demonstrate the limitations of using the Mann-Whitney U Test.</p>
 </section>
 <section id="hypothesis-2" class="level3" data-number="6.1.2">
 <h3 data-number="6.1.2" class="anchored" data-anchor-id="hypothesis-2"><span class="header-section-number">6.1.2</span> Hypothesis 2:</h3>
-<p><em>Null Hypothesis:</em> <em>Alternative Hypothesis:</em> <em>Assumptions:</em></p>
-<ol type="1">
-<li>–</li>
-<li>–</li>
-<li>–</li>
-<li>–</li>
-<li>–</li>
-</ol>
+<p>Using the same assumptions, another consideration involves fully removing the racial aspect and instead considering the percentage of the population that is below the poverty level. Within the census data, the median is 13% below the poverty level, across all counties and 14% at the mean. We establish a new hypothesis.</p>
+<p><em>Null Hypothesis:</em> The distribution of medication costs in counties with &gt;=13% below poverty population is not statistically different from the distribution in counties with &lt;13% below poverty population.</p>
+<p><em>Alternative Hypothesis:</em> The distribution of medication costs in counties with &gt;= 13% below poverty population is statistically different from that in counties with &lt;13% below poverty population.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Drug Name</th>
+<th>p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Semaglutide</td>
+<td>1.43e-20</td>
+</tr>
+<tr class="even">
+<td>Dulaglutide</td>
+<td>2.49e-16</td>
+</tr>
+<tr class="odd">
+<td>Ibrutinib</td>
+<td>4.41e-13</td>
+</tr>
+<tr class="even">
+<td>Insulin Aspart</td>
+<td>2.34e-10</td>
+</tr>
+<tr class="odd">
+<td>Adalimumab</td>
+<td>3.46e-10</td>
+</tr>
+<tr class="even">
+<td>Etanercept</td>
+<td>2.40e-08</td>
+</tr>
+<tr class="odd">
+<td>Ustekinumab</td>
+<td>8.88e-08</td>
+</tr>
+<tr class="even">
+<td>Apixaban</td>
+<td>1.90e-06</td>
+</tr>
+<tr class="odd">
+<td>Empagliflozin</td>
+<td>6.70e-06</td>
+</tr>
+<tr class="even">
+<td>Liraglutide</td>
+<td>1.12e-03</td>
+</tr>
+<tr class="odd">
+<td>Lenalidomide</td>
+<td>1.43e-03</td>
+</tr>
+<tr class="even">
+<td>Paliperidone Palmitate</td>
+<td>2.70e-02</td>
+</tr>
+<tr class="odd">
+<td>Tiotropium Bromide</td>
+<td>8.55e-02</td>
+</tr>
+<tr class="even">
+<td>Rivaroxaban</td>
+<td>1.54e-01</td>
+</tr>
+</tbody>
+</table>
+<p>Again, we find that there are statistically significant outcomes for many of the selected medications. Twelve of the fourteen medications yield p-values below 0.05 suggesting that the null hypothesis be rejected.</p>
+<p>In {<a href="#fig-h2" class="quarto-xref">Figure&nbsp;10</a>} we look closer at six medications, to expand the investigation into these differences and the direction of any potential advantage.</p>
+<div id="cell-fig-h2" class="cell">
+<div class="cell-output-display">
+<div id="fig-h2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-h2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-h2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;10: Hypothesis 2 - Comparing six medications which were indicated for statistically significant differences in price for two poverty groups"><img src="capstone_files/figure-html/fig-h2-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-h2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Hypothesis 2 - Comparing six medications which were indicated for statistically significant differences in price for two poverty groups
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Similar to hypothesis 1, we see that the price differences are contextual to the medication and price rank position. While the null hypothesis is rejected, the challenge of approaching multiple medications is clearly demonstrated. For both hypotheses, by rejecting the null, this may result in a type 1 error, or false positive. There are clearly price differences relative to certain demographic groups. Whether those differences are being driven by the demographics remains unclear.</p>
 </section>
 </section>
 <section id="population-vs-number-of-available-medicare-plans" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="population-vs-number-of-available-medicare-plans"><span class="header-section-number">6.2</span> Population vs Number of Available Medicare Plans</h2>
-<p>Given the lack of clear patterns for medication prices across the maps, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {<a href="#fig-plans-vs-population" class="quarto-xref">Figure&nbsp;9</a>}</p>
+<p>Given the lack of clear patterns for medication prices across the maps, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {<a href="#fig-plans-vs-population" class="quarto-xref">Figure&nbsp;11</a>}</p>
 <div id="cell-fig-plans-vs-population" class="cell">
 <div class="cell-output-display">
 <div id="fig-plans-vs-population" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-plans-vs-population-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-plans-vs-population-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: Correlation between the number of Medicare Plan Options and Total Population by US County in 23Q4"><img src="capstone_files/figure-html/fig-plans-vs-population-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-plans-vs-population-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: Correlation between the number of Medicare Plan Options and Total Population by US County in 23Q4"><img src="capstone_files/figure-html/fig-plans-vs-population-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plans-vs-population-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: Correlation between the number of Medicare Plan Options and Total Population by US County in 23Q4
+Figure&nbsp;11: Correlation between the number of Medicare Plan Options and Total Population by US County in 23Q4
 </figcaption>
 </figure>
 </div>
@@ -757,31 +971,31 @@ Figure&nbsp;9: Correlation between the number of Medicare Plan Options and Total
 <h2 data-number="6.3" class="anchored" data-anchor-id="machine-learning"><span class="header-section-number">6.3</span> Machine Learning</h2>
 <section id="check-for-gaussian-distributions" class="level3" data-number="6.3.1">
 <h3 data-number="6.3.1" class="anchored" data-anchor-id="check-for-gaussian-distributions"><span class="header-section-number">6.3.1</span> Check for Gaussian Distributions</h3>
-<p>Before jumping into any modeling, one must check the distribution of the variables. For this particular dataset, if all the medications are looked at simultaneously, one needs to take the log of the median prices to have the histogram show a more Gaussian distribution. (See <a href="#fig-hist-price-all-drugs" class="quarto-xref">Figure&nbsp;10</a>). This is due to the fact that the median drug price varies greatly depending on the actual drug being considered.</p>
+<p>Before jumping into any modeling, one must check the distribution of the variables. For this particular dataset, if all the medications are looked at simultaneously, one needs to take the log of the median prices to have the histogram show a more Gaussian distribution. (See <a href="#fig-hist-price-all-drugs" class="quarto-xref">Figure&nbsp;12</a>). This is due to the fact that the median drug price varies greatly depending on the actual drug being considered.</p>
 <div id="cell-fig-hist-price-all-drugs" class="cell">
 <div class="cell-output-display">
 <div id="fig-hist-price-all-drugs" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-hist-price-all-drugs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-hist-price-all-drugs-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;10: Histogram of Median Drug Prices and Log-Transformed Median Drug Prices across All Drugs"><img src="capstone_files/figure-html/fig-hist-price-all-drugs-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-hist-price-all-drugs-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;12: Histogram of Median Drug Prices and Log-Transformed Median Drug Prices across All Drugs"><img src="capstone_files/figure-html/fig-hist-price-all-drugs-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist-price-all-drugs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10: Histogram of Median Drug Prices and Log-Transformed Median Drug Prices across All Drugs
+Figure&nbsp;12: Histogram of Median Drug Prices and Log-Transformed Median Drug Prices across All Drugs
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>If the medications are reviewed independently (<a href="#fig-hist-price-per-drug" class="quarto-xref">Figure&nbsp;11</a>), then we do not need to take the log of the medication prices. The distribution shape doesn’t change with or without the log of the price. Our plan is to look at each drug independently due to the lack of patterns in the correlation heatmaps earlier (<a href="#fig-by-drug-correlations" class="quarto-xref">Figure&nbsp;7</a>).</p>
+<p>If the medications are reviewed independently (<a href="#fig-hist-price-per-drug" class="quarto-xref">Figure&nbsp;13</a>), then we do not need to take the log of the medication prices. The distribution shape doesn’t change with or without the log of the price. Our plan is to look at each drug independently due to the lack of patterns in the correlation heatmaps earlier (<a href="#fig-by-drug-correlations" class="quarto-xref">Figure&nbsp;7</a>).</p>
 <div id="cell-fig-hist-price-per-drug" class="cell">
 <div class="cell-output-display">
 <div id="fig-hist-price-per-drug" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-hist-price-per-drug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-hist-price-per-drug-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: Histogram of Median Drug Prices by Drug"><img src="capstone_files/figure-html/fig-hist-price-per-drug-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-hist-price-per-drug-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13: Histogram of Median Drug Prices by Drug"><img src="capstone_files/figure-html/fig-hist-price-per-drug-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist-price-per-drug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11: Histogram of Median Drug Prices by Drug
+Figure&nbsp;13: Histogram of Median Drug Prices by Drug
 </figcaption>
 </figure>
 </div>
@@ -801,16 +1015,16 @@ Figure&nbsp;11: Histogram of Median Drug Prices by Drug
 </section>
 <section id="model-performance" class="level3" data-number="6.3.3">
 <h3 data-number="6.3.3" class="anchored" data-anchor-id="model-performance"><span class="header-section-number">6.3.3</span> Model Performance</h3>
-<p>Looping over every drug, we trained all the previously described models. A heatmap of the resulting model performance is provided below in <a href="#fig-heatmap-models-performance" class="quarto-xref">Figure&nbsp;12</a>. Note that all models for Ustekinumab have outlier RMSE and MAE results and are thus gray to make the difference between the other drug results more differentiated visually. For all other drugs, the random forest model has the lowest RMSE and MAE values. Fortunately, the random forest model also provides insight into feature importance.</p>
+<p>Looping over every drug, we trained all the previously described models. A heatmap of the resulting model performance is provided below in <a href="#fig-heatmap-models-performance" class="quarto-xref">Figure&nbsp;14</a>. Note that all models for Ustekinumab have outlier RMSE and MAE results and are thus gray to make the difference between the other drug results more differentiated visually. For all other drugs, the random forest model has the lowest RMSE and MAE values. Fortunately, the random forest model also provides insight into feature importance.</p>
 <div id="cell-fig-heatmap-models-performance" class="cell">
 <div class="cell-output-display">
 <div id="fig-heatmap-models-performance" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-heatmap-models-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-heatmap-models-performance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;12: Histogram of Median Drug Prices by Drug"><img src="capstone_files/figure-html/fig-heatmap-models-performance-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-heatmap-models-performance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Figure&nbsp;14: Histogram of Median Drug Prices by Drug"><img src="capstone_files/figure-html/fig-heatmap-models-performance-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-heatmap-models-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12: Histogram of Median Drug Prices by Drug
+Figure&nbsp;14: Histogram of Median Drug Prices by Drug
 </figcaption>
 </figure>
 </div>
@@ -819,16 +1033,16 @@ Figure&nbsp;12: Histogram of Median Drug Prices by Drug
 </section>
 <section id="feature-importance" class="level3" data-number="6.3.4">
 <h3 data-number="6.3.4" class="anchored" data-anchor-id="feature-importance"><span class="header-section-number">6.3.4</span> Feature Importance</h3>
-<p>The most important features for the random forest models across all drugs are shown in the heatmap below (<a href="#fig-heatmap-rf-variable-importance" class="quarto-xref">Figure&nbsp;13</a>). The most obvious pattern here is that the num_contract_plans (aka the quantity of available Medicare plans) is the most important feature for 10 out of the 14 top drugs. We already looked at the connection between total_population and the quantity of available plans in a county previously, and only saw a mild correlation. For the other four drugs, the top features were percent of residences with an associate’s degree as their maximum education level, the median household income, the percentage of the population that is black, and the percentage of the population where the highest level of education is a master’s degree.</p>
+<p>The most important features for the random forest models across all drugs are shown in the heatmap below (<a href="#fig-heatmap-rf-variable-importance" class="quarto-xref">Figure&nbsp;15</a>). The most obvious pattern here is that the num_contract_plans (aka the quantity of available Medicare plans) is the most important feature for 10 out of the 14 top drugs. We already looked at the connection between total_population and the quantity of available plans in a county previously, and only saw a mild correlation. For the other four drugs, the top features were percent of residences with an associate’s degree as their maximum education level, the median household income, the percentage of the population that is black, and the percentage of the population where the highest level of education is a master’s degree.</p>
 <div id="cell-fig-heatmap-rf-variable-importance" class="cell">
 <div class="cell-output-display">
 <div id="fig-heatmap-rf-variable-importance" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-heatmap-rf-variable-importance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-heatmap-rf-variable-importance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13: Random Forest Variable Importance Heatmap by Drug"><img src="capstone_files/figure-html/fig-heatmap-rf-variable-importance-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-heatmap-rf-variable-importance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Figure&nbsp;15: Random Forest Variable Importance Heatmap by Drug"><img src="capstone_files/figure-html/fig-heatmap-rf-variable-importance-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-heatmap-rf-variable-importance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13: Random Forest Variable Importance Heatmap by Drug
+Figure&nbsp;15: Random Forest Variable Importance Heatmap by Drug
 </figcaption>
 </figure>
 </div>
@@ -845,24 +1059,70 @@ Figure&nbsp;13: Random Forest Variable Importance Heatmap by Drug
 </section>
 <section id="conclusions" class="level1" data-number="7">
 <h1 data-number="7"><span class="header-section-number">7</span> Conclusions</h1>
+<section id="insights-and-recommendations" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="insights-and-recommendations"><span class="header-section-number">7.1</span> Insights and Recommendations</h2>
 <p>Our analysis reveals significant geographic disparities in Medicare Part D drug pricing across the United States. While our data does not conclusively demonstrate that these pricing variations disproportionately affect any single demographic group, the inconsistencies raise serious concerns about the effectiveness and equity of Medicare’s price negotiation mechanisms. The observed variation suggests that drug costs could be more uniformly regulated, pointing to inefficiencies in the current system.</p>
-<p>For many Medicare beneficiaries—particularly older adults and individuals with limited resources—the burden of navigating complex plan options to secure affordable coverage is substantial. Despite the availability of plan finder tools and licensed advisors, the process remains daunting for a population that the program is intended to support. This complexity undermines the accessibility and fairness of Medicare Part D.</p>
-<p>The Inflation Reduction Act of 2022 marked a pivotal step toward addressing unsustainable drug pricing. Regulatory intervention, as demonstrated by the U.S. Department of Health and Human Services (HHS) and the CMS <span class="citation" data-cites="cms2025negotiation">(<a href="#ref-cms2025negotiation" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2024b</a>)</span>, has shown potential to curb excessive price increases. In December 2024, CMS <span class="citation" data-cites="cms2024inflationrebate">(<a href="#ref-cms2024inflationrebate" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2024a</a>)</span> announced cost savings for 64 drugs whose prices had outpaced inflation—an encouraging sign of progress. However, the full impact of these measures remains uncertain. Much of the projected savings will not materialize until 2026, and their effectiveness will depend on pharmaceutical industry responses, future pricing trends, and the extent to which affected medications are utilized.</p>
-<p>To promote greater equity and transparency, federal and state policymakers could collaborate to ensure that the lowest negotiated drug prices are made broadly accessible, rather than confined to specific plans or contracts. There is a clear opportunity to advance price normalization and improve the transparency of treatment costs, which would better serve Medicare beneficiaries and strengthen the integrity of the program.</p>
-<p>Price normalization across Medicare Part D plans could have far-reaching benefits beyond the immediate Medicare population. By reducing regional and plan-based disparities, normalization would help create a more predictable and equitable pricing environment for all stakeholders, including providers, pharmacies, and insurers. It could also reduce administrative overhead associated with managing complex pricing structures and improve the efficiency of healthcare delivery.</p>
-<p>Normalized pricing could help curb overall healthcare spending by discouraging price inflation and promoting competitive pricing among pharmaceutical manufacturers. When drug prices are consistent and transparent, it becomes easier for policymakers and researchers to evaluate cost-effectiveness, identify inefficiencies, and implement targeted reforms. This could lead to better resource allocation and improved public health outcomes.</p>
-<section id="ethical-considerations" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="ethical-considerations"><span class="header-section-number">7.1</span> Ethical Considerations</h2>
+<p>For many Medicare beneficiaries—particularly older adults and individuals with limited financial resources—the challenge of navigating complex plan options to secure affordable coverage remains significant. Despite the availability of plan finder tools and licensed advisors, the process is often overwhelming for the very population the program is designed to support. This complexity undermines both the accessibility and fairness of Medicare Part D, highlighting a need for more user-friendly systems and clearer guidance to ensure equitable and affordable access to prescription drug coverage.</p>
+<p>The Inflation Reduction Act of 2022 represents a pivotal step toward addressing the long-standing issue of unsustainable drug pricing in the United States. Regulatory actions by the U.S. Department of Health and Human Services (HHS) and the Centers for Medicare &amp; Medicaid Services (CMS) <span class="citation" data-cites="cms2025negotiation">(<a href="#ref-cms2025negotiation" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2024b</a>)</span> have demonstrated promising potential to curb excessive price increases. Notably, in December 2024, CMS <span class="citation" data-cites="cms2024inflationrebate">(<a href="#ref-cms2024inflationrebate" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2024a</a>)</span> announced cost savings for 64 drugs whose prices had risen faster than inflation—an encouraging indicator of progress.</p>
+<p>However, the full impact of these measures remains to be seen. Much of the projected savings will not be realized until 2026, and their effectiveness will depend on several factors, including pharmaceutical industry responses, future pricing trends, and the extent to which the affected medications are utilized by beneficiaries. Continued monitoring and evaluation will be essential to ensure these reforms translate into meaningful improvements in affordability and access.</p>
+<p>To promote greater equity and transparency in Medicare Part D, federal and state policymakers could collaborate to ensure that the lowest negotiated drug prices are made broadly accessible—rather than restricted to specific plans or contracts. This approach presents a clear opportunity to advance price normalization and improve the visibility of treatment costs. By making pricing more consistent and transparent, policymakers can better serve Medicare beneficiaries and reinforce the integrity and fairness of the program.</p>
+<p>Price normalization across Medicare Part D plans could yield far-reaching benefits that extend beyond the immediate Medicare population. By reducing regional and plan-based disparities, normalization would foster a more predictable and equitable pricing environment for all stakeholders—including healthcare providers, pharmacies, and insurers. It could also streamline administrative processes by minimizing the complexity of managing varied pricing structures, thereby enhancing the efficiency of healthcare delivery and reducing operational costs.</p>
+<p>Fortunately, many private companies (like GoodRx and CostPlusDrugs) are actively working to promote price transparency and secure the best possible prices for commonly prescribed medications. Their efforts demonstrate that innovation in medication pricing structures is feasible. Policymakers must embrace these emerging modern approaches and support initiatives that promote consistent and transparent pricing across the healthcare system. This is not about enforcing rigid price controls, but rather about ensuring fairness, clarity, and accessibility in how drug prices are determined and communicated.</p>
+<p>Normalized drug pricing across Medicare Part D plans could play a critical role in curbing overall healthcare spending by discouraging price inflation and fostering competitive pricing among pharmaceutical manufacturers. When prices are consistent and transparent, it becomes significantly easier for policymakers, researchers, and healthcare administrators to evaluate cost-effectiveness, identify inefficiencies, and implement targeted reforms. This clarity can lead to more strategic resource allocation, improved public health outcomes, and a more sustainable healthcare system.</p>
+<p>The movement toward transparent and normalized drug pricing offers a promising path forward for consumers and the healthcare system alike. With private companies paving the way, policymakers have a unique chance to foster a more equitable pricing landscape—one built on clarity, consistency, and shared benefit.</p>
 </section>
-<section id="privacy" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="privacy"><span class="header-section-number">7.2</span> Privacy</h2>
+<section id="ethical-considerations" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="ethical-considerations"><span class="header-section-number">7.2</span> Ethical Considerations</h2>
+<section id="equity-and-fairness" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="equity-and-fairness"><span class="header-section-number">7.2.1</span> Equity and Fairness</h3>
+<p>Leveraging census data introduces inherent biases, as certain populations—such as undocumented individuals, transient communities, or those with limited access to digital infrastructure—may be underrepresented. Throughout our data collection, cleaning, and analysis processes, we have taken deliberate steps to avoid stigmatizing or overgeneralizing any group.</p>
+<p>We recognize that systemic disparities in healthcare access—driven by socioeconomic status, geography, race, and other factors—can influence both the availability and affordability of medications. Additionally, using Medicare pricing as a proxy for broader drug costs may obscure trends that would be more visible with commercial or retail pricing data. This methodological choice, while practical, may limit the general applicability of our findings and should be interpreted with caution.</p>
 </section>
-<section id="biases" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="biases"><span class="header-section-number">7.3</span> Biases</h2>
+<section id="purpose-and-impact" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="purpose-and-impact"><span class="header-section-number">7.2.2</span> Purpose and Impact</h3>
+<p>The primary goal of this project is to contribute to a more equitable and transparent healthcare system in the United States. By linking CMS formulary data with demographic insights from the census, we aim to uncover patterns that can inform future research, policy development, and targeted interventions. We hope that this work serves as a foundation for ongoing efforts to address longstanding inequities in healthcare accessibility and affordability.</p>
 </section>
-<section id="further-research" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="further-research"><span class="header-section-number">7.4</span> Further research</h2>
-<p>Trends over time. Looking at more demographics. Bring in rural vs urban classifications. Political leanings, etc.</p>
+<section id="privacy" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="privacy"><span class="header-section-number">7.2.3</span> Privacy</h3>
+<p>All data used in this project was sourced from publicly available datasets that do not contain personally identifiable information. No attempt was made to re-identify individuals through data linkage or analysis. Our approach prioritizes responsible data handling and respects the privacy of all individuals that might be represented.</p>
+</section>
+</section>
+<section id="future-research" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="future-research"><span class="header-section-number">7.3</span> Future Research</h2>
+<p>One of the most significant challenges encountered in this project was the sheer size and complexity of the datasets. To make the analysis feasible, data had to be condensed and aggregated, which limited the granularity of insights. However, this also highlights the substantial potential for deeper and more nuanced analysis using these connected datasets in future work.</p>
+<section id="longitudinal-analysis" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="longitudinal-analysis"><span class="header-section-number">7.3.1</span> Longitudinal Analysis</h3>
+<p>The CMS formulary data that was collected is published quarterly, offering a valuable opportunity to evaluate trends over time. Future research could explore:</p>
+<ul>
+<li>Price fluctuations within specific contracts and plans.</li>
+<li>Temporal shifts in drug availability or coverage.</li>
+<li>Policy impacts on pricing and access over time. This longitudinal approach could reveal how changes in healthcare policy, market dynamics, or demographic shifts influence drug pricing and accessibility.</li>
+</ul>
+</section>
+<section id="expanded-demographic-analysis" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="expanded-demographic-analysis"><span class="header-section-number">7.3.2</span> Expanded Demographic Analysis</h3>
+<p>While this project incorporated basic demographic overlays, future work could benefit from:</p>
+<ul>
+<li>More granular demographic segmentation.</li>
+<li>Intersectional analysis to understand how overlapping identities affect access to medications and plan availability.</li>
+</ul>
+</section>
+<section id="geographic-and-environmental-context" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="geographic-and-environmental-context"><span class="header-section-number">7.3.3</span> Geographic and Environmental Context</h3>
+<p>Incorporating spatial and environmental factors could enhance understanding of healthcare access disparities:</p>
+<ul>
+<li>Rural vs.&nbsp;urban classifications to assess geographic inequities in drug coverage and pricing.</li>
+<li>Healthcare infrastructure mapping, such as proximity to pharmacies or providers, to contextualize formulary access.</li>
+</ul>
+</section>
+<section id="sociopolitical-context" class="level3" data-number="7.3.4">
+<h3 data-number="7.3.4" class="anchored" data-anchor-id="sociopolitical-context"><span class="header-section-number">7.3.4</span> Sociopolitical Context</h3>
+<p>Exploring the influence of sociopolitical factors could add depth to the analysis:</p>
+<ul>
+<li>Political leanings of regions (e.g., voting patterns) to examine correlations with healthcare policy adoption or plan availability.</li>
+<li>State-level policy differences, such as Medicaid expansion or drug pricing regulations, to assess their impact on formulary design.</li>
+</ul>
+</section>
 </section>
 </section>
 <section id="references" class="level1" data-number="8">

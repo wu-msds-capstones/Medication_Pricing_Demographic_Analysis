@@ -2,7 +2,7 @@
 
 Our main hypothesis was that there is likely some demographic that is facing more hardship due to medication price inflation in counties with these demographics within the US. Can we use the demographics of a specific county, along with the median medication prices within said county, to develop a model to predict the medication prices? If yes, we could in the short term advise people with specific medical conditions to move to counties with demographics that provide more favorable medication prices and long-term influence the industry to fix such inequities. 
 
-## Statistical Testing
+## Statistical Testing - Phase 1
 
 To consider the impact to different demographics by varying prices for the selected drugs, our team constructed a series of hypotheses.  The first consideration was towards race.  The majority of U.S. counties contain percentages which heavily tilt towards individuals who identify as white.  In fact, when evaluating the percentages across all counties throughout the US, counties are 95% white at the median and 93% at the mean.  For our first test, we elected to evaluate counties that were at least 95% white and those below that threshold.
 
@@ -12,7 +12,7 @@ The Wilcoxon rank-sum (Mann-Whitney U) test was selected to evaluate two indepen
 
 Ultimately, the Mann-Whitney U Test is less powerful than parametric tests when assumptions are met.  It also lacks confidence intervals and is only comparing the ranks and not the actual values.  The benefit of taking this approach for our data is that fewer overall assumptions are necessary.  Since our team was condensing a number of variables, this approach was preferred to starting with an excessive number of assumptions.
 
-### Hypothesis 1:
+### Hypothesis 1
 
 *Null Hypothesis:* The distribution of medication costs in counties with >=95% white population is not statistically different from the distribution in counties with <95% white population.
 
@@ -59,7 +59,13 @@ h_df_clean = readRDS("data/h_df_clean.rds")
 
 h_df_clean%>%
   filter(drug_name_clean %in% c("Dulaglutide", "Semaglutide"))%>%
-  ggplot(aes(x = median_price, fill = white_95)) +
+  group_by(drug_name_clean) %>%
+  filter(
+    mean_price > quantile(mean_price, 0.25) - 1.5 * IQR(mean_price) &
+      mean_price < quantile(mean_price, 0.75) + 1.5 * IQR(mean_price)
+  )%>%
+  ungroup()%>%
+  ggplot(aes(x = mean_price, fill = white_95)) +
   geom_density(alpha = 0.5) +
   scale_fill_manual(values = c("blue", "orange"),
                     labels = c("<95% White", "≥95% White")) +
@@ -67,10 +73,13 @@ h_df_clean%>%
     title = "Density Plots of Mean Drug Prices by County Demographics",
     x = "Mean Price",
     y = "Density",
-    fill = "County Group"
+    fill = "County Group",
+    caption = "*Outliers removed"
   ) +
+  scale_x_continuous(labels = scales::label_dollar(accuracy=1))+
   facet_grid(.~ drug_name_clean, scales = "free") +
-  theme_minimal()
+  theme_minimal()+
+  theme(panel.spacing = unit(1.5, "lines")) 
 
 
 ```
@@ -86,7 +95,7 @@ Drilling down again, with these two medications in focus, actual values are comp
 
 The findings are interesting but have issues.  In the plot, we can clearly see that advantages are given to certain groups at certain prices.  The mean of the mean prices, as well as the standard deviations show practically no difference for Dulaglutide and only some difference for Semaglutide.  Unfortunately, this does not provide much clarity regarding any particular advantage afforded to counties where more than 95% of the population identifies as white.  The findings are hardly definitive and lack confidence intervals.  This does demonstrate the limitations of using the Mann-Whitney U Test.
 
-### Hypothesis 2:
+### Hypothesis 2
 
 Using the same assumptions, another consideration involves fully removing the racial aspect and instead considering the percentage of the population that is below the poverty level.  Within the census data, the median is 13% below the poverty level, across all counties and 14% at the mean.  We establish a new hypothesis.
 
@@ -126,8 +135,13 @@ library(tidyverse)
 h_df_clean = readRDS("data/h_df_clean.rds")
 
 h_df_clean%>%
-  filter(drug_name_clean %in% c("Semaglutide", "Dulaglutide", "Ibrutinib", "Insulin Aspart",
-                                "Adalimumab", "Etanercept"))%>%
+  filter(drug_name_clean %in% c("Semaglutide", "Dulaglutide"))%>%
+  group_by(drug_name_clean) %>%
+  filter(
+    mean_price > quantile(mean_price, 0.25) - 1.5 * IQR(mean_price) &
+      mean_price < quantile(mean_price, 0.75) + 1.5 * IQR(mean_price)
+  )%>%
+  ungroup()%>%
   ggplot(aes(x = mean_price, fill = poverty_13)) +
   geom_density(alpha = 0.5) +
   scale_fill_manual(values = c("blue", "orange"),
@@ -136,8 +150,10 @@ h_df_clean%>%
     title = "Density Plots of Mean Drug Prices by County Demographics",
     x = "Mean Price",
     y = "Density",
-    fill = "County Group"
+    fill = "County Group",
+    caption = "*Outliers removed"
   ) +
+  scale_x_continuous(labels = scales::label_dollar())+
   facet_wrap(~ drug_name_clean, scales = "free") +
   theme_minimal()
 

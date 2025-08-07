@@ -7,6 +7,8 @@ One of the first goals was to understand the connected data at a high level by c
 #| fig-cap: "Top Medication Spending from 2019 - 2022 across Medicare Part B, D and Medicaid"
 #| warning: false
 #| echo: false
+#| fig-width: 10
+#| fig-heigh: 6
 
 library(tidyverse)
 library(ggrepel)

@@ -396,29 +396,47 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
 
 ``` {r}
 #| label: fig-heatmap-rf-variable-importance
-#| fig-cap: "Random Forest Variable Importance Heatmap by Drug"
+#| fig-cap: "Top 5 Variable Importance Heatmap by Drug for XGB Model"
 #| warning: false
 #| echo: false
 #| fig-height: 6
 
 library(ggplot2)
-top_rf_vars2 <- readRDS("data/top_rf_vars2.rds")
 
-ggplot(top_rf_vars2, aes(x = Variable, y = Drug, fill = Overall)) +
+# top_rf_vars2 <- readRDS("data/top_rf_vars2.rds")
+# 
+# ggplot(top_rf_vars2, aes(x = Variable, y = Drug, fill = Overall)) +
+#   geom_tile(color = "white") +
+#   geom_text(aes(label = signif(Overall, 2), color = label_color), size = 3) +
+#   scale_color_identity() +  # use colors directly from label_color
+#   scale_fill_viridis_c(option = "magma", name = "Importance") +
+#   coord_flip() +
+#   labs(
+#     title = "Random Forest Variable Importance Heatmap by Drug",
+#     x = NULL, #"Variable",
+#     y = NULL #"Drug"
+#   ) +
+#   theme_minimal() +
+#   theme(
+#     axis.text.x = element_text(angle = 90, hjust = 1)
+#   )
+
+all_varimp_clean = readRDS("data/all_varimp_clean.rds")
+
+ggplot(all_varimp_clean, aes(x = Drug_Model, y = Variable, fill = NormalizedImportance)) +
   geom_tile(color = "white") +
-  geom_text(aes(label = signif(Overall, 2), color = label_color), size = 3) +
-  scale_color_identity() +  # use colors directly from label_color
-  scale_fill_viridis_c(option = "magma", name = "Importance") +
-  coord_flip() +
-  labs(
-    title = "Random Forest Variable Importance Heatmap by Drug",
-    x = NULL, #"Variable",
-    y = NULL #"Drug"
-  ) +
+  geom_text(aes(label = round(NormalizedImportance, 1), color = TextColor), 
+            size = 3, 
+            angle = 0) +
+  scale_fill_viridis_c(option = "C", name = "Normalized\nImportance") +
+  scale_color_identity() +  # Use colors as-is from the column
+  labs(title = "Top 5 Variable Importances for Each Drug with a XGB Model",
+       x = NULL,
+       y = NULL) +
   theme_minimal() +
-  theme(
-    axis.text.x = element_text(angle = 90, hjust = 1)
-  )
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+  # coord_flip()
+
 
 ```
 

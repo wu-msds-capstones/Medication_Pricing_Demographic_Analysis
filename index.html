@@ -1229,140 +1229,20 @@ Figure&nbsp;16: Top 5 Variable Importance Heatmap by Drug for XGB Model
 </div>
 </div>
 <p>We did a quick linear regression fit between the median price of all drugs and the number of available Medicare plans in a county. The results are shown in the below table. The percent of the price variance is that is due to the number of available Medicare plans was pulled from the R^2 value. The direction of the relationship is shown as either an increase (↑) or decrease (↓) in price with an increase in the number of available plans. The significance of the relationship was determined by a p-value &lt; 0.05. The interpretation of the relationship is based on the slope of the fit, which indicates how much the median price changes with each additional Medicare plan available in a county.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 23%">
-<col style="width: 8%">
-<col style="width: 7%">
-<col style="width: 14%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Drug</th>
-<th>Price Change with Each Additional Plan</th>
-<th>% Change</th>
-<th>Significant?</th>
-<th>Explains x% of Variance</th>
-<th>Interpretation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Adalimumab</strong></td>
-<td>+$1.75</td>
-<td><strong>+0.00%</strong></td>
-<td>Yes</td>
-<td>0.84</td>
-<td>Small positive effect</td>
-</tr>
-<tr class="even">
-<td><strong>Apixaban</strong></td>
-<td>$0</td>
-<td><strong>-0.00%</strong></td>
-<td>No</td>
-<td>0.04</td>
-<td>No evidence of relationship</td>
-</tr>
-<tr class="odd">
-<td><strong>Dulaglutide</strong></td>
-<td>$-0.08</td>
-<td><strong>-0.00%</strong></td>
-<td>No</td>
-<td>0.11</td>
-<td>Weak negative trend, borderline significance</td>
-</tr>
-<tr class="even">
-<td><strong>Empagliflozin</strong></td>
-<td>$0.01</td>
-<td><strong>+0.00%</strong></td>
-<td>Yes</td>
-<td>0.33</td>
-<td>Tiny positive effect</td>
-</tr>
-<tr class="odd">
-<td><strong>Etanercept</strong></td>
-<td>$0.49</td>
-<td><strong>+0.00%</strong></td>
-<td>Yes</td>
-<td>0.30</td>
-<td>Small positive effect</td>
-</tr>
-<tr class="even">
-<td><strong>Ibrutinib</strong></td>
-<td>$0.17</td>
-<td><strong>+0.00%</strong></td>
-<td>Yes</td>
-<td>0.22</td>
-<td>Small positive effect</td>
-</tr>
-<tr class="odd">
-<td><strong>Insulin Aspart</strong></td>
-<td>-$0.08</td>
-<td><strong>-0.00%</strong></td>
-<td>No</td>
-<td>&lt;0.01</td>
-<td>No effect</td>
-</tr>
-<tr class="even">
-<td><strong>Lenalidomide</strong></td>
-<td>+25.04¢</td>
-<td><strong>+0.00%</strong></td>
-<td>Yes</td>
-<td><strong>5.01</strong></td>
-<td>Moderate positive effect</td>
-</tr>
-<tr class="odd">
-<td><strong>Liraglutide</strong></td>
-<td>-12.92¢</td>
-<td><strong>-0.16%</strong></td>
-<td>Yes</td>
-<td><strong>4.20</strong></td>
-<td>Moderate negative effect</td>
-</tr>
-<tr class="even">
-<td><strong>Paliperidone Palmitate</strong></td>
-<td>+10.80¢</td>
-<td><strong>+0.00%</strong></td>
-<td>Yes</td>
-<td>0.21</td>
-<td>Small positive effect</td>
-</tr>
-<tr class="odd">
-<td><strong>Rivaroxaban</strong></td>
-<td>-$1.03</td>
-<td><strong>-0.01%</strong></td>
-<td>Yes</td>
-<td><strong>2.84</strong></td>
-<td>Small but clear negative effect</td>
-</tr>
-<tr class="even">
-<td><strong>Semaglutide</strong></td>
-<td>-$1.37</td>
-<td><strong>-0.05%</strong></td>
-<td>Yes</td>
-<td><strong>2.58</strong></td>
-<td>Small/moderate negative effect</td>
-</tr>
-<tr class="odd">
-<td><strong>Tiotropium Bromide</strong></td>
-<td>+$14.2</td>
-<td><strong>+0.00%</strong></td>
-<td>Yes</td>
-<td><strong>6.35</strong></td>
-<td>Strongest predictive power in this group (6.4%)</td>
-</tr>
-<tr class="even">
-<td><strong>Ustekinumab</strong></td>
-<td>-$5.02</td>
-<td><strong>-0.00%</strong></td>
-<td>Yes</td>
-<td>0.13</td>
-<td>Weak but statistically significant negative effect</td>
-</tr>
-</tbody>
-</table>
+<div id="cell-fig-effect-available-plans-on-drug-price" class="cell">
+<div class="cell-output-display">
+<div id="fig-effect-available-plans-on-drug-price" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-effect-available-plans-on-drug-price-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="capstone_files/figure-html/fig-effect-available-plans-on-drug-price-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18" title="Figure&nbsp;17: Effect of Available Plans on Drug Price"><img src="capstone_files/figure-html/fig-effect-available-plans-on-drug-price-1.png" style="height:6in" width="672" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-effect-available-plans-on-drug-price-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;17: Effect of Available Plans on Drug Price
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="machine-learning-ml-conclusions" class="level3" data-number="6.4.6">
 <h3 data-number="6.4.6" class="anchored" data-anchor-id="machine-learning-ml-conclusions"><span class="header-section-number">6.4.6</span> Machine Learning (ML) Conclusions</h3>

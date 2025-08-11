@@ -65,7 +65,7 @@ We were not able to match all the top drugs to our dataset, so we used only the 
 
 ### Price Variance Across Counties 
 
-After mapping individual medication prices to U.S. counties where Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure {@fig-pricevariance}. This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.
+After mapping individual medication prices to U.S. counties where Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure (@fig-pricevariance). This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.
 
 
 ```{r}
@@ -174,6 +174,7 @@ ggplot(or_contracts, aes(x = fct_reorder(COUNTY, unique_contract_plans), y = uni
 ### Data summary simplifications
 
 Given the number of plans within each county (and the variation in drug prices by plan, pharmacy, dosage, and delivery mechanism), we chose to simplify the data by calculating the median 30-day supply price for each drug (based on the 9-digit NDC code) within each county. While 60-day and 90-day supply prices were also available, they were excluded to streamline the analysis. For much of the subsequent work, this median county-level price per drug will serve as our primary target variable.
+
 
 ### Geographic Medication Price Patterns
 

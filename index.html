@@ -351,12 +351,11 @@ background: linear-gradient(45deg, rgb(186, 12, 47) 0%, rgb(0,0,0) 100%);;
   <li><a href="#population-vs-number-of-available-medicare-plans" id="toc-population-vs-number-of-available-medicare-plans" class="nav-link" data-scroll-target="#population-vs-number-of-available-medicare-plans"><span class="header-section-number">6.3</span> Population vs Number of Available Medicare Plans</a></li>
   <li><a href="#machine-learning" id="toc-machine-learning" class="nav-link" data-scroll-target="#machine-learning"><span class="header-section-number">6.4</span> Machine Learning</a>
   <ul class="collapse">
-  <li><a href="#check-for-gaussian-distributions" id="toc-check-for-gaussian-distributions" class="nav-link" data-scroll-target="#check-for-gaussian-distributions"><span class="header-section-number">6.4.1</span> Check for Gaussian Distributions</a></li>
-  <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection"><span class="header-section-number">6.4.2</span> Model Selection</a></li>
-  <li><a href="#model-performance" id="toc-model-performance" class="nav-link" data-scroll-target="#model-performance"><span class="header-section-number">6.4.3</span> Model Performance</a></li>
-  <li><a href="#tuning-to-prevent-overfitting" id="toc-tuning-to-prevent-overfitting" class="nav-link" data-scroll-target="#tuning-to-prevent-overfitting"><span class="header-section-number">6.4.4</span> Tuning to prevent overfitting</a></li>
-  <li><a href="#feature-importance" id="toc-feature-importance" class="nav-link" data-scroll-target="#feature-importance"><span class="header-section-number">6.4.5</span> Feature Importance</a></li>
-  <li><a href="#machine-learning-ml-conclusions" id="toc-machine-learning-ml-conclusions" class="nav-link" data-scroll-target="#machine-learning-ml-conclusions"><span class="header-section-number">6.4.6</span> Machine Learning (ML) Conclusions</a></li>
+  <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection"><span class="header-section-number">6.4.1</span> Model Selection</a></li>
+  <li><a href="#model-performance" id="toc-model-performance" class="nav-link" data-scroll-target="#model-performance"><span class="header-section-number">6.4.2</span> Model Performance</a></li>
+  <li><a href="#tuning-to-prevent-overfitting" id="toc-tuning-to-prevent-overfitting" class="nav-link" data-scroll-target="#tuning-to-prevent-overfitting"><span class="header-section-number">6.4.3</span> Tuning to prevent overfitting</a></li>
+  <li><a href="#feature-importance" id="toc-feature-importance" class="nav-link" data-scroll-target="#feature-importance"><span class="header-section-number">6.4.4</span> Feature Importance</a></li>
+  <li><a href="#machine-learning-ml-conclusions" id="toc-machine-learning-ml-conclusions" class="nav-link" data-scroll-target="#machine-learning-ml-conclusions"><span class="header-section-number">6.4.5</span> Machine Learning (ML) Conclusions</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">7</span> Conclusions</a>
@@ -617,7 +616,7 @@ Table&nbsp;1: Top medications by absolute spend and the treatment conditions
 <h2 data-number="5.2" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">5.2</span> Exploratory Data Analysis</h2>
 <section id="price-variance-across-counties" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="price-variance-across-counties"><span class="header-section-number">5.2.1</span> Price Variance Across Counties</h3>
-<p>After mapping individual medication prices to U.S. counties where Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure {<a href="#fig-pricevariance" class="quarto-xref">Figure&nbsp;2</a>}. This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.</p>
+<p>After mapping individual medication prices to U.S. counties where Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure (<a href="#fig-pricevariance" class="quarto-xref">Figure&nbsp;2</a>). This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.</p>
 <div id="cell-fig-pricevariance" class="cell">
 <div class="cell-output-display">
 <div id="fig-pricevariance" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -762,12 +761,12 @@ Figure&nbsp;8: Pearson Correlations between Demographic Features and Affordabili
 <li>– Independence within each group</li>
 </ol>
 <p>Accordingly, our team elected to compare mean prices, which notably exposes our analysis to outlier pricing. The assumption independence within each group is stretched, considering the manner in which the data was procured, which we have discussed in great detail.</p>
-<div id="tbl-h1" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[50,50]">
+<div id="tbl-h1_pvalue" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[50,50]">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-h1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-h1_pvalue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;2: P-value results for Hypothesis 1
 </figcaption>
-<div aria-describedby="tbl-h1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="tbl-h1_pvalue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table-striped table-hover caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -841,7 +840,7 @@ Table&nbsp;2: P-value results for Hypothesis 1
 </div>
 </figure>
 </div>
-<p>We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See <a href="#tbl-h1" class="quarto-xref">Table&nbsp;2</a>.) To dive deeper, our team constructed density plots to compare the direction of this difference. As observed in <a href="#fig-h1" class="quarto-xref">Figure&nbsp;9</a>, where we evaluate two of these medications. We can clearly see that the direction shifts at different price ranks and depends on the medication.</p>
+<p>We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See <a href="#tbl-h1_pvalue" class="quarto-xref">Table&nbsp;2</a> above.) To dive deeper, our team constructed density plots to compare the direction of this difference. As observed in <a href="#fig-h1" class="quarto-xref">Figure&nbsp;9</a>, where we evaluate two of these medications. We can clearly see that the direction shifts at different price ranks and depends on the medication.</p>
 <div id="cell-fig-h1" class="cell">
 <div class="cell-output-display">
 <div id="fig-h1" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -856,8 +855,20 @@ Figure&nbsp;9: Hypothesis 1 - Comparing GLP-1 receptor agonists, primarily used 
 </div>
 </div>
 </div>
-<p>Drilling down again, with these two medications in focus, actual values are compared:</p>
-<table class="caption-top table">
+<p>Drilling down again, with these two medications in focus, actual values are compared below in <a href="#tbl-h1_means" class="quarto-xref">Table&nbsp;3</a>.</p>
+<div id="tbl-h1_means" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[25,25,25,25]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-h1_means-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Mean of Mean Price and Standard Deviation for Dulaglutide and Semaglutide betwen two race groups
+</figcaption>
+<div aria-describedby="tbl-h1_means-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table-striped table-hover caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Drug Name</th>
@@ -893,6 +904,9 @@ Figure&nbsp;9: Hypothesis 1 - Comparing GLP-1 receptor agonists, primarily used 
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p>The findings are interesting but have issues. In the plot, we can clearly see that advantages are given to certain groups at certain prices. The mean of the mean prices, as well as the standard deviations show practically no difference for Dulaglutide and only some difference for Semaglutide. Unfortunately, this does not provide much clarity regarding any particular advantage afforded to counties where more than 95% of the population identifies as white. The findings are hardly definitive and lack confidence intervals. This does demonstrate the limitations of using the Mann-Whitney U Test.</p>
 </section>
 <section id="hypothesis-2" class="level3" data-number="6.1.2">
@@ -900,7 +914,17 @@ Figure&nbsp;9: Hypothesis 1 - Comparing GLP-1 receptor agonists, primarily used 
 <p>Using the same assumptions, another consideration involves fully removing the racial aspect and instead considering the percentage of the population that is below the poverty level. Within the census data, the median is 13% below the poverty level, across all counties and 14% at the mean. We establish a new hypothesis.</p>
 <p><em>Null Hypothesis:</em> The distribution of medication costs in counties with &gt;=13% below poverty population is not statistically different from the distribution in counties with &lt;13% below poverty population.</p>
 <p><em>Alternative Hypothesis:</em> The distribution of medication costs in counties with &gt;= 13% below poverty population is statistically different from that in counties with &lt;13% below poverty population.</p>
-<table class="caption-top table">
+<div id="tbl-h2_pvalue" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[50,50]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-h2_pvalue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: P-value results for Hypothesis 2
+</figcaption>
+<div aria-describedby="tbl-h2_pvalue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table-striped table-hover caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Drug Name</th>
@@ -966,8 +990,11 @@ Figure&nbsp;9: Hypothesis 1 - Comparing GLP-1 receptor agonists, primarily used 
 </tr>
 </tbody>
 </table>
-<p>Again, we find that there are statistically significant outcomes for many of the selected medications. Twelve of the fourteen medications yield p-values below 0.05 suggesting that the null hypothesis be rejected.</p>
-<p>In {<a href="#fig-h2" class="quarto-xref">Figure&nbsp;10</a>} we look closer at six medications, to expand the investigation into these differences and the direction of any potential advantage.</p>
+</div>
+</figure>
+</div>
+<p>Again, we find that there are statistically significant outcomes for many of the selected medications. Twelve of the fourteen medications yield p-values below 0.05 suggesting that the null hypothesis be rejected. (See <a href="#tbl-h2_pvalue" class="quarto-xref">Table&nbsp;4</a> above.)</p>
+<p>In <a href="#fig-h2" class="quarto-xref">Figure&nbsp;10</a> we look closer at six medications, to expand the investigation into these differences and the direction of any potential advantage.</p>
 <div id="cell-fig-h2" class="cell">
 <div class="cell-output-display">
 <div id="fig-h2" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -989,13 +1016,19 @@ Figure&nbsp;10: Hypothesis 2 - Comparing medications which were indicated for st
 <h2 data-number="6.2" class="anchored" data-anchor-id="statistical-testing---phase-2"><span class="header-section-number">6.2</span> Statistical Testing - Phase 2</h2>
 <p>In order to further explore statistical significance, we assumed a normal distribution of the data. This assumption enabled the use of traditional parametric testing methods. Specifically, we conducted two-sample t-tests, mirroring the structure used in the first phase of statistical testing, where the dataset was divided based on demographic medians. Additionally, we grouped counties into multiple subsets using demographic quartiles rather than medians, allowing for more granular comparisons. This stratification enabled the application of the Tukey HSD test to assess pairwise differences across these groups.</p>
 <p>Using a two-sample t-test allowed reconsideration of our second hypothesis. We again encountered low p-values. Selecting for Semaglutide as one example and using the same data split for poverty at the median, the resulting p-value was 2.2e-16 which was a strong indicator for statistical significance, suggesting we reject the null.</p>
-<p>Building on this, we applied the Tukey HSD test to the quartile-based groups at a 95% confidence level. Again, we found p-values that supported rejecting the null hypothesis, indicating that the average mean prices across groups were not equal. Interestingly, the only comparisons with p-values at or above 5% occurred between adjacent quartile groups, while all other comparisons yielded p-values well below this threshold.</p>
-<table class="caption-top table">
+<p>Building on this, we applied the Tukey HSD test to the quartile-based groups at a 95% confidence level. Again, we found p-values that supported rejecting the null hypothesis, indicating that the average mean prices across groups were not equal. Interestingly, the only comparisons with p-values at or above 5% occurred between adjacent quartile groups, while all other comparisons yielded p-values well below this threshold. (See <a href="#tbl-p2_tukey" class="quarto-xref">Table&nbsp;5</a> below.)</p>
+<div id="tbl-p2_tukey" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[30, 17.5, 17.5, 17.5, 17.5]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-p2_tukey-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: Tukey HSD test comparing Semaglutide prices amongst four poverty levels
+</figcaption>
+<div aria-describedby="tbl-p2_tukey-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table-striped table-hover caption-top table">
 <colgroup>
-<col style="width: 37%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
+<col style="width: 30%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
 <col style="width: 18%">
 </colgroup>
 <thead>
@@ -1052,16 +1085,25 @@ Figure&nbsp;10: Hypothesis 2 - Comparing medications which were indicated for st
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p>We repeated this process across several medications and demographic variables, consistently observing statistical significance. However, when examining the actual differences in average prices between groups, the magnitude of these differences was often minimal. Continuing with Semaglutide as an example, counties in the lowest poverty quartile (0–10%) had an average mean price of $168, while those in the highest poverty quartile (&gt;17%) had an average of $167, a mere $1 difference. Notably, counties with higher poverty levels were paying slightly less on average.</p>
-<p>To better understand the implications of this finding, we considered affordability by dividing the mean price by the median income of each county. This revealed that although prices were lower in higher-poverty areas, the cost represented a larger proportion of income, highlighting a disparity in affordability. This relationship is clearly illustrated in the following table and <a href="#fig-h2_2" class="quarto-xref">Figure&nbsp;11</a>.</p>
-<table class="caption-top table">
+<p>To better understand the implications of this finding, we considered affordability by dividing the mean price by the median income of each county. This revealed that although prices were lower in higher-poverty areas, the cost represented a larger proportion of income, highlighting a disparity in affordability. This relationship is clearly illustrated in the following <a href="#tbl-p2-means" class="quarto-xref">Table&nbsp;6</a> and <a href="#fig-h2_2" class="quarto-xref">Figure&nbsp;11</a>.</p>
+<div id="tbl-p2-means" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[17, 17, 15, 17, 17]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-p2-means-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6: Mean and standard deviation of prices of Semaglutide by four poverty buckets
+</figcaption>
+<div aria-describedby="tbl-p2-means-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table-striped table-hover caption-top table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 12%">
-<col style="width: 10%">
-<col style="width: 21%">
-<col style="width: 18%">
-<col style="width: 18%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 15%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1108,6 +1150,9 @@ Figure&nbsp;10: Hypothesis 2 - Comparing medications which were indicated for st
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <div id="cell-fig-h2_2" class="cell">
 <div class="cell-output-display">
 <div id="fig-h2_2" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1148,41 +1193,8 @@ Figure&nbsp;12: Correlation between the number of Medicare Plan Options and Tota
 </section>
 <section id="machine-learning" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="machine-learning"><span class="header-section-number">6.4</span> Machine Learning</h2>
-<section id="check-for-gaussian-distributions" class="level3" data-number="6.4.1">
-<h3 data-number="6.4.1" class="anchored" data-anchor-id="check-for-gaussian-distributions"><span class="header-section-number">6.4.1</span> Check for Gaussian Distributions</h3>
-<p>Before proceeding into any modeling, one must check the distribution of the variables. For this particular dataset, if all the medications are looked at simultaneously, one needs to take the log of the median prices to have the histogram show a more Gaussian distribution. (See <a href="#fig-hist-price-all-drugs" class="quarto-xref">Figure&nbsp;13</a>). This is due to the fact that the median drug price varies greatly depending on the actual drug being considered.</p>
-<div id="cell-fig-hist-price-all-drugs" class="cell">
-<div class="cell-output-display">
-<div id="fig-hist-price-all-drugs" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-hist-price-all-drugs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-hist-price-all-drugs-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13: Histogram of Median Drug Prices and Log-Transformed Median Drug Prices across All Drugs"><img src="capstone_files/figure-html/fig-hist-price-all-drugs-1.png" class="img-fluid figure-img" width="672"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist-price-all-drugs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13: Histogram of Median Drug Prices and Log-Transformed Median Drug Prices across All Drugs
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>If the medications are reviewed independently (<a href="#fig-hist-price-per-drug" class="quarto-xref">Figure&nbsp;14</a>), then we do not need to take the log of the medication prices. The distribution shape doesn’t change with or without the log of the price. Our plan is to look at each drug independently due to the lack of patterns in the correlation heatmaps earlier (<strong>?@fig-by-drug-correlations</strong>).</p>
-<div id="cell-fig-hist-price-per-drug" class="cell">
-<div class="cell-output-display">
-<div id="fig-hist-price-per-drug" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-hist-price-per-drug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-hist-price-per-drug-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Figure&nbsp;14: Histogram of Median Drug Prices by Drug"><img src="capstone_files/figure-html/fig-hist-price-per-drug-1.png" class="img-fluid figure-img" width="672"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist-price-per-drug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14: Histogram of Median Drug Prices by Drug
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="model-selection" class="level3" data-number="6.4.2">
-<h3 data-number="6.4.2" class="anchored" data-anchor-id="model-selection"><span class="header-section-number">6.4.2</span> Model Selection</h3>
+<section id="model-selection" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="model-selection"><span class="header-section-number">6.4.1</span> Model Selection</h3>
 <p>In order to model the relationship between medication prices and demographic features, we employed a variety of machine learning algorithms, each with unique strengths and assumptions. Below is a brief overview of the algorithms explored:</p>
 <p><strong>Linear Model (LM):</strong> Linear regression is a fundamental technique used to model the relationship between a continuous outcome variable and one or more predictors, assuming a linear relationship. It is interpretable and computationally efficient but may underperform when the underlying patterns are nonlinear or complex.</p>
 <p><strong>Elastic Net (ENET):</strong> Elastic Net is a regularized regression method that combines both L1 (Lasso) and L2 (Ridge) penalties. It is particularly effective when dealing with multicollinearity or when performing variable selection in high-dimensional datasets. Elastic Net encourages sparsity while maintaining group stability among correlated features.</p>
@@ -1192,50 +1204,50 @@ Figure&nbsp;14: Histogram of Median Drug Prices by Drug
 <p><strong>Support Vector Machine (SVM):</strong> SVM is a powerful classifier and regressor that aims to find the optimal hyperplane that maximally separates classes or fits data with minimal error (via support vectors). It works well in high-dimensional spaces and with complex boundaries but can be computationally intensive and sensitive to kernel and parameter choices.</p>
 <p><strong>Extreme Gradient Boosting (XGBoost):</strong> XGBoost is an optimized and scalable implementation of gradient boosting. It includes advanced features such as regularization, parallel processing, and handling of missing values. XGBoost typically outperforms many other algorithms in structured data problems and is widely used in machine learning competitions and real-world applications.</p>
 </section>
-<section id="model-performance" class="level3" data-number="6.4.3">
-<h3 data-number="6.4.3" class="anchored" data-anchor-id="model-performance"><span class="header-section-number">6.4.3</span> Model Performance</h3>
-<p>Looping over every drug, we trained all the previously described models. A heatmap of the resulting model performance is provided below in <a href="#fig-heatmap-models-performance" class="quarto-xref">Figure&nbsp;15</a>. As expected, the gradient boosting machine, the random forest, and the extreme gradient boosting models performed the best across all drugs. Unfortunately, while the models ok R^2 values when fitting to the training data, the R^2 values for the test data is significantly lower. This suggests that the models are overfitting to the training data, and we need to tune the hyperparameters of the models to improve performance.</p>
+<section id="model-performance" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="model-performance"><span class="header-section-number">6.4.2</span> Model Performance</h3>
+<p>Looping over every drug, we trained all the previously described models. A heatmap of the resulting model performance is provided below in <a href="#fig-heatmap-models-performance" class="quarto-xref">Figure&nbsp;13</a>. As expected, the gradient boosting machine, the random forest, and the extreme gradient boosting models performed the best across all drugs. Unfortunately, while the models ok R^2 values when fitting to the training data, the R^2 values for the test data is significantly lower. This suggests that the models are overfitting to the training data, and we need to tune the hyperparameters of the models to improve performance.</p>
 <div id="cell-fig-heatmap-models-performance" class="cell">
 <div class="cell-output-display">
 <div id="fig-heatmap-models-performance" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-heatmap-models-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-heatmap-models-performance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Figure&nbsp;15: Model Performance Heatmap by Drug"><img src="capstone_files/figure-html/fig-heatmap-models-performance-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-heatmap-models-performance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13: Model Performance Heatmap by Drug"><img src="capstone_files/figure-html/fig-heatmap-models-performance-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-heatmap-models-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15: Model Performance Heatmap by Drug
+Figure&nbsp;13: Model Performance Heatmap by Drug
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="tuning-to-prevent-overfitting" class="level3" data-number="6.4.4">
-<h3 data-number="6.4.4" class="anchored" data-anchor-id="tuning-to-prevent-overfitting"><span class="header-section-number">6.4.4</span> Tuning to prevent overfitting</h3>
+<section id="tuning-to-prevent-overfitting" class="level3" data-number="6.4.3">
+<h3 data-number="6.4.3" class="anchored" data-anchor-id="tuning-to-prevent-overfitting"><span class="header-section-number">6.4.3</span> Tuning to prevent overfitting</h3>
 <p>To improve the model performance and prevent overfitting, we tuned the hyperparameters of the extreme gradient boosting models. The tuning process involved adjusting parameters such as the number of rounds, maximum depth, learning rate (aka eta) and more to optimize model performance on the validation set. Our most overfit model XGB6 has a nearly perfect fit to the training data for all drugs, and yet it also has the best fit to the test data. If the model had the key features that drive median price, we would’ve expected to see the test R^2 values be much closer to the training R^2 values and that there would be a optimum point where the training data might have a worse fit, but the test data would have a better fit in comparison. Tunning the parameters to prevent overfitting, you can see the XGB7-9 get progressively worse fits to the training data, but also worse fits to the test data. Thus, we think that the features that we have are not the best predictors of median drug price. The tuned XGB models are shown in <strong>?@fig-heatmap-models-performance-tuned</strong>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="capstone_files/figure-html/ig-heatmap-models-performance-tuned-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Tuned XGB Models Performance Heatmap by Drug"><img src="capstone_files/figure-html/ig-heatmap-models-performance-tuned-1.png" class="img-fluid figure-img" width="672" alt="Tuned XGB Models Performance Heatmap by Drug"></a></p>
+<p><a href="capstone_files/figure-html/ig-heatmap-models-performance-tuned-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Tuned XGB Models Performance Heatmap by Drug"><img src="capstone_files/figure-html/ig-heatmap-models-performance-tuned-1.png" class="img-fluid figure-img" width="672" alt="Tuned XGB Models Performance Heatmap by Drug"></a></p>
 <figcaption>Tuned XGB Models Performance Heatmap by Drug</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="feature-importance" class="level3" data-number="6.4.5">
-<h3 data-number="6.4.5" class="anchored" data-anchor-id="feature-importance"><span class="header-section-number">6.4.5</span> Feature Importance</h3>
-<p>The most important features for the initial XGB model across all drugs are shown in the heatmap below (<a href="#fig-heatmap-rf-variable-importance" class="quarto-xref">Figure&nbsp;16</a>). The most obvious pattern here is that the num_contract_plans (aka the quantity of available Medicare plans) is the most important feature for 12 out of the 14 top drugs. We already looked at the connection between total_population and the quantity of available plans in a county previously, and only saw a mild correlation. For the other two drugs, the top features were income per capita and percent of the population with master’s degree.</p>
+<section id="feature-importance" class="level3" data-number="6.4.4">
+<h3 data-number="6.4.4" class="anchored" data-anchor-id="feature-importance"><span class="header-section-number">6.4.4</span> Feature Importance</h3>
+<p>The most important features for the initial XGB model across all drugs are shown in the heatmap below (<a href="#fig-heatmap-rf-variable-importance" class="quarto-xref">Figure&nbsp;14</a>). The most obvious pattern here is that the num_contract_plans (aka the quantity of available Medicare plans) is the most important feature for 12 out of the 14 top drugs. We already looked at the connection between total_population and the quantity of available plans in a county previously, and only saw a mild correlation. For the other two drugs, the top features were income per capita and percent of the population with master’s degree.</p>
 <div id="cell-fig-heatmap-rf-variable-importance" class="cell">
 <div class="cell-output-display">
 <div id="fig-heatmap-rf-variable-importance" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-heatmap-rf-variable-importance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-heatmap-rf-variable-importance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17" title="Figure&nbsp;16: Top 5 Variable Importance Heatmap by Drug for XGB Model"><img src="capstone_files/figure-html/fig-heatmap-rf-variable-importance-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-heatmap-rf-variable-importance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Figure&nbsp;14: Top 5 Variable Importance Heatmap by Drug for XGB Model"><img src="capstone_files/figure-html/fig-heatmap-rf-variable-importance-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-heatmap-rf-variable-importance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;16: Top 5 Variable Importance Heatmap by Drug for XGB Model
+Figure&nbsp;14: Top 5 Variable Importance Heatmap by Drug for XGB Model
 </figcaption>
 </figure>
 </div>
@@ -1247,18 +1259,18 @@ Figure&nbsp;16: Top 5 Variable Importance Heatmap by Drug for XGB Model
 <div id="fig-effect-available-plans-on-drug-price" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-effect-available-plans-on-drug-price-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-effect-available-plans-on-drug-price-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18" title="Figure&nbsp;17: Effect of Available Plans on Drug Price"><img src="capstone_files/figure-html/fig-effect-available-plans-on-drug-price-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="capstone_files/figure-html/fig-effect-available-plans-on-drug-price-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Figure&nbsp;15: Effect of Available Plans on Drug Price"><img src="capstone_files/figure-html/fig-effect-available-plans-on-drug-price-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-effect-available-plans-on-drug-price-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17: Effect of Available Plans on Drug Price
+Figure&nbsp;15: Effect of Available Plans on Drug Price
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="machine-learning-ml-conclusions" class="level3" data-number="6.4.6">
-<h3 data-number="6.4.6" class="anchored" data-anchor-id="machine-learning-ml-conclusions"><span class="header-section-number">6.4.6</span> Machine Learning (ML) Conclusions</h3>
+<section id="machine-learning-ml-conclusions" class="level3" data-number="6.4.5">
+<h3 data-number="6.4.5" class="anchored" data-anchor-id="machine-learning-ml-conclusions"><span class="header-section-number">6.4.5</span> Machine Learning (ML) Conclusions</h3>
 <p>The application of diverse machine learning algorithms provided valuable insights into the complex relationships between demographic factors and medication prices across U.S. counties. Despite the initial hypothesis that demographic variables might strongly predict drug pricing disparities, our results indicate that the quantity of Medicare plans available within a county is the most consistent and influential predictor across the majority of the top-spending medications. Other demographic features, such as education level, income, and racial composition, showed variable importance depending on the specific drug but did not emerge as universally strong predictors.</p>
 <p>The superior performance of random forest modelling highlights the nonlinear and multifaceted nature of drug pricing patterns, which simpler linear models struggled to capture effectively. This complexity underscores the challenge of modeling medication prices purely based on demographics and points to the potential influence of additional factors not captured in our current dataset.</p>
 <p>Overall, these findings suggest that while demographic characteristics contribute to medication price variation, market dynamics (reflected by Medicare plan availability) play a pivotal role. Future work may benefit from incorporating additional economic, regulatory, and supply-chain data to better explain and predict geographic disparities in medication costs. This knowledge could ultimately inform policies aimed at improving affordability and equity in drug pricing.</p>

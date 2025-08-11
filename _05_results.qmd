@@ -47,7 +47,7 @@ Accordingly, our team elected to compare mean prices, which notably exposes our 
 
 : P-value results for Hypothesis 1 {#tbl-h1_pvalue .striped .hover tbl-colwidths="[50,50]"}  
 
-We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See @tbl-h1_pvalue below.) To dive deeper, our team constructed density plots to compare the direction of this difference.  As observed in @fig-h1, where we evaluate two of these medications.  We can clearly see that the direction shifts at different price ranks and depends on the medication.
+We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See @tbl-h1_pvalue above.) To dive deeper, our team constructed density plots to compare the direction of this difference.  As observed in @fig-h1, where we evaluate two of these medications.  We can clearly see that the direction shifts at different price ranks and depends on the medication.
 
 ```{r}
 #| label: fig-h1
@@ -293,37 +293,6 @@ While there is a slight trend, it is not a great fit overall. The model is stati
 From here, we jumped into creating a model across all our demographics (age, education, gender, and racial breakdowns, as well as median income, and percent below the poverty line). 
 
 ## Machine Learning
-
-### Check for Gaussian Distributions
-
-Before proceeding into any modeling, one must check the distribution of the variables. For this particular dataset, if all the medications are looked at simultaneously, one needs to take the log of the median prices to have the histogram show a more Gaussian distribution. This is due to the fact that the median drug price varies greatly depending on the actual drug being considered. 
-
-If the medications are reviewed independently (@fig-hist-price-per-drug), then we do not need to take the log of the medication prices. The distribution shape doesn’t change with or without the log of the price. Our plan is to look at each drug independently due to the lack of patterns in the correlation heatmaps earlier (@fig-by-drug-correlations).
-
-```{r}
-#| label: fig-hist-price-per-drug
-#| fig-cap: "Histogram of Median Drug Prices by Drug"
-#| warning: false
-#| echo: false
-#| fig-height: 8
-
-summary_table2 = readRDS("data/summary_table2.rds") %>% filter(!is.na(drug_name_clean))
-
-library(dplyr)
-library(ggplot2)
-
-# Plot faceted histograms
-ggplot(summary_table2, aes(x = median_price)) +
-  geom_histogram(bins = 50, fill = "darkgray") +
-  facet_wrap(~ drug_name_clean, scales = "free", ncol = 3) +
-  labs(
-    title = "Distribution of Median Price by Drug",
-    x = "Median Price",
-    y = "Count"
-  ) +
-  theme_minimal(base_size = 10)
-
-```
 
 ### Model Selection
 In order to model the relationship between medication prices and demographic features, we employed a variety of machine learning algorithms, each with unique strengths and assumptions. Below is a brief overview of the algorithms explored:

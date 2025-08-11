@@ -1,33 +1,45 @@
 # Background
 
-## Previous research
+## Preliminary Research
 
-Within the US, a 2009 study called “Variation in Drug Prices at Pharmacies: Are Prices Higher in Poorer Areas?” [@gellad2009variation], the authors looked at the mean retail prices for four target medications across Florida and compared those to the median ZIP code income from the 2000 census. They found that across the four drugs, the mean prices in the poorest ZIP codes were 9 percent higher than the statewide average.
+### Domestic Impact
 
-Internationally, there are also significant drug price disparities. A 2021 report from the United States Government Accountability Office [@gao2021_21_282] found that “U.S. Prices for Selected Brand Drugs Were Higher on Average than Prices in Australia, Canada, and France”. On average, the drugs were more expensive in the US, with some drugs as much as 10 times higher and others a little lower than the maximum from other countries. 
+In the United States, a 2009 study titled “Variation in Drug Prices at Pharmacies: Are Prices Higher in Poorer Areas?” [@gellad2009variation] examined mean retail prices for four commonly prescribed medications across Florida. The researchers compared these prices to median ZIP code income data from the 2000 census. Their findings revealed that, on average, drug prices in the poorest ZIP codes were 9% higher than the statewide average, suggesting a troubling correlation between socioeconomic status and pharmaceutical costs.
 
-## Factors that Influence Medication Affordability
+### Global Impact
 
-According to [@ncbi_nbk493090], many factors affect medication affordability. The factors that seem most important for our investigation are “the interaction of market power, health insurance, and the lack of effective incentives for controlling product price”, “unequal bargaining power between buyers and sellers”, “insurance benefit designs with significant patient cost-sharing provisions”, and “inadequate performance of patient assistance programs and other public programs intended to make medicines more affordable for patients.” For consumers, few levers exist to lower costs. One option is choosing where to purchase medications, though this assumes access to multiple pharmacies and the ability to travel. The other is selecting a health insurance plan, but the availability of plan options varies widely by region. In many cases, geographic location, something individuals often cannot control, significantly limits affordable choices.
+Internationally, disparities in drug pricing persist. A 2021 report from the U.S. Government Accountability Office [@gao2021_21_282] found that prices for selected brand-name drugs in the United States were, on average, higher than those in Australia, Canada, and France. While some medications were priced only slightly above international benchmarks, others cost up to ten times more than their counterparts abroad, underscoring the extent of pricing variability and the relative inefficiency of the U.S. pharmaceutical market.
 
-## Data landscape 
+## Factors Influencing Medication Affordability
+
+According to the National Academies of Sciences, Engineering, and Medicine [@ncbi_nbk493090], many factors affect medication affordability. The factors that seem most important for our investigation are “the interaction of market power, health insurance, and the lack of effective incentives for controlling product price”, “unequal bargaining power between buyers and sellers”, “insurance benefit designs with significant patient cost-sharing provisions”, and “inadequate performance of patient assistance programs and other public programs intended to make medicines more affordable for patients.” 
+
+For consumers, few levers exist to lower costs. One option is choosing where to purchase medications, though this assumes access to multiple pharmacies and the ability to travel. The other is selecting a health insurance plan, but the availability of plan options varies widely by region. In many cases, geographic location, something individuals often cannot control, significantly limits affordable choices.
+
+## Data Landscape 
 
 Medication prices vary depending on one’s insurance plan, the pharmacy, the dosage of medication, generic or name-brand, and more.  When looking for medication prices for our analysis, we initially explored several APIs from online pharmacies, including GoodRx [@goodrx2025] and CostPlusDrugs [@costplusdrugs2025], which aim to improve consumer price transparency. However, these sources could not be reliably linked to the county-level demographic data essential to our analysis. 
 
-Consequently, we turned to the Centers for Medicare & Medicaid Services (CMS), which offers one of the most comprehensive public datasets on healthcare coverage and drug pricing. CMS maintains over 100 datasets spanning prescription costs, plan structures, and beneficiary demographics [@cms2025data]. One Medicare-based dataset in particular allowed for medication pricing to be tied to geographic location, which we hoped to pair with demographic data. Three additional datasets from CMS provide access to overall drug spending at the national level. These datasets, covering the years 2019 through 2023, provide high-level insights into Medicare and Medicaid expenditures, including spending under Medicare Part D, Medicare Part B, and Medicaid. While this data lacks the geographic granularity needed for county-level analysis, it offers valuable context by identifying medications with the greatest national impact based on total cost.
+Consequently, we turned to the Centers for Medicare & Medicaid Services (CMS), which offers several of the most comprehensive public datasets on healthcare coverage and drug pricing. CMS maintains over 100 datasets spanning prescription costs, plan structures, and beneficiary demographics [@cms2025data]. One Medicare-based dataset, in particular, allowed for medication pricing to be tied to geographic location, which could then be paired with demographic data. While the dataset is limited to Medicare beneficiaries, it still serves as a strong proxy for broader drug pricing trends. Medicare Part D covers over 50 million people and negotiates prices through private insurers, making it a major market influencer. Its pricing often anchors costs across the healthcare system, suggesting that other buyers likely pay similar or higher prices.
 
-For demographic data, the most obvious choice is to use the demographic data collected every 10 years by the US Census.  [@uscensus2025] 
+For demographic data, the most obvious choice was to use the demographic data collected every 10 years by the US Census [@uscensus2025].
 
 ## Medicare Overview
 
-Medicare eligibility generally requires individuals to be age 65 or older, although those with disabilities, end-stage renal disease (ESRD), or amyotrophic lateral sclerosis (ALS) may qualify earlier [@medicareEligibility]. Once someone is age-eligible, they must sign up for Medicare coverage (Parts A, B, and D) within ± 3 months of their 65th birthday else face late enrollment penalties. 
-Medicare has four primary parts. [@medicareParts]
-Part A (Hospital Insurance) - This covers inpatient care in hospitals, skilled nursing facility care, hospice care, and home health care.
-Part B (Medical Insurance) - This covers regular doctors visits, outpatient care, home health care, durable medical equipment, and many preventative services.
-Part D (Drug Coverage) - This covers the cost of prescription drugs. 
-Medigap (Medicare Supplemental Insurance - only eligible with Original Medicare)
-There are several different methods to purchase some combination of the parts above. The two primary methods are: (1) through “Original Medicare” which bundles Part A and B, and Part D must be purchased separately or (2) thru a Medicare Advantage Plan (referred to as Part C) which bundles Parts A, B, and D together and is often thru private insurers.
+Medicare eligibility typically begins at age 65, though individuals with disabilities, end-stage renal disease (ESRD), or ALS may qualify earlier [@medicareEligibility]. Enrollment must occur within three months before or after one’s 65th birthday to avoid late penalties.
+
+Medicare consists of four main parts [@medicareParts]:
+
+- Part A – Hospital insurance (inpatient care, skilled nursing, hospice, home health)
+- Part B – Medical insurance (doctor visits, outpatient care, equipment, preventive services)
+- Part D – Prescription drug coverage
+- Medigap – Supplemental insurance (available only with Original Medicare)
+
+Coverage can be obtained through:
+
+- Original Medicare – Includes Parts A and B; Part D and Medigap must be purchased separately.
+- Medicare Advantage (Part C) – Bundles Parts A, B, and often D, offered by private insurers.
 
 ## Medicare Part D (Drug Coverage) Costs
 
-Since our focus will be on medication costs, let’s do a deeper dive into Medicare Part D. Depending on the specific plan, one could pay a premium (fixed monthly cost no matter how much the plan is used), a deductible (an amount one pays before the plan starts to pay, a max of $590 in 2025 down to no deductible), a copayment (a fixed amount ones pay at the pharmacy), and/or coinsurance (a percentage one pays at the pharmacy). [@medicarePartDCosts] The specific medication and dosage combination one takes will have different prices at every pharmacy and will have different prices within the same pharmacy depending on the chosen Medicare plan. Some medications are not covered by all plans. Since the average person at age 65 is likely to be on more than one prescription medication, this is a lot of factors to consider when choosing the best plan and pharmacy to minimize costs. This level of complication explains why so many 65-year-olds experience confusion in the process of having to go on Medicare. 
+Medicare Part D costs vary by plan and may include a monthly premium, an annual deductible (up to $590 in 2025), copayments (fixed amounts), and coinsurance (percentage-based costs) [@medicarePartDCosts]. Prices for the same medication and dosage can differ across pharmacies and even within the same pharmacy depending on the selected plan. Not all plans cover all medications, adding another layer of complexity. Given that most 65-year-olds take multiple prescriptions, choosing the most cost-effective plan and pharmacy can be overwhelming, making Medicare enrollment confusing.

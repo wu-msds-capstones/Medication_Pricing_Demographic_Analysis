@@ -183,7 +183,7 @@ Building on this, we applied the Tukey HSD test to the quartile-based groups at 
 
 We repeated this process across several medications and demographic variables, consistently observing statistical significance. However, when examining the actual differences in average prices between groups, the magnitude of these differences was often minimal. Continuing with Semaglutide as an example, counties in the lowest poverty quartile (0–10%) had an average mean price of $168, while those in the highest poverty quartile (>17%) had an average of $167—a mere $1 difference. Notably, counties with higher poverty levels were paying slightly less on average.
 
-To better understand the implications of this finding, we considered affordability by dividing the mean price by the median income of each county. This revealed that although prices were lower in higher-poverty areas, the cost represented a larger proportion of income—highlighting a disparity in affordability. This relationship is clearly illustrated in the following table and Figure @fig-h2_2.
+To better understand the implications of this finding, we considered affordability by dividing the mean price by the median income of each county. This revealed that although prices were lower in higher-poverty areas, the cost represented a larger proportion of income—highlighting a disparity in affordability. This relationship is clearly illustrated in the following table and @fig-h2_2.
 
 | Poverty Group       | Mean Price | SD Price | Mean Affordability | SD Affordability | Sample Size (n) |
 |---------------------|------------|----------|---------------------|------------------|------------------|
@@ -329,6 +329,7 @@ summary_table2 = readRDS("data/summary_table2.rds") %>% filter(!is.na(drug_name_
 
 library(dplyr)
 library(ggplot2)
+
 # Plot faceted histograms
 ggplot(summary_table2, aes(x = median_price)) +
   geom_histogram(bins = 50, fill = "darkgray") +
@@ -347,7 +348,6 @@ In order to model the relationship between medication prices and demographic fea
 
 **Linear Model (LM):**
 Linear regression is a fundamental technique used to model the relationship between a continuous outcome variable and one or more predictors, assuming a linear relationship. It is interpretable and computationally efficient but may underperform when the underlying patterns are nonlinear or complex.
-
 
 **Elastic Net (ENET):**
 Elastic Net is a regularized regression method that combines both L1 (Lasso) and L2 (Ridge) penalties. It is particularly effective when dealing with multicollinearity or when performing variable selection in high-dimensional datasets. Elastic Net encourages sparsity while maintaining group stability among correlated features.

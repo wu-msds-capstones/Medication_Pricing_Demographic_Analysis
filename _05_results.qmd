@@ -250,7 +250,7 @@ Recognizing this limitation, we pivoted our focus toward structural market facto
 
 ## Population vs Number of Available Medicare Plans
 
-Given the lack of clear patterns for medication prices across the maps and within isolated demographic groups, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {@fig-plans-vs-population} 
+Given the lack of clear patterns for medication prices across the maps and within isolated demographic groups, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line in @fig-plans-vs-population.
 
 
 ```{r}
@@ -527,7 +527,9 @@ ggplot(all_varimp_clean, aes(x = Drug_Model, y = Variable, fill = NormalizedImpo
 
 ```
 
-We did a quick linear regression fit between the median price of all drugs and the number of available Medicare plans in a county. The results are shown in the below table. The percent of the price variance is that is due to the number of available Medicare plans was pulled from the R^2 value. The direction of the relationship is shown as either an increase (↑) or decrease (↓) in price with an increase in the number of available plans. The significance of the relationship was determined by a p-value < 0.05. The interpretation of the relationship is based on the slope of the fit, which indicates how much the median price changes with each additional Medicare plan available in a county.
+### Direction top feature pushes drug price
+
+We did a quick linear regression fit between the median price of all drugs and the number of available Medicare plans in a county. The results are shown in @fig-effect-available-plans-on-drug-price below. The percent of the price variance that is due to the number of available Medicare plans was pulled from the R^2 value and is shown in the size of the points. The direction of the relationship is shown as a percent of the median drug price on the X-axis. For every 10 medicare plans added to a county, the drug price either increases or decreases by the percent in the plot. The significance of the relationship was determined by a p-value < 0.05 and is color coded in the plot. In general, while some drug account, the number of contracts accounts for ~5% of the variance in drug price, that is still quite a small number. Also, some drugs are increasing price and some decreasing with the addtion of 10 more Medicare plan options in a county. In general, the number of Medicare plans available isn't the only factor that drives drug price, but it is the most important factor we found in our analysis.
 
 
 ``` {r}
@@ -585,7 +587,7 @@ ggplot(df, aes(x = PercentChange, y = MedianPrice,
 
 The application of diverse machine learning algorithms provided valuable insights into the complex relationships between demographic factors and medication prices across U.S. counties. Despite the initial hypothesis that demographic variables might strongly predict drug pricing disparities, our results indicate that the quantity of Medicare plans available within a county is the most consistent and influential predictor across the majority of the top-spending medications. Other demographic features, such as education level, income, and racial composition, showed variable importance depending on the specific drug but did not emerge as universally strong predictors.
 
-The superior performance of random forest modelling highlights the nonlinear and multifaceted nature of drug pricing patterns, which simpler linear models struggled to capture effectively. This complexity underscores the challenge of modeling medication prices purely based on demographics and points to the potential influence of additional factors not captured in our current dataset.
+The superior performance of GBM, RF, and XGB models highlights the nonlinear and multifaceted nature of drug pricing patterns, which simpler linear models struggled to capture effectively. This complexity underscores the challenge of modeling medication prices purely based on demographics and points to the potential influence of additional factors not captured in our current dataset.
 
 Overall, these findings suggest that while demographic characteristics contribute to medication price variation, market dynamics (reflected by Medicare plan availability) play a pivotal role. Future work may benefit from incorporating additional economic, regulatory, and supply-chain data to better explain and predict geographic disparities in medication costs. This knowledge could ultimately inform policies aimed at improving affordability and equity in drug pricing.
 

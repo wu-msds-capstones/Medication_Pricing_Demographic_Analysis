@@ -21,7 +21,7 @@ Some Medicare plan options were listed at the county level, while others were av
 
 A key limitation of the CMS formulary data was the absence of drug names, listing only 11-digit National Drug Code (NDC) identifiers. Meanwhile, the overall spending datasets included drug names but lacked NDCs, preventing direct linkage. Since NDCs are not easily interpretable, converting them to readable names was essential for analysis.
 
-To bridge this gap, we used the FDA’s National Drug Code Directory [@fda2025ndc], which provides detailed drug identification. However, formatting inconsistencies—such as missing leading zeros and compressed segments—required standardizing both datasets to a 9-digit format by removing package-level detail and adjusting segment lengths.
+To bridge this gap, we used the FDA’s National Drug Code Directory [@fda2025ndc], which provides detailed drug identification. However, formatting inconsistencies, such as missing leading zeros and compressed segments, required standardizing both datasets to a 9-digit format by removing package-level detail and adjusting segment lengths.
 
 After extensive cleaning, we successfully matched FDA drug names to CMS formulary entries. Fortunately, naming conventions in the spending data aligned closely with FDA standards (95% match), enabling us to relate national spending figures to county-level prices and plan availability. This integration created a robust, interconnected database across multiple large-scale datasets.
 

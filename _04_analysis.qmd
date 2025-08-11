@@ -59,18 +59,18 @@ We were not able to match all the top drugs to our dataset, so we used only the 
 | $12.1B            | Tiotropium Bromide    | Spiriva                    | COPD (Chronic Obstructive Pulmonary Disease), Asthma (adjunct)                                                  |
 | $11.6B            | Liraglutide           | Victoza, Saxenda           | Type 2 Diabetes, Obesity                                                                  |
 
-: Table 1 -  Top medications by absolute spend and the treatment conditions {#tbl-topmeds .striped .hover tbl-colwidths="[20,20,20,40]"}  
+: Top medications by absolute spend and the treatment conditions {#tbl-topmeds .striped .hover tbl-colwidths="[20,20,20,40]"}  
 
 ## Exploratory Data Analysis
 
-### Large medication price variance across counties and Medicare plans 
+### Price Variance Across Counties 
 
 After mapping individual medication prices to U.S. counties where Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure {@fig-pricevariance}. This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.
 
 
 ```{r}
 #| label: fig-pricevariance
-#| fig-cap: "Variance in price amongst the top drugs /n (descending by absolute spending) across the US"
+#| fig-cap: "Variance in price for top drugs (descending by absolute spending) across the U.S."
 #| warning: false
 #| echo: false
 #| message: false 
@@ -375,7 +375,7 @@ Our team was surprised by what we observed once the median prices were applied t
 The age, education, racial, and gender data from the Census are provided as absolute values. We normalized those by dividing each metric by the total population to convert them to percentages. We then explored which demographic metrics most closely correlate to the prices for each medication in @fig-by-drug-correlation. If all the medications are correlated with similar demographic metrics, all drugs can be modeled together. If not, the individual drugs will need to be modeled separately. In this case, we filtered out weak correlations, keeping only those with Pearson correlation coefficients less than -0.1 or greater than 0.1. There is no clear pattern among all the top drugs for correlations with the demographic metrics. 
 
 ```{r}
-#| label: fig-by-drug-correlations
+#| label: fig-by-drug-correlation
 #| fig-cap: "Heatmap of Pearson Correlations Between Demographics and Drug Prices where |Pearson Correlation| > 0.1"
 #| warning: false
 #| fig-height: 8 
@@ -415,7 +415,7 @@ We introduced a feature called “Affordability” which divided price by income
 
 ```{r}
 #| label: fig-affordability-correlations
-#| fig-cap: "Pearson Correlations between Demographic VFeatures and Affordability"
+#| fig-cap: "Pearson Correlations between Demographic Features and Affordability"
 #| warning: false
 #| echo: false
 

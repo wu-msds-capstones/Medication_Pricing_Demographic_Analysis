@@ -300,7 +300,7 @@ XGBoost is an optimized and scalable implementation of gradient boosting. It inc
 
 ### Model Performance
 
-Looping over every drug, we trained all the previously described models. A heatmap of the resulting model performance is provided below in @fig-heatmap-models-performance. Note that all models for Ustekinumab have outlier RMSE and MAE results and are thus gray to make the difference between the other drug results more differentiated visually. For all other drugs, the random forest model has the lowest RMSE and MAE values. Fortunately, the random forest model also provides insight into feature importance. 
+Looping over every drug, we trained all the previously described models. A heatmap of the resulting model performance is provided below in @fig-heatmap-models-performance. As expected, the gradient boosting machine, the random forest, and the extreme gradient boosting models performed the best across all drugs. Unfortunately, while the models ok R^2 values when fitting to the training data, the R^2 values for the test data is significantly lower. This suggests that the models are overfitting to the training data, and we need to tune the hyperparameters of the models to improve performance.
 
 
 ```{r}
@@ -362,13 +362,13 @@ Rsq_limits <- c(min(all_metrics$Rsquared, na.rm = TRUE),
 # Train Rsquared heatmap
 p1 <- ggplot(train_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
   geom_tile(color = "white") +
-  geom_text(aes(label = signif(Rsquared, 2),
+  geom_text(aes(label = signif(Rsquared, 1),
                 color = text_color),
             size = 3, angle = 45, 
             show.legend = FALSE) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) + 
-  labs(title = "Train Rsquared", x = "Model", y = NULL) +
+  labs(title = "Training Data Rsquared", x = "Model", y = NULL) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -381,7 +381,7 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
             show.legend = FALSE) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) +
-  labs(title = "Test Rsquared", x = "Model", y = NULL) +
+  labs(title = "Test Data Rsquared", x = "Model", y = NULL) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 # Combine
@@ -390,8 +390,69 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
 ```
 
 
+### Tuning to prevent overfitting
+To improve the model performance and prevent overfitting, we tuned the hyperparameters of the extreme gradient boosting models. The tuning process involved adjusting parameters such as the number of rounds, maximum depth, learning rate (aka eta) and more to optimize model performance on the validation set. Our most overfit model XGB6 has a nearly perfect fit to the training data for all drugs, and yet it also has the best fit to the test data. If the model had the key features that drive median price, we would've expected to see the test R^2 values be much closer to the training R^2 values and that there would be a optimum point where the training data might have a worse fit, but the test data would have a better fit in comparison. Tunning the parameters to prevent overfitting, you can see the XGB7-9 get progressively worse fits to the training data, but also worse fits to the test data. Thus, we think that the features that we have are not the best predictors of median drug price. The tuned XGB models are shown in @fig-heatmap-models-performance-tuned.
+  
+```{r}
+#| label: ig-heatmap-models-performance-tuned
+#| fig-cap: "Tuned XGB Models Performance Heatmap by Drug"
+#| warning: false
+#| echo: false
+#| fig-height: 6
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(scales)
+
+all_metrics_XGB = readRDS("data/all_metrics_XGB_tuned_models.rds")
+
+train_metrics <- all_metrics_XGB %>% 
+  filter(Dataset == "Train") %>% 
+  mutate(fill_norm = rescale(Rsquared), 
+         text_color = ifelse(fill_norm > 0.25, "white", "black"))  # text is black if background is light
+test_metrics  <- all_metrics_XGB %>% 
+  filter(Dataset == "Test") %>% 
+  mutate(fill_norm = rescale(Rsquared), 
+         text_color = ifelse(fill_norm > 0.5, "white", "black"))  # text is black if background is light
+
+# Shared fill scale
+Rsq_limits <- c(min(all_metrics_XGB$Rsquared, na.rm = TRUE),
+                quantile(all_metrics_XGB$Rsquared, 1, na.rm = TRUE))
+
+# Train Rsquared heatmap
+p1 <- ggplot(train_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = signif(Rsquared, 2),
+                color = text_color),
+            size = 3, angle = 45, 
+            show.legend = FALSE) +
+  scale_color_identity() +  # use colors as-is from the column
+  scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) + 
+  labs(title = "Training Data Rsquared", x = "Model", y = NULL) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Test Rsquared heatmap
+p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = signif(Rsquared, 2),
+                color = text_color),
+            size = 3, angle = 45, 
+            show.legend = FALSE) +
+  scale_color_identity() +  # use colors as-is from the column
+  scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) +
+  labs(title = "Test Data Rsquared", x = "Model", y = NULL) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+# Combine
+(p1 + p2) + plot_layout(guides = "collect") & theme(legend.position = "right")
+
+
+```
+
 ### Feature Importance
- The most important features for the random forest models across all drugs are shown in the heatmap below (@fig-heatmap-rf-variable-importance). The most obvious pattern here is that the num_contract_plans (aka the quantity of available Medicare plans) is the most important feature for 10 out of the 14 top drugs. We already looked at the connection between total_population and the quantity of available plans in a county previously, and only saw a mild correlation. For the other four drugs, the top features were percent of residences with an associate's degree as their maximum education level, the median household income, the percentage of the population that is black, and the percentage of the population where the highest level of education is a master’s degree.
+ The most important features for the initial XGB model across all drugs are shown in the heatmap below (@fig-heatmap-rf-variable-importance). The most obvious pattern here is that the num_contract_plans (aka the quantity of available Medicare plans) is the most important feature for 12 out of the 14 top drugs. We already looked at the connection between total_population and the quantity of available plans in a county previously, and only saw a mild correlation. For the other two drugs, the top features were income per capita and percent of the population with master's degree.
 
 
 ``` {r}
@@ -439,6 +500,31 @@ ggplot(all_varimp_clean, aes(x = Drug_Model, y = Variable, fill = NormalizedImpo
 
 
 ```
+
+We did a quick linear regression fit between the median price of all drugs and the number of available Medicare plans in a county. The results are shown in the below table. The percent of the price variance is that is due to the number of available Medicare plans was pulled from the R^2 value. The direction of the relationship is shown as either an increase (↑) or decrease (↓) in price with an increase in the number of available plans. The significance of the relationship was determined by a p-value < 0.05. The interpretation of the relationship is based on the slope of the fit, which indicates how much the median price changes with each additional Medicare plan available in a county.
+
+
+| Drug                       | Price Change with Each Additional Plan | % Change       | Significant? | Explains x% of Variance | Interpretation                                     |
+| -------------------------- | -------------------------------------- | --------------  | ------------ | ----------------------- | -------------------------------------------------- |
+| **Adalimumab**             | +$1.75                                | **+0.00%**      | Yes          | 0.84                    | Small positive effect                              |
+| **Apixaban**               | $0                              | **-0.00%**       | No           | 0.04                    | No evidence of relationship                        |
+| **Dulaglutide**            | $-0.08                                | **-0.00%**          | No           | 0.11                    | Weak negative trend, borderline significance       |
+| **Empagliflozin**          | $0.01                               | **+0.00%**          | Yes          | 0.33                    | Tiny positive effect                               |
+| **Etanercept**             | $0.49                                 | **+0.00%**         | Yes          | 0.30                    | Small positive effect                              |
+| **Ibrutinib**              | $0.17                                 | **+0.00%**         | Yes          | 0.22                    | Small positive effect                              |
+| **Insulin Aspart**         | -$0.08                               | **-0.00%**           | No           | <0.01                   | No effect                                          |
+| **Lenalidomide**           | +25.04¢                                | **+0.00%**           | Yes          | **5.01**                | Moderate positive effect                           |
+| **Liraglutide**            | -12.92¢                                | **-0.16%**           | Yes          | **4.20**                | Moderate negative effect                           |
+| **Paliperidone Palmitate** | +10.80¢                                | **+0.00%**             | Yes          | 0.21                    | Small positive effect                              |
+| **Rivaroxaban**            | -$1.03                                | **-0.01%**             | Yes          | **2.84**                | Small but clear negative effect                    |
+| **Semaglutide**            | -$1.37                                | **-0.05%**             | Yes          | **2.58**                | Small/moderate negative effect                     |
+| **Tiotropium Bromide**     | +$14.2                                 | **+0.00%**             | Yes          | **6.35**                | Strongest predictive power in this group (6.4%)    |
+| **Ustekinumab**            | -$5.02                                | **-0.00%**           | Yes          | 0.13                    | Weak but statistically significant negative effect |
+
+
+
+
+
 
 ### Machine Learning (ML) Conclusions
 

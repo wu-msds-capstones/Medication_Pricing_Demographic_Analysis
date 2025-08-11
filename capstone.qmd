@@ -2,7 +2,7 @@
 title: "Predicting Medicare Medication Costs Across US Demographics"
 subtitle: | 
   Can demographic information predict medication costs for Medicare patients?
-  <!-- ![](images/W_compass.png){height=0.5in} -->
+  <!-- (images/W_compass.png){height=0.5in} -->
   <!-- Data Science Capstone -->
 authors: "Ellann Cohen and Travis McKenzie"
 bibliography: references.bib

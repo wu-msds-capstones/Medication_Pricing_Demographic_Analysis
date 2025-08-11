@@ -45,9 +45,9 @@ Accordingly, our team elected to compare mean prices, which notably exposes our 
 | Ustekinumab            | 7.29e-02        |
 | Ibrutinib              | 4.93e-01        |
 
-: P-value results for Hypothesis 1 {#tbl-h1 .striped .hover tbl-colwidths="[50,50]"}  
+: P-value results for Hypothesis 1 {#tbl-h1_pvalue .striped .hover tbl-colwidths="[50,50]"}  
 
-We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See @tbl-h1.) To dive deeper, our team constructed density plots to compare the direction of this difference.  As observed in @fig-h1, where we evaluate two of these medications.  We can clearly see that the direction shifts at different price ranks and depends on the medication.
+We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See @tbl-h1_pvalue above.) To dive deeper, our team constructed density plots to compare the direction of this difference.  As observed in @fig-h1, where we evaluate two of these medications.  We can clearly see that the direction shifts at different price ranks and depends on the medication.
 
 ```{r}
 #| label: fig-h1
@@ -87,7 +87,7 @@ h_df_clean%>%
 
 ```
 
-Drilling down again, with these two medications in focus, actual values are compared:
+Drilling down again, with these two medications in focus, actual values are compared below in @tbl-h1_means.
 
 | Drug Name   | >=95% White | Mean of Mean Price | SD Mean Price |
 |-------------|----------|----------------|----------------|
@@ -95,6 +95,8 @@ Drilling down again, with these two medications in focus, actual values are comp
 | Dulaglutide | TRUE     | 444.00          | 3.71           |
 | Semaglutide | FALSE    | 168.00          | 2.58           |
 | Semaglutide | TRUE     | 167.00          | 1.84           |
+
+: Mean of Mean Price and Standard Deviation for Dulaglutide and Semaglutide betwen two race groups {#tbl-h1_means .striped .hover tbl-colwidths="[25,25,25,25]"}  
 
 The findings are interesting but have issues.  In the plot, we can clearly see that advantages are given to certain groups at certain prices.  The mean of the mean prices, as well as the standard deviations show practically no difference for Dulaglutide and only some difference for Semaglutide.  Unfortunately, this does not provide much clarity regarding any particular advantage afforded to counties where more than 95% of the population identifies as white.  The findings are hardly definitive and lack confidence intervals.  This does demonstrate the limitations of using the Mann-Whitney U Test.
 
@@ -123,9 +125,11 @@ Using the same assumptions, another consideration involves fully removing the ra
 | Tiotropium Bromide     | 8.55e-02        |
 | Rivaroxaban            | 1.54e-01        |
 
-Again, we find that there are statistically significant outcomes for many of the selected medications.  Twelve of the fourteen medications yield p-values below 0.05 suggesting that the null hypothesis be rejected.
+: P-value results for Hypothesis 2 {#tbl-h2_pvalue .striped .hover tbl-colwidths="[50,50]"}  
 
-In {@fig-h2} we look closer at six medications, to expand the investigation into these differences and the direction of any potential advantage.
+Again, we find that there are statistically significant outcomes for many of the selected medications.  Twelve of the fourteen medications yield p-values below 0.05 suggesting that the null hypothesis be rejected. (See @tbl-h2_pvalue above.)
+
+In @fig-h2 we look closer at six medications, to expand the investigation into these differences and the direction of any potential advantage.
 
 ```{r}
 #| label: fig-h2
@@ -172,7 +176,7 @@ In order to further explore statistical significance, we assumed a normal distri
 
 Using a two-sample t-test allowed reconsideration of our second hypothesis.  We again encountered low p-values.  Selecting for Semaglutide as one example and using the same data split for poverty at the median, the resulting p-value was 2.2e-16 which was a strong indicator for statistical significance, suggesting we reject the null.
 
-Building on this, we applied the Tukey HSD test to the quartile-based groups at a 95% confidence level. Again, we found p-values that supported rejecting the null hypothesis, indicating that the average mean prices across groups were not equal. Interestingly, the only comparisons with p-values at or above 5% occurred between adjacent quartile groups, while all other comparisons yielded p-values well below this threshold.
+Building on this, we applied the Tukey HSD test to the quartile-based groups at a 95% confidence level. Again, we found p-values that supported rejecting the null hypothesis, indicating that the average mean prices across groups were not equal. Interestingly, the only comparisons with p-values at or above 5% occurred between adjacent quartile groups, while all other comparisons yielded p-values well below this threshold. (See @tbl-p2_tukey below.)
 
 | Comparison                         | Difference   | Lower CI     | Upper CI     | Adjusted p-value |
 |------------------------------------|--------------|--------------|--------------|------------------|
@@ -183,9 +187,11 @@ Building on this, we applied the Tukey HSD test to the quartile-based groups at 
 | 10-13% Poverty - 0-10% Poverty     | -0.2990395   | -0.5978861   | -0.0001928   | 0.0497806        |
 | 13-17% Poverty - 10-13% Poverty    | -0.2192862   | -0.5196131   |  0.0810407   | 0.2382320        |
 
+: Tukey HSD test comparing Semaglutide prices amongst four poverty levels {#tbl-p2_tukey .striped .hover tbl-colwidths="[30, 17.5, 17.5, 17.5, 17.5]"}  
+
 We repeated this process across several medications and demographic variables, consistently observing statistical significance. However, when examining the actual differences in average prices between groups, the magnitude of these differences was often minimal. Continuing with Semaglutide as an example, counties in the lowest poverty quartile (0–10%) had an average mean price of $168, while those in the highest poverty quartile (>17%) had an average of $167, a mere $1 difference. Notably, counties with higher poverty levels were paying slightly less on average.
 
-To better understand the implications of this finding, we considered affordability by dividing the mean price by the median income of each county. This revealed that although prices were lower in higher-poverty areas, the cost represented a larger proportion of income, highlighting a disparity in affordability. This relationship is clearly illustrated in the following table and @fig-h2_2.
+To better understand the implications of this finding, we considered affordability by dividing the mean price by the median income of each county. This revealed that although prices were lower in higher-poverty areas, the cost represented a larger proportion of income, highlighting a disparity in affordability. This relationship is clearly illustrated in the following @tbl-p2-means and @fig-h2_2.
 
 | Poverty Group       | Mean Price | SD Price | Mean Affordability | SD Affordability | Sample Size (n) |
 |---------------------|------------|----------|---------------------|------------------|------------------|
@@ -193,6 +199,8 @@ To better understand the implications of this finding, we considered affordabili
 | 10–13% Poverty      | 168.00     | 2.60     | 0.00246             | 0.000332         | 725              |
 | 13–17% Poverty      | 167.00     | 2.36     | 0.00275             | 0.000351         | 772              |
 | >17% Poverty        | 167.00     | 1.69     | 0.00340             | 0.000613         | 846              |
+
+: Mean and standard deviation of prices of Semaglutide by four poverty buckets {#tbl-p2-means .striped .hover tbl-colwidths="[17, 17, 15, 17, 17]"} 
 
 ```{r}
 #| label: fig-h2_2
@@ -242,7 +250,7 @@ Recognizing this limitation, we pivoted our focus toward structural market facto
 
 ## Population vs Number of Available Medicare Plans
 
-Given the lack of clear patterns for medication prices across the maps and within isolated demographic groups, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {@fig-plans-vs-population} 
+Given the lack of clear patterns for medication prices across the maps and within isolated demographic groups, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line in @fig-plans-vs-population.
 
 
 ```{r}
@@ -285,65 +293,6 @@ While there is a slight trend, it is not a great fit overall. The model is stati
 From here, we jumped into creating a model across all our demographics (age, education, gender, and racial breakdowns, as well as median income, and percent below the poverty line). 
 
 ## Machine Learning
-
-### Check for Gaussian Distributions
-
-Before proceeding into any modeling, one must check the distribution of the variables. For this particular dataset, if all the medications are looked at simultaneously, one needs to take the log of the median prices to have the histogram show a more Gaussian distribution. (See @fig-hist-price-all-drugs). This is due to the fact that the median drug price varies greatly depending on the actual drug being considered. 
-
-```{r}
-#| label: fig-hist-price-all-drugs
-#| fig-cap: "Histogram of Median Drug Prices and Log-Transformed Median Drug Prices across All Drugs"
-#| warning: false
-#| fig-height: 4
-#| echo: false
-
-
-summary_table2 = readRDS("data/summary_table2.rds")
-
-# Set up a 1-row, 2-column layout
-par(mfrow = c(1, 2))
-# Histogram of raw median_price
-hist(summary_table2$median_price, 
-     breaks = 50, 
-     main = "Median Price - All Drugs", 
-     xlab = "Price",
-     col = "darkgray")
-# Histogram of log-transformed median_price
-hist(log(summary_table2$median_price), 
-     breaks = 50, 
-     main = "Log(Median Price) - All Drugs", 
-     xlab = "log(Price)",
-     col = "lightgray")
-# Reset plotting layout
-par(mfrow = c(1, 1))
-```
-
-If the medications are reviewed independently (@fig-hist-price-per-drug), then we do not need to take the log of the medication prices. The distribution shape doesn’t change with or without the log of the price. Our plan is to look at each drug independently due to the lack of patterns in the correlation heatmaps earlier (@fig-by-drug-correlations).
-
-```{r}
-#| label: fig-hist-price-per-drug
-#| fig-cap: "Histogram of Median Drug Prices by Drug"
-#| warning: false
-#| echo: false
-#| fig-height: 8
-
-summary_table2 = readRDS("data/summary_table2.rds") %>% filter(!is.na(drug_name_clean))
-
-library(dplyr)
-library(ggplot2)
-
-# Plot faceted histograms
-ggplot(summary_table2, aes(x = median_price)) +
-  geom_histogram(bins = 50, fill = "darkgray") +
-  facet_wrap(~ drug_name_clean, scales = "free", ncol = 3) +
-  labs(
-    title = "Distribution of Median Price by Drug",
-    x = "Median Price",
-    y = "Count"
-  ) +
-  theme_minimal(base_size = 10)
-
-```
 
 ### Model Selection
 In order to model the relationship between medication prices and demographic features, we employed a variety of machine learning algorithms, each with unique strengths and assumptions. Below is a brief overview of the algorithms explored:
@@ -578,7 +527,9 @@ ggplot(all_varimp_clean, aes(x = Drug_Model, y = Variable, fill = NormalizedImpo
 
 ```
 
-We did a quick linear regression fit between the median price of all drugs and the number of available Medicare plans in a county. The results are shown in the below table. The percent of the price variance is that is due to the number of available Medicare plans was pulled from the R^2 value. The direction of the relationship is shown as either an increase (↑) or decrease (↓) in price with an increase in the number of available plans. The significance of the relationship was determined by a p-value < 0.05. The interpretation of the relationship is based on the slope of the fit, which indicates how much the median price changes with each additional Medicare plan available in a county.
+### Direction top feature pushes drug price
+
+We did a quick linear regression fit between the median price of all drugs and the number of available Medicare plans in a county. The results are shown in @fig-effect-available-plans-on-drug-price below. The percent of the price variance that is due to the number of available Medicare plans was pulled from the R^2 value and is shown in the size of the points. The direction of the relationship is shown as a percent of the median drug price on the X-axis. For every 10 medicare plans added to a county, the drug price either increases or decreases by the percent in the plot. The significance of the relationship was determined by a p-value < 0.05 and is color coded in the plot. In general, while some drug account, the number of contracts accounts for ~5% of the variance in drug price, that is still quite a small number. Also, some drugs are increasing price and some decreasing with the addtion of 10 more Medicare plan options in a county. In general, the number of Medicare plans available isn't the only factor that drives drug price, but it is the most important factor we found in our analysis.
 
 
 ``` {r}
@@ -636,7 +587,7 @@ ggplot(df, aes(x = PercentChange, y = MedianPrice,
 
 The application of diverse machine learning algorithms provided valuable insights into the complex relationships between demographic factors and medication prices across U.S. counties. Despite the initial hypothesis that demographic variables might strongly predict drug pricing disparities, our results indicate that the quantity of Medicare plans available within a county is the most consistent and influential predictor across the majority of the top-spending medications. Other demographic features, such as education level, income, and racial composition, showed variable importance depending on the specific drug but did not emerge as universally strong predictors.
 
-The superior performance of random forest modelling highlights the nonlinear and multifaceted nature of drug pricing patterns, which simpler linear models struggled to capture effectively. This complexity underscores the challenge of modeling medication prices purely based on demographics and points to the potential influence of additional factors not captured in our current dataset.
+The superior performance of GBM, RF, and XGB models highlights the nonlinear and multifaceted nature of drug pricing patterns, which simpler linear models struggled to capture effectively. This complexity underscores the challenge of modeling medication prices purely based on demographics and points to the potential influence of additional factors not captured in our current dataset.
 
 Overall, these findings suggest that while demographic characteristics contribute to medication price variation, market dynamics (reflected by Medicare plan availability) play a pivotal role. Future work may benefit from incorporating additional economic, regulatory, and supply-chain data to better explain and predict geographic disparities in medication costs. This knowledge could ultimately inform policies aimed at improving affordability and equity in drug pricing.
 

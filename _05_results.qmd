@@ -334,7 +334,6 @@ Looping over every drug, we trained all the previously described models. A heatm
 #| fig-cap: "Model Performance Heatmap by Drug"
 #| warning: false
 #| echo: false
-#| fig-height: 6
 
 library(ggplot2)
 library(dplyr)
@@ -417,14 +416,13 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
 
 
 ### Tuning to prevent overfitting
-To improve the model performance and prevent overfitting, we tuned the hyperparameters of the extreme gradient boosting models. The tuning process involved adjusting parameters such as the number of rounds, maximum depth, learning rate (aka eta) and more to optimize model performance on the validation set. Our most overfit model XGB6 has a nearly perfect fit to the training data for all drugs, and yet it also has the best fit to the test data. If the model had the key features that drive median price, we would've expected to see the test R^2 values be much closer to the training R^2 values and that there would be a optimum point where the training data might have a worse fit, but the test data would have a better fit in comparison. Tunning the parameters to prevent overfitting, you can see the XGB7-9 get progressively worse fits to the training data, but also worse fits to the test data. Thus, we think that the features that we have are not the best predictors of median drug price. The tuned XGB models are shown in @fig-heatmap-models-performance-tuned.
+To improve the model performance and prevent overfitting, we tuned the hyperparameters of the extreme gradient boosting models. The tuning process involved adjusting parameters such as the number of rounds, maximum depth, learning rate (aka eta) and more to optimize model performance on the validation set. Our most overfit model XGB6 has a nearly perfect fit to the training data for all drugs, and yet it also has the best fit to the test data. If the model had the key features that drive median price, we would've expected to see the test R^2 values be much closer to the training R^2 values and that there would be a optimum point where the training data might have a worse fit, but the test data would have a better fit in comparison. Tunning the parameters to prevent overfitting, you can see the XGB7, XGB8, and XGB9 get progressively worse fits to the training data, but also those models get worse fits to the test data. Thus, we think that the features that we have are not the best predictors of median drug price. The tuned XGB models are shown in @fig-heatmap-models-performance-tuned.
   
 ```{r}
-#| label: ig-heatmap-models-performance-tuned
+#| label: fig-heatmap-models-performance-tuned
 #| fig-cap: "Tuned XGB Models Performance Heatmap by Drug"
 #| warning: false
 #| echo: false
-#| fig-height: 6
 
 library(ggplot2)
 library(dplyr)
@@ -455,7 +453,7 @@ p1 <- ggplot(train_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
             show.legend = FALSE) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) + 
-  labs(title = "Training Data Rsquared", x = "Model", y = NULL) +
+  labs(title = "Training Data R^2", x = "Model", y = NULL) +
   theme_minimal(base_size = 10) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -468,7 +466,7 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
             show.legend = FALSE) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) +
-  labs(title = "Test Data Rsquared", x = "Model", y = NULL) +
+  labs(title = "Test Data R^2", x = "Model", y = NULL) +
   theme_minimal(base_size = 10) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 # Combine
@@ -486,7 +484,6 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
 #| fig-cap: "Top 5 Variable Importance Heatmap by Drug for XGB Model"
 #| warning: false
 #| echo: false
-#| fig-height: 6
 
 library(ggplot2)
 
@@ -534,7 +531,7 @@ We did a quick linear regression fit between the median price of all drugs and t
 
 ``` {r}
 #| label: fig-effect-available-plans-on-drug-price
-#| fig-cap: "Effect of Available Plans on Drug Price"
+#| fig-cap: "Effect of Additional Available Medicare Plans in a County on Drug Price"
 #| warning: false
 #| echo: false
 
@@ -569,10 +566,10 @@ ggplot(df, aes(x = PercentChange, y = MedianPrice,
   # scale_shape_manual(values = c("Increase" = 16, "Decrease" = 17)) +
   geom_text_repel(aes(label = Drug), size = 3, max.overlaps = 10, box.padding = 1, point.padding = 1) +
   labs(
-    title = "Effect of Available Plans on Drug Price",
-    x = "% Change in Price per 10 More Plans",
+    title = "Effect of Additional Available Medicare Plans in a County on Drug Price",
+    x = "% Change in Price per 10 Additional Medicare Plans",
     y = "Median Price (log10 USD)",
-    size = "Explains x% of Variance",
+    size = "Explains X% of Variance",
     color = "Statistically Significant"
     # shape = "Direction"
   ) +
@@ -583,7 +580,7 @@ ggplot(df, aes(x = PercentChange, y = MedianPrice,
 
 
 
-### Machine Learning (ML) Conclusions
+### Machine Learning Conclusions
 
 The application of diverse machine learning algorithms provided valuable insights into the complex relationships between demographic factors and medication prices across U.S. counties. Despite the initial hypothesis that demographic variables might strongly predict drug pricing disparities, our results indicate that the quantity of Medicare plans available within a county is the most consistent and influential predictor across the majority of the top-spending medications. Other demographic features, such as education level, income, and racial composition, showed variable importance depending on the specific drug but did not emerge as universally strong predictors.
 

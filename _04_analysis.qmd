@@ -9,8 +9,6 @@ One of the first goals was to understand the connected data at a high level by c
 #| fig-cap: "Top Medication Spending from 2019 - 2022 across Medicare Part B, D and Medicaid"
 #| warning: false
 #| echo: false
-#| fig-width: 10
-#| fig-heigh: 6
 
 library(tidyverse)
 library(ggrepel)
@@ -39,7 +37,7 @@ print(g1)
 
 ```
 
-We were not able to match all the top drugs to our dataset, so we used only the ones that had full matches, which ended up being the 14 of the top 25 medications. To help contextualize what conditions these medications treat, see the table below. (@tbl-topmeds)
+We were not able to match all the top drugs to our dataset, so we used only the ones that had full matches, which ended up being the 14 of the top 25 medications. To help contextualize what conditions these medications treat, see @tbl-topmeds below.
 
 
 | Total Spend (USD) | Generic Name          | Brand Name(s)              | Common Treatment Conditions                                                                                                 |
@@ -70,7 +68,7 @@ After mapping individual medication prices to U.S. counties where Medicare plans
 
 ```{r}
 #| label: fig-pricevariance
-#| fig-cap: "Variance in price for top drugs (descending by absolute spending) across the U.S."
+#| fig-cap: "Median price variance in price for top drugs (descending by absolute spending) across the U.S."
 #| warning: false
 #| echo: false
 #| message: false 
@@ -116,7 +114,7 @@ box_plot_table <- box_plot_table %>%
 # Plot using the drug_label on the x-axis
 ggplot(box_plot_table, aes(x = drug_label, y = UNIT_COST)) +
   geom_boxplot() + 
-  labs(title = "Price Variance for Top Medications",
+  labs(title = "Median Price Variance For Top Drugs Across the U.S",
        subtitle = "Descending by Absolute Spending (2019-2023)",
        x = "",
        y = "Price ($USD, log scale)") +
@@ -143,11 +141,10 @@ One contributing factor to the wide range of drug prices is the number of Medica
 
 ```{r}
 #| label: fig-ORplans
-#| fig-cap: "Unique Medicare Plan Counts by Oregon County"
+#| fig-cap: "Quantity of Unique Medicare Plan Counts by Oregon County"
 #| warning: false
 #| echo: false
 #| message: false
-#| fig-height: 7 
 
 
 # Load libraries
@@ -379,7 +376,6 @@ The age, education, racial, and gender data from the Census are provided as abso
 #| label: fig-by-drug-correlation
 #| fig-cap: "Heatmap of Pearson Correlations Between Demographics and Drug Prices where |Pearson Correlation| > 0.1"
 #| warning: false
-#| fig-height: 8 
 #| echo: false
 #| message: false
 

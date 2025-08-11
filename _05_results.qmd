@@ -47,7 +47,7 @@ Accordingly, our team elected to compare mean prices, which notably exposes our 
 
 : P-value results for Hypothesis 1 {#tbl-h1 .striped .hover tbl-colwidths="[50,50]"}  
 
-We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See {@tbl-h1}.) To dive deeper, our team constructed density plots to compare the direction of this difference.  As observed in {@fig-h1}, where we evaluate two of these medications.  We can clearly see that the direction shifts at different price ranks and depends on the medication.
+We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See @tbl-h1.) To dive deeper, our team constructed density plots to compare the direction of this difference.  As observed in @fig-h1, where we evaluate two of these medications.  We can clearly see that the direction shifts at different price ranks and depends on the medication.
 
 ```{r}
 #| label: fig-h1

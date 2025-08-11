@@ -1,6 +1,6 @@
 # Results
 
-Our main hypothesis was that there is likely some demographic that is facing more hardship due to medication price inflation in counties with these demographics within the US. Can we use the demographics of a specific county, along with the median medication prices within said county, to develop a model to predict the medication prices? If yes, we could in the short term advise people with specific medical conditions to move to counties with demographics that provide more favorable medication prices and long-term influence the industry to fix such inequities. 
+Our primary hypothesis was that certain demographic groups may experience greater hardship due to rising medication prices, particularly in counties where these demographics are concentrated. We asked whether it’s possible to use county-level demographic data, along with median medication prices, to build a predictive model for drug costs. If successful, such a model could offer short-term guidance—helping individuals with specific medical needs identify counties with more favorable pricing—and long-term potential to inform policy and industry efforts aimed at addressing pricing inequities.
 
 ## Statistical Testing - Phase 1
 
@@ -183,7 +183,7 @@ Building on this, we applied the Tukey HSD test to the quartile-based groups at 
 
 We repeated this process across several medications and demographic variables, consistently observing statistical significance. However, when examining the actual differences in average prices between groups, the magnitude of these differences was often minimal. Continuing with Semaglutide as an example, counties in the lowest poverty quartile (0–10%) had an average mean price of $168, while those in the highest poverty quartile (>17%) had an average of $167—a mere $1 difference. Notably, counties with higher poverty levels were paying slightly less on average.
 
-To better understand the implications of this finding, we introduced an affordability measure by dividing the mean price by the median income of each county. This revealed that although prices were lower in higher-poverty areas, the cost represented a larger proportion of income—highlighting a disparity in affordability. This relationship is clearly illustrated in the following table and Figure @fig-h2_2.
+To better understand the implications of this finding, we considered affordability by dividing the mean price by the median income of each county. This revealed that although prices were lower in higher-poverty areas, the cost represented a larger proportion of income—highlighting a disparity in affordability. This relationship is clearly illustrated in the following table and Figure @fig-h2_2.
 
 | Poverty Group       | Mean Price | SD Price | Mean Affordability | SD Affordability | Sample Size (n) |
 |---------------------|------------|----------|---------------------|------------------|------------------|
@@ -232,15 +232,15 @@ h_df_clean%>%
 
 ```
 
-We employed both t-tests and Tukey HSD tests to analyze a range of medications across various demographic subsets, tailoring each test to our hypotheses, exploring the potential for demographic price impacts. These analyses produced a diverse set of outputs, many of which indicated statistical significance. Upon closer inspection, we observed marginal differences in the average mean prices across county groups, as well as in our affordability metric and other summary statistics.
+We employed both t-tests and Tukey HSD tests to evaluate a range of medications across various demographic subsets, tailoring each analysis to specific hypotheses about potential demographic impacts on drug pricing. While many results showed statistical significance, further inspection revealed that the actual differences in mean prices, affordability metrics, and other summary statistics were often marginal.
 
-While some differences were statistically significant, they often lacked practical relevance. It's important to note that statistical significance merely suggests that a difference is unlikely to be due to random chance—it does not necessarily imply that the difference is meaningful in a real-world context. As we delved deeper into the results, it became clear that although our tests were identifying differences, these findings did not always translate into actionable insights.
+This distinction between statistical and practical significance became a turning point. Statistical significance simply indicates that a result is unlikely due to random chance. It does not guarantee that the difference is meaningful or actionable. In our case, the detected differences, though statistically valid, lacked the magnitude necessary to inform policy or guide consumer decisions.
 
-To better understand the implications of these results, we shifted our focus toward evaluating how population sizes compare to the number of available plans in each area. This perspective allows us to assess whether plan availability aligns with population needs, offering a more grounded view of affordability and access across different regions.
+Recognizing this limitation, we pivoted our focus toward structural market factors, particularly the relationship between population size and the number of available Medicare Part D plans in each county. This shift allowed us to explore whether plan availability aligns with population needs—a perspective that offers more tangible insights into affordability and access. By emphasizing market dynamics over demographic predictors, we uncovered patterns that more directly influence pricing and equity across regions.
 
 ## Population vs Number of Available Medicare Plans
 
-Given the lack of clear patterns for medication prices across the maps, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {@fig-plans-vs-population} 
+Given the lack of clear patterns for medication prices across the maps and within isolated demographic groups, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {@fig-plans-vs-population} 
 
 
 ```{r}

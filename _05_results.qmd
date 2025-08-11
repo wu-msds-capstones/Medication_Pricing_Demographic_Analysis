@@ -339,7 +339,7 @@ ggplot(summary_table2, aes(x = median_price)) +
     x = "Median Price",
     y = "Count"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 10)
 
 ```
 
@@ -444,7 +444,7 @@ p1 <- ggplot(train_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) + 
   labs(title = "Training Data Rsquared", x = "Model", y = NULL) +
-  theme_minimal() +
+  theme_minimal(base_size = 10) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Test Rsquared heatmap
@@ -457,7 +457,7 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) +
   labs(title = "Test Data Rsquared", x = "Model", y = NULL) +
-  theme_minimal() +
+  theme_minimal(base_size = 10) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 # Combine
 (p1 + p2) + plot_layout(guides = "collect") & theme(legend.position = "right")
@@ -505,7 +505,7 @@ p1 <- ggplot(train_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) + 
   labs(title = "Training Data Rsquared", x = "Model", y = NULL) +
-  theme_minimal() +
+  theme_minimal(base_size = 10) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Test Rsquared heatmap
@@ -518,7 +518,7 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) +
   labs(title = "Test Data Rsquared", x = "Model", y = NULL) +
-  theme_minimal() +
+  theme_minimal(base_size = 10) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 # Combine
 (p1 + p2) + plot_layout(guides = "collect") & theme(legend.position = "right")
@@ -569,7 +569,7 @@ ggplot(all_varimp_clean, aes(x = Drug_Model, y = Variable, fill = NormalizedImpo
   labs(title = "Top 5 Variable Importances for Each Drug with a XGB Model",
        x = NULL,
        y = NULL) +
-  theme_minimal() +
+  theme_minimal(base_size = 10) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
   # coord_flip()
 
@@ -579,24 +579,54 @@ ggplot(all_varimp_clean, aes(x = Drug_Model, y = Variable, fill = NormalizedImpo
 We did a quick linear regression fit between the median price of all drugs and the number of available Medicare plans in a county. The results are shown in the below table. The percent of the price variance is that is due to the number of available Medicare plans was pulled from the R^2 value. The direction of the relationship is shown as either an increase (↑) or decrease (↓) in price with an increase in the number of available plans. The significance of the relationship was determined by a p-value < 0.05. The interpretation of the relationship is based on the slope of the fit, which indicates how much the median price changes with each additional Medicare plan available in a county.
 
 
-| Drug                       | Price Change with Each Additional Plan | % Change       | Significant? | Explains x% of Variance | Interpretation                                     |
-| -------------------------- | -------------------------------------- | --------------  | ------------ | ----------------------- | -------------------------------------------------- |
-| **Adalimumab**             | +$1.75                                | **+0.00%**      | Yes          | 0.84                    | Small positive effect                              |
-| **Apixaban**               | $0                              | **-0.00%**       | No           | 0.04                    | No evidence of relationship                        |
-| **Dulaglutide**            | $-0.08                                | **-0.00%**          | No           | 0.11                    | Weak negative trend, borderline significance       |
-| **Empagliflozin**          | $0.01                               | **+0.00%**          | Yes          | 0.33                    | Tiny positive effect                               |
-| **Etanercept**             | $0.49                                 | **+0.00%**         | Yes          | 0.30                    | Small positive effect                              |
-| **Ibrutinib**              | $0.17                                 | **+0.00%**         | Yes          | 0.22                    | Small positive effect                              |
-| **Insulin Aspart**         | -$0.08                               | **-0.00%**           | No           | <0.01                   | No effect                                          |
-| **Lenalidomide**           | +25.04¢                                | **+0.00%**           | Yes          | **5.01**                | Moderate positive effect                           |
-| **Liraglutide**            | -12.92¢                                | **-0.16%**           | Yes          | **4.20**                | Moderate negative effect                           |
-| **Paliperidone Palmitate** | +10.80¢                                | **+0.00%**             | Yes          | 0.21                    | Small positive effect                              |
-| **Rivaroxaban**            | -$1.03                                | **-0.01%**             | Yes          | **2.84**                | Small but clear negative effect                    |
-| **Semaglutide**            | -$1.37                                | **-0.05%**             | Yes          | **2.58**                | Small/moderate negative effect                     |
-| **Tiotropium Bromide**     | +$14.2                                 | **+0.00%**             | Yes          | **6.35**                | Strongest predictive power in this group (6.4%)    |
-| **Ustekinumab**            | -$5.02                                | **-0.00%**           | Yes          | 0.13                    | Weak but statistically significant negative effect |
+``` {r}
+#| label: fig-effect-available-plans-on-drug-price
+#| fig-cap: "Effect of Available Plans on Drug Price"
+#| warning: false
+#| echo: false
+#| out-height: 6in
 
+library(ggplot2)
+library(dplyr)
+library(ggrepel)
 
+# Data
+df <- tibble::tibble(
+  Drug = c("Adalimumab", "Apixaban", "Dulaglutide", "Empagliflozin", "Etanercept",
+           "Ibrutinib", "Insulin Aspart", "Lenalidomide", "Liraglutide",
+           "Paliperidone Palmitate", "Rivaroxaban", "Semaglutide",
+           "Tiotropium Bromide", "Ustekinumab"),
+  MedianPrice = c(3497, 9, 448, 10, 1720, 536, 34, 712, 81, 3575, 17, 261, 119, 26041),
+  PercentChange = c(0.05, -0.01, -0.02, 0.09, 0.03, 0.03, -0.01, 0.35, -1.59,
+                    0.03, -0.06, -0.53, 0.12, -0.02),
+  VarianceExplained = c(0.84, 0.04, 0.11, 0.33, 0.30, 0.22, 0, 5.01, 4.20,
+                        0.21, 2.84, 2.58, 6.35, 0.13),
+  Significant = c(TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE,
+                  TRUE, TRUE, TRUE, TRUE, TRUE)
+)
+
+# Plot
+ggplot(df, aes(x = PercentChange, y = MedianPrice,
+               size = VarianceExplained, color = Significant)) +
+  geom_point(alpha = 0.8) +
+  scale_y_log10(labels = scales::dollar_format()) +
+  scale_color_manual(values = c("gray60", "darkgreen")) +
+  scale_size_continuous(range = c(2, 10), 
+                breaks = seq(0, 6, by = 2), 
+                labels = scales::percent_format(scale = 1)) +
+  # scale_shape_manual(values = c("Increase" = 16, "Decrease" = 17)) +
+  geom_text_repel(aes(label = Drug), size = 3, max.overlaps = 10, box.padding = 1, point.padding = 1) +
+  labs(
+    title = "Effect of Available Plans on Drug Price",
+    x = "% Change in Price per 10 More Plans",
+    y = "Median Price (log10 USD)",
+    size = "Explains x% of Variance",
+    color = "Statistically Significant"
+    # shape = "Direction"
+  ) +
+  theme_minimal(base_size = 10) +
+  geom_vline(xintercept = 0, linetype = "dashed")
+```
 
 
 

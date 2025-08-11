@@ -1,6 +1,8 @@
 # Analysis
-## Scope Reduction By Starting with National Data
-One of the first goals was to understand the connected data at a high level by condensing and aggregating details. Due to the granularity of the formulary data, it was necessary to narrow the focus rather than analyze all 6,000+ medications. The CMS spending datasets (Part B, Part D, and Medicaid) provided a clearer, structured view and helped identify high-impact drugs. Using this data, we generated top drug lists by total spend, claims, and doses (@fig-topspend), ultimately selecting a few key medications for deeper analysis.
+
+## Scope Reduction Leveraging National Spending Data
+
+One of the first goals was to understand the connected data at a high level by condensing and aggregating details. Due to the granularity of the formulary data, it was necessary to narrow the focus rather than analyze all 6,000+ medications. The CMS spending datasets provided a clearer, structured view and helped identify high-impact drugs. Using this data, we generated top drug lists by total spend, claims, and doses (@fig-topspend), ultimately selecting a few key medications for deeper analysis.  Initially, we reviewed the top 10 and top 25 by total spending.
 
 ```{r}
 #| label: fig-topspend
@@ -24,7 +26,7 @@ g1 = med_spend_dose_trim%>%
   scale_x_log10(labels = scales::label_number(scale = 1e-6, suffix = "M", big.mark = ","))+
   scale_y_continuous(labels = scales::label_dollar(scale = 1e-6, suffix = "M"))+
   scale_size_manual(values = c("<50M"=2, "50–150M"=4, "150–300M"=6, ">300M"=8))+
-  labs(title = "Medicare Part B, D & Medicaid Drug Spending",
+  labs(title = "Medicare Part B, D & Medicaid Drug Spending - Top 10",
        subtitle = "2019 - 2023",
        x="Doses Prescribed (Millions)",
        y="Total Spending (Millions)",
@@ -37,7 +39,7 @@ print(g1)
 
 ```
 
-For the rest of the analysis, we plan to use these top drugs by the most absolute spend in 2019-2023. We were not able to match all the top 25 drugs to our dataset, so we used only the ones that had full matches, which ended up being the 14 medications below. To help contextualize what conditions these medications treat, see the table below. (@tbl-topmeds)
+We were not able to match all the top drugs to our dataset, so we used only the ones that had full matches, which ended up being the 14 of the top 25 medications. To help contextualize what conditions these medications treat, see the table below. (@tbl-topmeds)
 
 
 | Total Spend (USD) | Generic Name          | Brand Name(s)              | Common Treatment Conditions                                                                                                 |
@@ -57,18 +59,18 @@ For the rest of the analysis, we plan to use these top drugs by the most absolut
 | $12.1B            | Tiotropium Bromide    | Spiriva                    | COPD (Chronic Obstructive Pulmonary Disease), Asthma (adjunct)                                                  |
 | $11.6B            | Liraglutide           | Victoza, Saxenda           | Type 2 Diabetes, Obesity                                                                  |
 
-: Table 1 -  Top medications by absolute spend and the treatment conditions {#tbl-topmeds .striped .hover tbl-colwidths="[20,20,20,40]"}  
+: Top medications by absolute spend and the treatment conditions {#tbl-topmeds .striped .hover tbl-colwidths="[20,20,20,40]"}  
 
 ## Exploratory Data Analysis
 
-### Large medication price variance across counties and Medicare plans 
+### Price Variance Across Counties 
 
 After mapping individual medication prices to U.S. counties where Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure {@fig-pricevariance}. This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.
 
 
 ```{r}
 #| label: fig-pricevariance
-#| fig-cap: "Variance in price amongst the top drugs /n (descending by absolute spending) across the US"
+#| fig-cap: "Variance in price for top drugs (descending by absolute spending) across the U.S."
 #| warning: false
 #| echo: false
 #| message: false 
@@ -114,11 +116,11 @@ box_plot_table <- box_plot_table %>%
 # Plot using the drug_label on the x-axis
 ggplot(box_plot_table, aes(x = drug_label, y = UNIT_COST)) +
   geom_boxplot() + 
-  labs(title = "Variance in price amongst the top drugs
-(descending by total absolute spending between 2019-2023 )",
+  labs(title = "Price Variance for Top Medications",
+       subtitle = "Descending by Absolute Spending (2019-2023)",
        x = "",
-       y = "Price (USD, log scale)") +
-  scale_y_log10(labels = comma) +
+       y = "Price ($USD, log scale)") +
+  scale_y_log10(labels = label_dollar()) +
   theme_minimal(base_size = 10) +
   coord_flip()  +
   theme(
@@ -134,7 +136,7 @@ ggplot(box_plot_table, aes(x = drug_label, y = UNIT_COST)) +
 
 ```
 
-### Quantity of Medicare plans available within individual counties
+### Quantity of Available Medicare Plans 
 
 One contributing factor to the wide range of drug prices is the number of Medicare plans available within a given county. Not all prices shown in the previous figure are accessible to every Medicare patient, as plan availability varies by location. To further illustrate this variability at the county level, the bar chart below displays the number of Medicare plans available in each county within a sample state (@fig-ORplans).
 
@@ -184,6 +186,7 @@ An early concern in the development of this project was whether there would even
 #| fig-cap: "Median drug prices by US County for 14 drugs. Note: The color scale is differnet for every drug. The highest value for each drug is yellow while the lowest value is purple."
 #| warning: false
 #| echo: false
+#| message: false
 
 
 library(tigris)
@@ -266,6 +269,7 @@ Taking a closer look at two drugs, Semaglutide is one drug that stands out at th
 #| fig-cap: "Median Medicare Price for 30-day Supply of Semaglutide by US County"
 #| warning: false
 #| echo: false
+#| message: false
 
 chosen_drug = "Semaglutide"
 
@@ -316,6 +320,7 @@ Liraglutide is another that stands out in that it has a clear state-wide price i
 #| fig-cap: "Median Medicare Price for 30-day Supply of Liraglutide by US County"
 #| warning: false
 #| echo: false
+#| message: false
 
 chosen_drug = "Liraglutide"
 
@@ -370,11 +375,12 @@ Our team was surprised by what we observed once the median prices were applied t
 The age, education, racial, and gender data from the Census are provided as absolute values. We normalized those by dividing each metric by the total population to convert them to percentages. We then explored which demographic metrics most closely correlate to the prices for each medication in @fig-by-drug-correlation. If all the medications are correlated with similar demographic metrics, all drugs can be modeled together. If not, the individual drugs will need to be modeled separately. In this case, we filtered out weak correlations, keeping only those with Pearson correlation coefficients less than -0.1 or greater than 0.1. There is no clear pattern among all the top drugs for correlations with the demographic metrics. 
 
 ```{r}
-#| label: fig-by-drug-correlations
+#| label: fig-by-drug-correlation
 #| fig-cap: "Heatmap of Pearson Correlations Between Demographics and Drug Prices where |Pearson Correlation| > 0.1"
 #| warning: false
 #| fig-height: 8 
 #| echo: false
+#| message: false
 
  cor_by_drug = readRDS("data/correlations_by_drug.rds")
  
@@ -405,12 +411,11 @@ The age, education, racial, and gender data from the Census are provided as abso
   
 ```
 
-At one point, we also added a new feature called “Affordability,” which was the median_medication_price divided by the per_capita_income. Unfortunately, using this new affordability feature showed very little correlation with other demographic features. Looking at the most positively and negatively correlated features, the Pearson correlation (@fig-affordability-correlations) is still less than 0.04, which is practically negligible. Going forward, we dropped this feature. 
-
+We introduced a feature called “Affordability” which divided price by income. This metric showed minimal correlation with other demographic variables. Even the strongest positive and negative correlations had Pearson coefficients below 0.04 (see @fig-affordability-correlations), indicating negligible relationships.  It failed to yield meaningful insights within our analysis and results.
 
 ```{r}
 #| label: fig-affordability-correlations
-#| fig-cap: "Pearson Correlations between Demographic VFeatures and Affordability"
+#| fig-cap: "Pearson Correlations between Demographic Features and Affordability"
 #| warning: false
 #| echo: false
 
@@ -433,6 +438,5 @@ At one point, we also added a new feature called “Affordability,” which was 
     theme_minimal(base_size = 10)
 ```
 
-At one point, we also added a new feature called “Affordability,” which was the median_medication_price divided by the per_capita_income. Unfortunately, using this new affordability feature showed very little correlation with other demographic features. Looking at the most positively and negatively correlated features, the Pearson correlation (@fig-affordability-correlations) is still less than 0.04, which is practically negligible. Going forward, we dropped this feature. 
 
 

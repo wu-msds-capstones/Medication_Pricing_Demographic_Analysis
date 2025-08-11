@@ -1,6 +1,6 @@
 # Results
 
-Our main hypothesis was that there is likely some demographic that is facing more hardship due to medication price inflation in counties with these demographics within the US. Can we use the demographics of a specific county, along with the median medication prices within said county, to develop a model to predict the medication prices? If yes, we could in the short term advise people with specific medical conditions to move to counties with demographics that provide more favorable medication prices and long-term influence the industry to fix such inequities. 
+Our primary hypothesis was that certain demographic groups may experience greater hardship due to rising medication prices, particularly in counties where these demographics are concentrated. We asked whether it’s possible to use county-level demographic data, along with median medication prices, to build a predictive model for drug costs. If successful, such a model could offer short-term guidance—helping individuals with specific medical needs identify counties with more favorable pricing—and long-term potential to inform policy and industry efforts aimed at addressing pricing inequities.
 
 ## Statistical Testing - Phase 1
 
@@ -52,6 +52,7 @@ We can reasonably conclude from this that in 10 of our 14 focus medications, the
 #| fig-cap: "Hypothesis 1 - Comparing GLP-1 receptor agonists, primarily used for type 2 diabetes management"
 #| warning: false
 #| echo: false
+#| message: false
 
 library(tidyverse)
 
@@ -67,7 +68,7 @@ h_df_clean%>%
   ungroup()%>%
   ggplot(aes(x = mean_price, fill = white_95)) +
   geom_density(alpha = 0.5) +
-  scale_fill_manual(values = c("blue", "orange"),
+  scale_fill_manual(values = c("#440154", "#FDE725"),
                     labels = c("<95% White", "≥95% White")) +
   labs(
     title = "Density Plots of Mean Drug Prices by County Demographics",
@@ -126,9 +127,10 @@ In {@fig-h2} we look closer at six medications, to expand the investigation into
 
 ```{r}
 #| label: fig-h2
-#| fig-cap: "Hypothesis 2 - Comparing six medications which were indicated for statistically significant differences in price for two poverty groups"
+#| fig-cap: "Hypothesis 2 - Comparing medications which were indicated for statistically significant differences in price for two poverty groups"
 #| warning: false
 #| echo: false
+#| message: false
 
 library(tidyverse)
 
@@ -144,7 +146,7 @@ h_df_clean%>%
   ungroup()%>%
   ggplot(aes(x = mean_price, fill = poverty_13)) +
   geom_density(alpha = 0.5) +
-  scale_fill_manual(values = c("blue", "orange"),
+  scale_fill_manual(values = c("#440154", "#FDE725"),
                     labels = c("<13% Below Poverty", "≥13% Below Poverty")) +
   labs(
     title = "Density Plots of Mean Drug Prices by County Demographics",
@@ -160,11 +162,85 @@ h_df_clean%>%
 
 ```
 
-Similar to hypothesis 1, we see that the price differences are contextual to the medication and price rank position.  While the null hypothesis is rejected, the challenge of approaching multiple medications is clearly demonstrated.  For both hypotheses, by rejecting the null, this may result in a type 1 error, or false positive.  There are clearly price differences relative to certain demographic groups.  Whether those differences are being driven by the demographics remains unclear.
+Similar to hypothesis 1, we see that the price differences are contextual to the medication and price rank position.  While the null hypothesis is rejected, the challenge of approaching multiple medications is clearly demonstrated.  For both hypotheses, by rejecting the null, this may result in a type 1 error, or false positive.  There are clearly price differences relative to certain demographic groups.  Whether those differences are being driven by the demographics remained unclear.
+
+## Statistical Testing - Phase 2
+
+In order to further explore statistical significance, we assumed a normal distribution of the data. This assumption enabled the use of traditional parametric testing methods. Specifically, we conducted two-sample t-tests, mirroring the structure used in the first phase of statistical testing, where the dataset was divided based on demographic medians. Additionally, we grouped counties into multiple subsets using demographic quartiles rather than medians, allowing for more granular comparisons. This stratification enabled the application of the Tukey HSD test to assess pairwise differences across these groups.
+
+Using a two-sample t-test allowed reconsideration of our second hypothesis.  We again encountered low p-values.  Selecting for Semaglutide as one example and using the same data split for poverty at the median, the resulting p-value was 2.2e-16 which was a strong indicator for statistical significance, suggesting we reject the null.
+
+Building on this, we applied the Tukey HSD test to the quartile-based groups at a 95% confidence level. Again, we found p-values that supported rejecting the null hypothesis, indicating that the average mean prices across groups were not equal. Interestingly, the only comparisons with p-values at or above 5% occurred between adjacent quartile groups, while all other comparisons yielded p-values well below this threshold.
+
+| Comparison                         | Difference   | Lower CI     | Upper CI     | Adjusted p-value |
+|------------------------------------|--------------|--------------|--------------|------------------|
+| >17% Poverty - 0-10% Poverty       | -1.1555147   | -1.4430153   | -0.8680141   | 0.0000000        |
+| >17% Poverty - 10-13% Poverty      | -0.8564752   | -1.1503721   | -0.5625784   | 0.0000000        |
+| >17% Poverty - 13-17% Poverty      | -0.6371890   | -0.9262280   | -0.3481500   | 0.0000001        |
+| 13-17% Poverty - 0-10% Poverty     | -0.5183257   | -0.8123963   | -0.2242551   | 0.0000361        |
+| 10-13% Poverty - 0-10% Poverty     | -0.2990395   | -0.5978861   | -0.0001928   | 0.0497806        |
+| 13-17% Poverty - 10-13% Poverty    | -0.2192862   | -0.5196131   |  0.0810407   | 0.2382320        |
+
+We repeated this process across several medications and demographic variables, consistently observing statistical significance. However, when examining the actual differences in average prices between groups, the magnitude of these differences was often minimal. Continuing with Semaglutide as an example, counties in the lowest poverty quartile (0–10%) had an average mean price of $168, while those in the highest poverty quartile (>17%) had an average of $167—a mere $1 difference. Notably, counties with higher poverty levels were paying slightly less on average.
+
+To better understand the implications of this finding, we considered affordability by dividing the mean price by the median income of each county. This revealed that although prices were lower in higher-poverty areas, the cost represented a larger proportion of income—highlighting a disparity in affordability. This relationship is clearly illustrated in the following table and @fig-h2_2.
+
+| Poverty Group       | Mean Price | SD Price | Mean Affordability | SD Affordability | Sample Size (n) |
+|---------------------|------------|----------|---------------------|------------------|------------------|
+| 0–10% Poverty       | 168.00     | 2.35     | 0.00209             | 0.000409         | 788              |
+| 10–13% Poverty      | 168.00     | 2.60     | 0.00246             | 0.000332         | 725              |
+| 13–17% Poverty      | 167.00     | 2.36     | 0.00275             | 0.000351         | 772              |
+| >17% Poverty        | 167.00     | 1.69     | 0.00340             | 0.000613         | 846              |
+
+```{r}
+#| label: fig-h2_2
+#| fig-cap: "Parametric Testing - Exploring affordability for Semaglutide across various levels of poverty"
+#| warning: false
+#| echo: false
+
+
+library(dplyr)
+library(ggplot2)
+
+
+h_df_clean%>%
+  filter(drug_name_clean == "Semaglutide")%>%
+  mutate(
+    affordability = mean_price/median_household_incomeE,
+    poverty_13 = factor(case_when(poverty_13 == TRUE ~ ">=13% Poverty",
+                           poverty_13 == FALSE ~ "<13% Poverty"),
+                        levels = c(">=13% Poverty", "<13% Poverty")
+  ))%>%
+  filter(
+    affordability > quantile(affordability, 0.25) - 1.5 * IQR(affordability) &
+    affordability < quantile(affordability, 0.75) + 1.5 * IQR(affordability)
+  ) %>%
+  ggplot(aes(x = affordability, fill = poverty_split)) +
+  geom_density(alpha = 0.5) +
+  scale_fill_viridis_d()+
+  theme_minimal() +
+  labs(
+    title = "Affordability by Poverty Level",
+    subtitle = "Semaglutide",
+    x = "Affordability (Mean Price / Median Household Income)",
+    y = "Density",
+    fill = "Poverty Levels",
+    caption = "*Outliers removed"
+  )
+
+
+
+```
+
+We employed both t-tests and Tukey HSD tests to evaluate a range of medications across various demographic subsets, tailoring each analysis to specific hypotheses about potential demographic impacts on drug pricing. While many results showed statistical significance, further inspection revealed that the actual differences in mean prices, affordability metrics, and other summary statistics were often marginal.
+
+This distinction between statistical and practical significance became a turning point. Statistical significance simply indicates that a result is unlikely due to random chance. It does not guarantee that the difference is meaningful or actionable. In our case, the detected differences, though statistically valid, lacked the magnitude necessary to inform policy or guide consumer decisions.
+
+Recognizing this limitation, we pivoted our focus toward structural market factors, particularly the relationship between population size and the number of available Medicare Part D plans in each county. This shift allowed us to explore whether plan availability aligns with population needs—a perspective that offers more tangible insights into affordability and access. By emphasizing market dynamics over demographic predictors, we uncovered patterns that more directly influence pricing and equity across regions.
 
 ## Population vs Number of Available Medicare Plans
 
-Given the lack of clear patterns for medication prices across the maps, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {@fig-plans-vs-population} 
+Given the lack of clear patterns for medication prices across the maps and within isolated demographic groups, we turned to a deep dive into the demographics. Our first dive was into the population. Do counties with a larger population have more Medicare plan options, and does this competition lead to lower drug prices? A scatter plot of the number of Medicare Plans available vs the population per county is shown below with a linear fit to show a trend line. {@fig-plans-vs-population} 
 
 
 ```{r}
@@ -172,6 +248,7 @@ Given the lack of clear patterns for medication prices across the maps, we turne
 #| fig-cap: "Correlation between the number of Medicare Plan Options and Total Population by US County in 23Q4"
 #| warning: false
 #| echo: false
+#| message: false
 
 
 library(tidyverse)
@@ -205,13 +282,11 @@ While there is a slight trend, it is not a great fit overall. The model is stati
  
 From here, we jumped into creating a model across all our demographics (age, education, gender, and racial breakdowns, as well as median income, and percent below the poverty line). 
 
-
-
 ## Machine Learning
 
 ### Check for Gaussian Distributions
 
-Before jumping into any modeling, one must check the distribution of the variables. For this particular dataset, if all the medications are looked at simultaneously, one needs to take the log of the median prices to have the histogram show a more Gaussian distribution. (See @fig-hist-price-all-drugs). This is due to the fact that the median drug price varies greatly depending on the actual drug being considered. 
+Before proceeding into any modeling, one must check the distribution of the variables. For this particular dataset, if all the medications are looked at simultaneously, one needs to take the log of the median prices to have the histogram show a more Gaussian distribution. (See @fig-hist-price-all-drugs). This is due to the fact that the median drug price varies greatly depending on the actual drug being considered. 
 
 ```{r}
 #| label: fig-hist-price-all-drugs
@@ -254,6 +329,7 @@ summary_table2 = readRDS("data/summary_table2.rds") %>% filter(!is.na(drug_name_
 
 library(dplyr)
 library(ggplot2)
+
 # Plot faceted histograms
 ggplot(summary_table2, aes(x = median_price)) +
   geom_histogram(bins = 50, fill = "darkgray") +
@@ -272,7 +348,6 @@ In order to model the relationship between medication prices and demographic fea
 
 **Linear Model (LM):**
 Linear regression is a fundamental technique used to model the relationship between a continuous outcome variable and one or more predictors, assuming a linear relationship. It is interpretable and computationally efficient but may underperform when the underlying patterns are nonlinear or complex.
-
 
 **Elastic Net (ENET):**
 Elastic Net is a regularized regression method that combines both L1 (Lasso) and L2 (Ridge) penalties. It is particularly effective when dealing with multicollinearity or when performing variable selection in high-dimensional datasets. Elastic Net encourages sparsity while maintaining group stability among correlated features.

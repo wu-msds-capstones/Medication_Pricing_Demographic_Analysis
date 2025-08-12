@@ -18,7 +18,9 @@ format:
     title-block-banner-color: "#D8DEE9"
 # runtime: shiny
 tbl-cap-location: bottom
-fig-width: 100%
+knitr:
+  opts_chunk:
+    out.width: "100%"
 ---
 
 {{< include _01_intro.qmd >}}

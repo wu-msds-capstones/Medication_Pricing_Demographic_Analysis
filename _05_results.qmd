@@ -189,7 +189,7 @@ Using a two-sample t-test allowed reconsideration of our second hypothesis.  We 
 
 Building on this, we applied the Tukey HSD test to the quartile-based groups at a 95% confidence level. Again, we found p-values that supported rejecting the null hypothesis, indicating that the average mean prices across groups were not equal. Interestingly, the only comparisons with p-values at or above 5% occurred between adjacent quartile groups, while all other comparisons yielded p-values well below this threshold. (See @tbl-p2_tukey below.)
 
-<div style="font-size: 890%;">
+<div style="font-size: 90%;">
 
 | Comparison                         | Difference   | Lower CI     | Upper CI     | Adjusted p-value |
 |------------------------------------|--------------|--------------|--------------|------------------|
@@ -382,8 +382,8 @@ p1 <- ggplot(train_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
             size = 3, angle = 45, 
             show.legend = FALSE) +
   scale_color_identity() +  # use colors as-is from the column
-  scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) + 
-  labs(title = "Training Data R^2", x = "Model", y = NULL) +
+  scale_fill_viridis_c(option = "magma", direction = -1, name = bquote(R^2), limits = Rsq_limits) + 
+  labs(title = bquote("Training Data " ~ R^2), x = "Model", y = NULL) +
   theme_minimal(base_size = 12) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -395,14 +395,15 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
             size = 3, angle = 45, 
             show.legend = FALSE) +
   scale_color_identity() +  # use colors as-is from the column
-  scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) +
-  labs(title = "Test Data R^2", x = "Model", y = NULL) +
+  scale_fill_viridis_c(option = "magma", direction = -1, name = bquote(R^2), limits = Rsq_limits) +
+  labs(title = bquote("Test Data " ~ R^2), x = "Model", y = NULL) +
   theme_minimal(base_size = 12) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1), 
         axis.text.y = element_blank()
         ) 
 # Combine
 (p1 + p2) + plot_layout(guides = "collect") & theme(legend.position = "right")
+
 
 ```
 
@@ -444,8 +445,8 @@ p1 <- ggplot(train_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
             size = 3, angle = 45, 
             show.legend = FALSE) +
   scale_color_identity() +  # use colors as-is from the column
-  scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) + 
-  labs(title = "Training Data R^2", x = "Model", y = NULL) +
+  scale_fill_viridis_c(option = "magma", direction = -1, name = bquote(R^2), limits = Rsq_limits) + 
+  labs(title = bquote("Training Data " ~ R^2), x = "Model", y = NULL) +
   theme_minimal(base_size = 12) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -457,8 +458,8 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
             size = 3, angle = 45, 
             show.legend = FALSE) +
   scale_color_identity() +  # use colors as-is from the column
-  scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) +
-  labs(title = "Test Data R^2", x = "Model", y = NULL) +
+  scale_fill_viridis_c(option = "magma", direction = -1, name = bquote(R^2), limits = Rsq_limits) +
+  labs(title = bquote("Test Data " ~ R^2), x = "Model", y = NULL) +
   theme_minimal(base_size = 12) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
                 axis.text.y = element_blank()) 
@@ -541,7 +542,7 @@ ggplot(df, aes(x = PercentChange, y = MedianPrice,
                 breaks = seq(0, 6, by = 2), 
                 labels = scales::percent_format(scale = 1)) +
   # scale_shape_manual(values = c("Increase" = 16, "Decrease" = 17)) +
-  geom_text_repel(aes(label = Drug), size = 3, max.overlaps = 10, box.padding = 1, point.padding = 1) +
+  geom_text_repel(aes(label = Drug), size = 3, max.overlaps = 10, box.padding = 0.6, point.padding = 0.6) +
   labs(
     title = "Effect of Additional Available Medicare Plans in a County on Drug Price",
     x = "% Change in Price per 10 Additional Medicare Plans",

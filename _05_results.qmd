@@ -339,35 +339,6 @@ library(dplyr)
 library(tidyr)
 library(scales)
 
-# # Load and prepare data
-# model_metrics_df <- readRDS("data/model_metrics_summary.rds")
-# 
-# metrics_long <- model_metrics_df %>%
-#   pivot_longer(cols = c(RMSE, MAE), names_to = "Metric", values_to = "Value") %>%
-#   # Normalize Value to [0,1] to assess brightness
-#   mutate(fill_norm = rescale(Value),
-#          text_color = ifelse(fill_norm > 0.05, "white", "black"))  # text is black if background is light
-# 
-# ggplot(metrics_long, aes(x = model, y = drug, fill = Value)) +
-#   geom_tile(color = "white") +
-#   geom_text(aes(label = signif(Value, 2), color = text_color), size = 3, angle = 45, show.legend = FALSE) +
-#   scale_color_identity() +  # use colors as-is from the column
-#   scale_fill_viridis_c(option = "magma", direction = -1, name = "Metric Value",     
-#                        limits = c(min(metrics_long$Value, na.rm = TRUE), 
-#                                   quantile(metrics_long$Value, 0.90, na.rm = TRUE))) +
-#   facet_wrap(~ Metric, ncol = 2) +
-#   labs(
-#     title = "Model Performance by Drug (Dynamic Text Contrast)",
-#     x = NULL, #"Model",
-#     y = NULL #"Drug"
-#   ) +
-#   theme_minimal(base_size = 12) +
-#   theme(
-#     axis.text.x = element_text(angle = 45, hjust = 1),
-#     plot.title = element_text(hjust = 0),
-#     plot.title.position = "plot"
-#   )
-
 all_metrics = readRDS("data/all_metrics_untuned_models.rds")
 
 train_metrics <- all_metrics %>% 
@@ -392,7 +363,7 @@ p1 <- ggplot(train_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
             show.legend = FALSE) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) + 
-  labs(title = "Training Data Rsquared", x = "Model", y = NULL) +
+  labs(title = "Training Data R^2", x = "Model", y = NULL) +
   theme_minimal(base_size = 10) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -405,7 +376,7 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
             show.legend = FALSE) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) +
-  labs(title = "Test Data Rsquared", x = "Model", y = NULL) +
+  labs(title = "Test Data R^2", x = "Model", y = NULL) +
   theme_minimal(base_size = 10) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 # Combine

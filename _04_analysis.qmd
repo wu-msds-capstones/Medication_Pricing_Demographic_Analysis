@@ -42,7 +42,7 @@ print(g1)
 
 We were not able to match all the top drugs to our dataset, so we used only the ones that had full matches, which ended up being the 14 of the top 25 medications. To help contextualize what conditions these medications treat, see @tbl-topmeds below.
 
-<div style="font-size: 80%;">
+<div style="font-size: 90%;">
 
 | Total Spend (USD) | Generic Name          | Brand Name(s)              | Common Treatment Conditions                                                                                                 |
 |-------------------|-----------------------|----------------------------|------------------------------------------------------------------------------------------------------------------|

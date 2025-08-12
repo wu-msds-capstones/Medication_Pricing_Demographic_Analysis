@@ -501,7 +501,7 @@ Figure&nbsp;1: Top Medication Spending from 2019 - 2022 across Medicare Part B, 
 </div>
 </div>
 <p>We were not able to match all the top drugs to our dataset, so we used only the ones that had full matches, which ended up being the 14 of the top 25 medications. To help contextualize what conditions these medications treat, see <a href="#tbl-topmeds" class="quarto-xref">Table&nbsp;1</a> below.</p>
-<div style="font-size: 80%;">
+<div style="font-size: 90%;">
 <div id="tbl-topmeds" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,20,20,40]">
 <figure class="quarto-float quarto-float-tbl figure">
 <div aria-describedby="tbl-topmeds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -750,8 +750,15 @@ Figure&nbsp;7: Heatmap of Pearson Correlations Between Demographics and Drug Pri
 <li>– Independence within each group</li>
 </ol>
 <p>Accordingly, our team elected to compare mean prices, which notably exposes our analysis to outlier pricing. The assumption independence within each group is stretched, considering the manner in which the data was procured, which we have discussed in great detail.</p>
-<div style="font-size: 80%;">
-<table class="table">
+<div style="font-size: 90%;">
+<div id="tbl-h1_pvalue" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[50,50]">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-h1_pvalue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table-striped table-hover table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Drug Name</th>
@@ -818,8 +825,13 @@ Figure&nbsp;7: Heatmap of Pearson Correlations Between Demographics and Drug Pri
 </tbody>
 </table>
 </div>
-<p>: P-value results for Hypothesis 1 {#tbl-h1_pvalue .striped .hover tbl-colwidths=“[50,50]”}</p>
-<p>We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See <strong>?@tbl-h1_pvalue</strong> above.) To dive deeper, our team constructed density plots to compare the direction of this difference. As observed in <a href="#fig-h1" class="quarto-xref">Figure&nbsp;8</a>, where we evaluate two of these medications. We can clearly see that the direction shifts at different price ranks and depends on the medication.</p>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-h1_pvalue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: P-value results for Hypothesis 1
+</figcaption>
+</figure>
+</div>
+</div>
+<p>We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See <a href="#tbl-h1_pvalue" class="quarto-xref">Table&nbsp;2</a> above.) To dive deeper, our team constructed density plots to compare the direction of this difference. As observed in <a href="#fig-h1" class="quarto-xref">Figure&nbsp;8</a>, where we evaluate two of these medications. We can clearly see that the direction shifts at different price ranks and depends on the medication.</p>
 <div id="cell-fig-h1" class="cell">
 <div class="cell-output-display">
 <div id="fig-h1" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -834,7 +846,8 @@ Figure&nbsp;8: Hypothesis 1 - Comparing GLP-1 receptor agonists, primarily used 
 </div>
 </div>
 </div>
-<p>Drilling down again, with these two medications in focus, actual values are compared below in <a href="#tbl-h1_means" class="quarto-xref">Table&nbsp;2</a>.</p>
+<p>Drilling down again, with these two medications in focus, actual values are compared below in <a href="#tbl-h1_means" class="quarto-xref">Table&nbsp;3</a>.</p>
+<div style="font-size: 90%;">
 <div id="tbl-h1_means" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[25,25,25,25]">
 <figure class="quarto-float quarto-float-tbl figure">
 <div aria-describedby="tbl-h1_means-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -882,9 +895,10 @@ Figure&nbsp;8: Hypothesis 1 - Comparing GLP-1 receptor agonists, primarily used 
 </table>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-h1_means-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2: Mean of Mean Price and Standard Deviation for Dulaglutide and Semaglutide betwen two race groups
+Table&nbsp;3: Mean of Mean Price and Standard Deviation for Dulaglutide and Semaglutide betwen two race groups
 </figcaption>
 </figure>
+</div>
 </div>
 <p>The findings are interesting but have issues. In the plot, we can clearly see that advantages are given to certain groups at certain prices. The mean of the mean prices, as well as the standard deviations show practically no difference for Dulaglutide and only some difference for Semaglutide. Unfortunately, this does not provide much clarity regarding any particular advantage afforded to counties where more than 95% of the population identifies as white. The findings are hardly definitive and lack confidence intervals. This does demonstrate the limitations of using the Mann-Whitney U Test.</p>
 </section>
@@ -893,6 +907,7 @@ Table&nbsp;2: Mean of Mean Price and Standard Deviation for Dulaglutide and Sema
 <p>Using the same assumptions, another consideration involves fully removing the racial aspect and instead considering the percentage of the population that is below the poverty level. Within the census data, the median is 13% below the poverty level, across all counties and 14% at the mean. We establish a new hypothesis.</p>
 <p><em>Null Hypothesis:</em> The distribution of medication costs in counties with &gt;=13% below poverty population is not statistically different from the distribution in counties with &lt;13% below poverty population.</p>
 <p><em>Alternative Hypothesis:</em> The distribution of medication costs in counties with &gt;= 13% below poverty population is statistically different from that in counties with &lt;13% below poverty population.</p>
+<div style="font-size: 90%;">
 <div id="tbl-h2_pvalue" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[50,50]">
 <figure class="quarto-float quarto-float-tbl figure">
 <div aria-describedby="tbl-h2_pvalue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -968,11 +983,12 @@ Table&nbsp;2: Mean of Mean Price and Standard Deviation for Dulaglutide and Sema
 </table>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-h2_pvalue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3: P-value results for Hypothesis 2
+Table&nbsp;4: P-value results for Hypothesis 2
 </figcaption>
 </figure>
 </div>
-<p>Again, we find that there are statistically significant outcomes for many of the selected medications. Twelve of the fourteen medications yield p-values below 0.05 suggesting that the null hypothesis be rejected. (See <a href="#tbl-h2_pvalue" class="quarto-xref">Table&nbsp;3</a> above.)</p>
+</div>
+<p>Again, we find that there are statistically significant outcomes for many of the selected medications. Twelve of the fourteen medications yield p-values below 0.05 suggesting that the null hypothesis be rejected. (See <a href="#tbl-h2_pvalue" class="quarto-xref">Table&nbsp;4</a> above.)</p>
 <p>In <a href="#fig-h2" class="quarto-xref">Figure&nbsp;9</a> we look closer at six medications, to expand the investigation into these differences and the direction of any potential advantage.</p>
 <div id="cell-fig-h2" class="cell">
 <div class="cell-output-display">
@@ -995,15 +1011,18 @@ Figure&nbsp;9: Hypothesis 2 - Comparing medications which were indicated for sta
 <h2 data-number="6.2" class="anchored" data-anchor-id="statistical-testing---phase-2"><span class="header-section-number">6.2</span> Statistical Testing - Phase 2</h2>
 <p>In order to further explore statistical significance, we assumed a normal distribution of the data. This assumption enabled the use of traditional parametric testing methods. Specifically, we conducted two-sample t-tests, mirroring the structure used in the first phase of statistical testing, where the dataset was divided based on demographic medians. Additionally, we grouped counties into multiple subsets using demographic quartiles rather than medians, allowing for more granular comparisons. This stratification enabled the application of the Tukey HSD test to assess pairwise differences across these groups.</p>
 <p>Using a two-sample t-test allowed reconsideration of our second hypothesis. We again encountered low p-values. Selecting for Semaglutide as one example and using the same data split for poverty at the median, the resulting p-value was 2.2e-16 which was a strong indicator for statistical significance, suggesting we reject the null.</p>
-<p>Building on this, we applied the Tukey HSD test to the quartile-based groups at a 95% confidence level. Again, we found p-values that supported rejecting the null hypothesis, indicating that the average mean prices across groups were not equal. Interestingly, the only comparisons with p-values at or above 5% occurred between adjacent quartile groups, while all other comparisons yielded p-values well below this threshold. (See <strong>?@tbl-p2_tukey</strong> below.)</p>
-<div style="font-size: 80%;">
-<table class="table">
+<p>Building on this, we applied the Tukey HSD test to the quartile-based groups at a 95% confidence level. Again, we found p-values that supported rejecting the null hypothesis, indicating that the average mean prices across groups were not equal. Interestingly, the only comparisons with p-values at or above 5% occurred between adjacent quartile groups, while all other comparisons yielded p-values well below this threshold. (See <a href="#tbl-p2_tukey" class="quarto-xref">Table&nbsp;5</a> below.)</p>
+<div style="font-size: 890%;">
+<div id="tbl-p2_tukey" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[40, 15, 15, 15, 15]">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-p2_tukey-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table-striped table-hover table">
 <colgroup>
-<col style="width: 37%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 18%">
+<col style="width: 40%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1060,18 +1079,26 @@ Figure&nbsp;9: Hypothesis 2 - Comparing medications which were indicated for sta
 </tbody>
 </table>
 </div>
-<p>: Tukey HSD test comparing Semaglutide prices amongst four poverty levels {#tbl-p2_tukey .striped .hover tbl-colwidths=“[40, 15, 15, 15, 15]”}</p>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-p2_tukey-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: Tukey HSD test comparing Semaglutide prices amongst four poverty levels
+</figcaption>
+</figure>
+</div>
+</div>
 <p>We repeated this process across several medications and demographic variables, consistently observing statistical significance. However, when examining the actual differences in average prices between groups, the magnitude of these differences was often minimal. Continuing with Semaglutide as an example, counties in the lowest poverty quartile (0–10%) had an average mean price of $168, while those in the highest poverty quartile (&gt;17%) had an average of $167, a mere $1 difference. Notably, counties with higher poverty levels were paying slightly less on average.</p>
-<p>To better understand the implications of this finding, we considered affordability by dividing the mean price by the median income of each county. This revealed that although prices were lower in higher-poverty areas, the cost represented a larger proportion of income, highlighting a disparity in affordability. This relationship is clearly illustrated in the following <strong>?@tbl-p2-means</strong> and <a href="#fig-h2_2" class="quarto-xref">Figure&nbsp;10</a>.</p>
-<div style="font-size: 80%;">
-<table class="table">
+<p>To better understand the implications of this finding, we considered affordability by dividing the mean price by the median income of each county. This revealed that although prices were lower in higher-poverty areas, the cost represented a larger proportion of income, highlighting a disparity in affordability. This relationship is clearly illustrated in the following <a href="#tbl-p2-means" class="quarto-xref">Table&nbsp;6</a> and <a href="#fig-h2_2" class="quarto-xref">Figure&nbsp;10</a>.</p>
+<div style="font-size: 90%;">
+<div id="tbl-p2-means" class="striped hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[30, 14, 14, 14, 14]">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-p2-means-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table-striped table-hover table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 12%">
-<col style="width: 10%">
-<col style="width: 21%">
-<col style="width: 18%">
-<col style="width: 18%">
+<col style="width: 30%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1119,7 +1146,12 @@ Figure&nbsp;9: Hypothesis 2 - Comparing medications which were indicated for sta
 </tbody>
 </table>
 </div>
-<p>: Mean and standard deviation of prices of Semaglutide by four poverty buckets {#tbl-p2-means .striped .hover tbl-colwidths=“[30, 14, 14, 14, 14]”}</p>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-p2-means-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6: Mean and standard deviation of prices of Semaglutide by four poverty buckets
+</figcaption>
+</figure>
+</div>
+</div>
 <div id="cell-fig-h2_2" class="cell">
 <div class="cell-output-display">
 <div id="fig-h2_2" class="quarto-float quarto-figure quarto-figure-center anchored">

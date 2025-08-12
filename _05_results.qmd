@@ -165,7 +165,6 @@ h_df_clean%>%
   facet_wrap(~ drug_name_clean, scales = "free") +
   theme_minimal()
 
-
 ```
 
 Similar to hypothesis 1, we see that the price differences are contextual to the medication and price rank position.  While the null hypothesis is rejected, the challenge of approaching multiple medications is clearly demonstrated.  For both hypotheses, by rejecting the null, this may result in a type 1 error, or false positive.  There are clearly price differences relative to certain demographic groups.  Whether those differences are being driven by the demographics remained unclear.
@@ -447,7 +446,7 @@ Rsq_limits <- c(min(all_metrics_XGB$Rsquared, na.rm = TRUE),
 # Train Rsquared heatmap
 p1 <- ggplot(train_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
   geom_tile(color = "white") +
-  geom_text(aes(label = signif(Rsquared, 2),
+  geom_text(aes(label = signif(Rsquared, 1),
                 color = text_color),
             size = 3, angle = 45, 
             show.legend = FALSE) +
@@ -460,7 +459,7 @@ p1 <- ggplot(train_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
 # Test Rsquared heatmap
 p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
   geom_tile(color = "white") +
-  geom_text(aes(label = signif(Rsquared, 2),
+  geom_text(aes(label = signif(Rsquared, 1),
                 color = text_color),
             size = 3, angle = 45, 
             show.legend = FALSE) +

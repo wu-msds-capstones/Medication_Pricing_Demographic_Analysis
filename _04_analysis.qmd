@@ -379,6 +379,7 @@ The age, education, racial, and gender data from the Census are provided as abso
 #| warning: false
 #| echo: false
 #| message: false
+#| fig-height: 10
 
  cor_by_drug = readRDS("data/correlations_by_drug.rds")
  
@@ -395,7 +396,7 @@ The age, education, racial, and gender data from the Census are provided as abso
       name = "Pearson\nCorrelation"
     ) +
     coord_flip() +
-    theme_minimal(base_size = 10) +
+    theme_minimal(base_size = 14) +
     theme(
       axis.text.x = element_text(angle = 90, hjust = 1),
       axis.text.y = element_text(size = 10), 

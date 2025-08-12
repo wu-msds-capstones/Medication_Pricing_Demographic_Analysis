@@ -34,7 +34,7 @@ g1 = med_spend_dose_trim%>%
        size="Claims",
        caption="Limited to medications with at least 10 million doses"
        )+
-  theme_minimal(base_size = 10)
+  theme_minimal(base_size = 14)
 
 print(g1)
 
@@ -122,7 +122,7 @@ ggplot(box_plot_table, aes(x = drug_label, y = UNIT_COST)) +
        x = "",
        y = "Price ($USD, log scale)") +
   scale_y_log10(labels = label_dollar()) +
-  theme_minimal(base_size = 10) +
+  theme_minimal(base_size = 14) +
   coord_flip()  +
   theme(
     # axis.title.x = element_text(size = 16),  # increase x-axis label font size
@@ -167,7 +167,7 @@ ggplot(or_contracts, aes(x = fct_reorder(COUNTY, unique_contract_plans), y = uni
     x = "County",
     y = "Unique Number of Medicare Plans Available to Residents",
   ) +
-  theme_minimal(base_size = 10)
+  theme_minimal(base_size = 14)
 
 ```
 
@@ -241,7 +241,7 @@ plot_one_drug <- function(drug) {
     scale_fill_viridis_c(option = "magma", direction = -1, na.value = "grey90",
                          limits = c(min_price, max_price)) +
     labs(title = drug, fill = "Median Cost") +
-    theme_minimal(base_size = 10) +
+    theme_minimal(base_size = 14) +
     theme(
       axis.text = element_blank(),
       axis.ticks = element_blank(),
@@ -311,7 +311,7 @@ ggplot(counties_cropped) +
     title = paste0("Median Medicare Price for 30-day Supply of ",  chosen_drug, " by US County "),
     fill = "Median Cost"
   ) +
-  theme_minimal(base_size = 10)
+  theme_minimal(base_size = 14)
 ```
 
 Liraglutide is another that stands out in that it has a clear state-wide price impact, like in New Mexico and Minnesota, but a county-level price delta in some counties scattered across other states such as Nebraska, Oregon, Washington, Tennessee, Missouri, and Virginia. (@fig-map-liraglutide)
@@ -362,7 +362,7 @@ ggplot(counties_cropped) +
     title = paste0("Median Medicare Price for 30-day Supply of ",  chosen_drug, " by US County "),
     fill = "Median Cost"
   ) +
-  theme_minimal(base_size = 10) + 
+  theme_minimal(base_size = 14) + 
   theme(
     plot.title.position = "plot",       # aligns title with plot area
     plot.title = element_text(hjust = 0) # hjust = 0 means left-align
@@ -437,7 +437,7 @@ We introduced a feature called “Affordability” which divided price by income
       x = "Variable",
       y = "Pearson Correlation"
     ) +
-    theme_minimal(base_size = 10)
+    theme_minimal(base_size = 14)
 ```
 
 

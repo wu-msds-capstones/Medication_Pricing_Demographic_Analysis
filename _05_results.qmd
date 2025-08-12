@@ -279,7 +279,7 @@ ggplot(summary_table2, aes(x = num_contract_plans, y = total_popE)) +
     x = "Number of Medicare Plan Options",
     y = "Total Population (log scale)"
   ) +
-  theme_minimal(base_size = 10) + 
+  theme_minimal(base_size = 14) + 
   theme(
     plot.title.position = "plot",       # aligns title with plot area
     plot.title = element_text(hjust = 0) # hjust = 0 means left-align
@@ -364,7 +364,7 @@ p1 <- ggplot(train_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) + 
   labs(title = "Training Data R^2", x = "Model", y = NULL) +
-  theme_minimal(base_size = 10) +
+  theme_minimal(base_size = 14) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Test Rsquared heatmap
@@ -377,7 +377,7 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) +
   labs(title = "Test Data R^2", x = "Model", y = NULL) +
-  theme_minimal(base_size = 10) +
+  theme_minimal(base_size = 14) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 # Combine
 (p1 + p2) + plot_layout(guides = "collect") & theme(legend.position = "right")
@@ -424,7 +424,7 @@ p1 <- ggplot(train_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) + 
   labs(title = "Training Data R^2", x = "Model", y = NULL) +
-  theme_minimal(base_size = 10) +
+  theme_minimal(base_size = 14) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Test Rsquared heatmap
@@ -437,7 +437,7 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
   scale_color_identity() +  # use colors as-is from the column
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) +
   labs(title = "Test Data R^2", x = "Model", y = NULL) +
-  theme_minimal(base_size = 10) +
+  theme_minimal(base_size = 14) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 # Combine
 (p1 + p2) + plot_layout(guides = "collect") & theme(legend.position = "right")
@@ -482,12 +482,12 @@ ggplot(all_varimp_clean, aes(x = Drug_Model, y = Variable, fill = NormalizedImpo
   geom_text(aes(label = round(NormalizedImportance, 1), color = TextColor), 
             size = 3, 
             angle = 0) +
-  scale_fill_viridis_c(option = "magma", direction = -1,, name = "Normalized\nImportance") +
+  scale_fill_viridis_c(option = "magma", direction = -1, name = "Normalized\nImportance") +
   scale_color_identity() +  # Use colors as-is from the column
   labs(title = "Top 5 Variable Importances for Each Drug with a XGB Model",
        x = NULL,
        y = NULL) +
-  theme_minimal(base_size = 10) +
+  theme_minimal(base_size = 14) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
   # coord_flip()
 
@@ -543,7 +543,7 @@ ggplot(df, aes(x = PercentChange, y = MedianPrice,
     color = "Statistically Significant"
     # shape = "Direction"
   ) +
-  theme_minimal(base_size = 10) +
+  theme_minimal(base_size = 14) +
   geom_vline(xintercept = 0, linetype = "dashed")
 ```
 

@@ -21,7 +21,7 @@ g1 = med_spend_dose_trim%>%
   ggplot(aes(x=Doses_All, y=Spending_All))+
   geom_point(aes(size=size_bucket), alpha=.7)+
   geom_text_repel(data = head(med_spend_dose_trim, 10), aes(label=Generic), 
-                   nudge_x = 0.1, nudge_y = 0.2, show.legend = FALSE)+
+                   nudge_x = 0.2, nudge_y = 0.2, show.legend = FALSE)+
   scale_x_log10(labels = label_dollar(scale_cut = cut_short_scale()))+
   # scale_x_log10(labels = scales::label_number(scale = 1e-6, suffix = "M", big.mark = ","))+
   scale_y_continuous(labels = label_dollar(scale_cut = cut_short_scale())) +
@@ -32,9 +32,9 @@ g1 = med_spend_dose_trim%>%
        x="Doses Prescribed (USD)",
        y="Total Spending (USD)",
        size="Claims",
-       caption="Limited to medications with at least 10 million doses"
+       caption="*Limited to medications with at least 10 million doses"
        )+
-  theme_minimal(base_size = 12)
+  theme_minimal(base_size = 10)
 
 print(g1)
 
@@ -42,6 +42,7 @@ print(g1)
 
 We were not able to match all the top drugs to our dataset, so we used only the ones that had full matches, which ended up being the 14 of the top 25 medications. To help contextualize what conditions these medications treat, see @tbl-topmeds below.
 
+<div style="font-size: 80%;">
 
 | Total Spend (USD) | Generic Name          | Brand Name(s)              | Common Treatment Conditions                                                                                                 |
 |-------------------|-----------------------|----------------------------|------------------------------------------------------------------------------------------------------------------|
@@ -61,6 +62,8 @@ We were not able to match all the top drugs to our dataset, so we used only the 
 | $11.6B            | Liraglutide           | Victoza, Saxenda           | Type 2 Diabetes, Obesity                                                                  |
 
 : Top medications by absolute spend and the treatment conditions {#tbl-topmeds .striped .hover tbl-colwidths="[20,20,20,40]"}  
+
+</div>
 
 ## Exploratory Data Analysis
 
@@ -120,7 +123,7 @@ ggplot(box_plot_table, aes(x = drug_label, y = UNIT_COST)) +
   labs(title = "Median Price Variance For Top Drugs Across the U.S",
        subtitle = "Descending by Absolute Spending (2019-2023)",
        x = "",
-       y = "Price ($USD, log scale)") +
+       y = "Price (USD, log scale)") +
   scale_y_log10(labels = label_dollar()) +
   theme_minimal(base_size = 12) +
   coord_flip()  +
@@ -148,7 +151,7 @@ One contributing factor to the wide range of drug prices is the number of Medica
 #| warning: false
 #| echo: false
 #| message: false
-#| fig-height: 8
+#| fig-height: 7
 
 
 # Load libraries
@@ -239,10 +242,10 @@ plot_one_drug <- function(drug) {
   
   ggplot(df) +
     geom_sf(aes(fill = median_price), color = NA) +
-    scale_fill_viridis_c(option = "magma", direction = -1, na.value = "grey90",
+    scale_fill_viridis_c(option = "plasma", na.value = "grey90",
                          limits = c(min_price, max_price)) +
     labs(title = drug, fill = "Median Cost") +
-    theme_minimal(base_size = 12) +
+    theme_minimal(base_size = 10) +
     theme(
       axis.text = element_blank(),
       axis.ticks = element_blank(),
@@ -307,12 +310,20 @@ counties_cropped <- st_crop(counties_joined, bbox)
 # Plot it
 ggplot(counties_cropped) +
   geom_sf(aes(fill = median_price)) +
-  scale_fill_viridis_c(option = "magma", direction = -1, na.value = "grey90") +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90") +
   labs(
     title = paste0("Median Medicare Price for 30-day Supply of ",  chosen_drug, " by US County "),
     fill = "Median Cost"
   ) +
-  theme_minimal(base_size = 12)
+  theme_minimal(base_size = 10) + 
+  theme(  
+    plot.title.position = "plot",       # aligns title with plot area
+    plot.title = element_text(hjust = 0), # hjust = 0 means left-align, 
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank()
+    )
 ```
 
 Liraglutide is another that stands out in that it has a clear state-wide price impact, like in New Mexico and Minnesota, but a county-level price delta in some counties scattered across other states such as Nebraska, Oregon, Washington, Tennessee, Missouri, and Virginia. (@fig-map-liraglutide)
@@ -358,16 +369,21 @@ counties_cropped <- st_crop(counties_joined, bbox)
 # Plot it
 ggplot(counties_cropped) +
   geom_sf(aes(fill = median_price)) +
-  scale_fill_viridis_c(option = "magma", direction = -1, na.value = "grey90") +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90") +
   labs(
     title = paste0("Median Medicare Price for 30-day Supply of ",  chosen_drug, " by US County "),
     fill = "Median Cost"
   ) +
-  theme_minimal(base_size = 12) + 
+  theme_minimal(base_size = 10) + 
   theme(
     plot.title.position = "plot",       # aligns title with plot area
-    plot.title = element_text(hjust = 0) # hjust = 0 means left-align
-  )
+    plot.title = element_text(hjust = 0), # hjust = 0 means left-align, 
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank()
+    )
+  
 
 ```
 
@@ -383,7 +399,7 @@ The age, education, racial, and gender data from the Census are provided as abso
 #| warning: false
 #| echo: false
 #| message: false
-#| fig-height: 10
+#| fig-height: 7
 
  cor_by_drug = readRDS("data/correlations_by_drug.rds")
  
@@ -400,7 +416,7 @@ The age, education, racial, and gender data from the Census are provided as abso
       name = "Pearson\nCorrelation"
     ) +
     coord_flip() +
-    theme_minimal(base_size = 12) +
+    theme_minimal(base_size = 10) +
     theme(
       axis.text.x = element_text(angle = 90, hjust = 1),
       axis.text.y = element_text(size = 10), 
@@ -414,31 +430,31 @@ The age, education, racial, and gender data from the Census are provided as abso
   
 ```
 
-We introduced a feature called “Affordability” which divided price by income. This metric showed minimal correlation with other demographic variables. Even the strongest positive and negative correlations had Pearson coefficients below 0.04 (see @fig-affordability-correlations), indicating negligible relationships.  It failed to yield meaningful insights within our analysis and results.
+We introduced a feature called “Affordability” which divided price by income. This metric showed minimal correlation with other demographic variables. Even the strongest positive and negative correlations had Pearson coefficients below 0.04, indicating negligible relationships.  It failed to yield meaningful insights within our analysis and results.
 
 ```{r}
-#| label: fig-affordability-correlations
-#| fig-cap: "Pearson Correlations between Demographic Features and Affordability"
-#| warning: false
-#| echo: false
-
-
-  library(ggplot2)
-  afford_df = readRDS("data/affordability_correlations.rds")
-  # Filter for strong correlations
-  afford_df <- afford_df %>%
-    filter(Correlation > 0.02 | Correlation < -0.02) %>%
-    arrange(desc(abs(Correlation)))  # reorder by strength
-  # Plot
-  ggplot(afford_df, aes(x = reorder(Variable, Correlation), y = Correlation)) +
-    geom_col(fill = "darkgray") +
-    coord_flip() +
-    labs(
-      title = "Correlation with Affordability",
-      x = "Variable",
-      y = "Pearson Correlation"
-    ) +
-    theme_minimal(base_size = 12)
+# #| label: fig-affordability-correlations
+# #| fig-cap: "Pearson Correlations between Demographic Features and Affordability"
+# #| warning: false
+# #| echo: false
+# 
+# 
+#   library(ggplot2)
+#   afford_df = readRDS("data/affordability_correlations.rds")
+#   # Filter for strong correlations
+#   afford_df <- afford_df %>%
+#     filter(Correlation > 0.02 | Correlation < -0.02) %>%
+#     arrange(desc(abs(Correlation)))  # reorder by strength
+#   # Plot
+#   ggplot(afford_df, aes(x = reorder(Variable, Correlation), y = Correlation)) +
+#     geom_col(fill = "darkgray") +
+#     coord_flip() +
+#     labs(
+#       title = "Correlation with Affordability",
+#       x = "Variable",
+#       y = "Pearson Correlation"
+#     ) +
+#     theme_minimal(base_size = 10)
 ```
 
 

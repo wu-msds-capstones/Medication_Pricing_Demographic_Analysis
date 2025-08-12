@@ -28,6 +28,8 @@ Ultimately, the Mann-Whitney U Test is less powerful than parametric tests when 
 
 Accordingly, our team elected to compare mean prices, which notably exposes our analysis to outlier pricing.  The assumption independence within each group is stretched, considering the manner in which the data was procured, which we have discussed in great detail.
 
+<div style="font-size: 80%;">
+
 | Drug Name               | p-value        |
 |------------------------|----------------|
 | Adalimumab             | 3.37e-21        |
@@ -44,6 +46,7 @@ Accordingly, our team elected to compare mean prices, which notably exposes our 
 | Etanercept             | 7.12e-02        |
 | Ustekinumab            | 7.29e-02        |
 | Ibrutinib              | 4.93e-01        |
+</div>
 
 : P-value results for Hypothesis 1 {#tbl-h1_pvalue .striped .hover tbl-colwidths="[50,50]"}  
 
@@ -177,6 +180,7 @@ Using a two-sample t-test allowed reconsideration of our second hypothesis.  We 
 
 Building on this, we applied the Tukey HSD test to the quartile-based groups at a 95% confidence level. Again, we found p-values that supported rejecting the null hypothesis, indicating that the average mean prices across groups were not equal. Interestingly, the only comparisons with p-values at or above 5% occurred between adjacent quartile groups, while all other comparisons yielded p-values well below this threshold. (See @tbl-p2_tukey below.)
 
+<div style="font-size: 80%;">
 | Comparison                         | Difference   | Lower CI     | Upper CI     | Adjusted p-value |
 |------------------------------------|--------------|--------------|--------------|------------------|
 | >17% Poverty - 0-10% Poverty       | -1.1555147   | -1.4430153   | -0.8680141   | 0.0000000        |
@@ -185,21 +189,24 @@ Building on this, we applied the Tukey HSD test to the quartile-based groups at 
 | 13-17% Poverty - 0-10% Poverty     | -0.5183257   | -0.8123963   | -0.2242551   | 0.0000361        |
 | 10-13% Poverty - 0-10% Poverty     | -0.2990395   | -0.5978861   | -0.0001928   | 0.0497806        |
 | 13-17% Poverty - 10-13% Poverty    | -0.2192862   | -0.5196131   |  0.0810407   | 0.2382320        |
+</div>
 
-: Tukey HSD test comparing Semaglutide prices amongst four poverty levels {#tbl-p2_tukey .striped .hover tbl-colwidths="[30, 17.5, 17.5, 17.5, 17.5]"}  
+: Tukey HSD test comparing Semaglutide prices amongst four poverty levels {#tbl-p2_tukey .striped .hover tbl-colwidths="[40, 15, 15, 15, 15]"}  
 
 We repeated this process across several medications and demographic variables, consistently observing statistical significance. However, when examining the actual differences in average prices between groups, the magnitude of these differences was often minimal. Continuing with Semaglutide as an example, counties in the lowest poverty quartile (0–10%) had an average mean price of $168, while those in the highest poverty quartile (>17%) had an average of $167, a mere $1 difference. Notably, counties with higher poverty levels were paying slightly less on average.
 
 To better understand the implications of this finding, we considered affordability by dividing the mean price by the median income of each county. This revealed that although prices were lower in higher-poverty areas, the cost represented a larger proportion of income, highlighting a disparity in affordability. This relationship is clearly illustrated in the following @tbl-p2-means and @fig-h2_2.
 
+<div style="font-size: 80%;">
 | Poverty Group       | Mean Price | SD Price | Mean Affordability | SD Affordability | Sample Size (n) |
 |---------------------|------------|----------|---------------------|------------------|------------------|
 | 0–10% Poverty       | 168.00     | 2.35     | 0.00209             | 0.000409         | 788              |
 | 10–13% Poverty      | 168.00     | 2.60     | 0.00246             | 0.000332         | 725              |
 | 13–17% Poverty      | 167.00     | 2.36     | 0.00275             | 0.000351         | 772              |
 | >17% Poverty        | 167.00     | 1.69     | 0.00340             | 0.000613         | 846              |
+</div>
 
-: Mean and standard deviation of prices of Semaglutide by four poverty buckets {#tbl-p2-means .striped .hover tbl-colwidths="[17, 17, 15, 17, 17]"} 
+: Mean and standard deviation of prices of Semaglutide by four poverty buckets {#tbl-p2-means .striped .hover tbl-colwidths="[30, 14, 14, 14, 14]"} 
 
 ```{r}
 #| label: fig-h2_2
@@ -378,7 +385,9 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) +
   labs(title = "Test Data R^2", x = "Model", y = NULL) +
   theme_minimal(base_size = 12) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), 
+        axis.text.y = element_blank()
+        ) 
 # Combine
 (p1 + p2) + plot_layout(guides = "collect") & theme(legend.position = "right")
 
@@ -438,7 +447,8 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
   scale_fill_viridis_c(option = "magma", direction = -1, name = "R^2", limits = Rsq_limits) +
   labs(title = "Test Data R^2", x = "Model", y = NULL) +
   theme_minimal(base_size = 12) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+                axis.text.y = element_blank()) 
 # Combine
 (p1 + p2) + plot_layout(guides = "collect") & theme(legend.position = "right")
 
@@ -470,7 +480,9 @@ ggplot(all_varimp_clean, aes(x = Drug_Model, y = Variable, fill = NormalizedImpo
        x = NULL,
        y = NULL) +
   theme_minimal(base_size = 12) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), 
+        plot.title.position = "plot",
+        plot.title = element_text(hjust = 0)) 
   # coord_flip()
 
 
@@ -525,8 +537,12 @@ ggplot(df, aes(x = PercentChange, y = MedianPrice,
     color = "Statistically Significant"
     # shape = "Direction"
   ) +
-  theme_minimal(base_size = 12) +
-  geom_vline(xintercept = 0, linetype = "dashed")
+  theme_minimal(base_size = 10) +
+  geom_vline(xintercept = 0, linetype = "dashed") + 
+  theme(
+    plot.title.position = "plot",
+    plot.title = element_text(hjust = 0)
+  )
 ```
 
 

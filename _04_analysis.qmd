@@ -22,14 +22,15 @@ g1 = med_spend_dose_trim%>%
   geom_point(aes(size=size_bucket), alpha=.7)+
   geom_text_repel(data = head(med_spend_dose_trim, 10), aes(label=Generic), 
                    nudge_x = 0.1, nudge_y = 0.2, show.legend = FALSE)+
-  scale_x_log10(labels = scales::label_number(scale = 1e-6, suffix = "M", big.mark = ","))+
+  scale_x_log10(labels = label_dollar(scale_cut = cut_short_scale()))+
+  # scale_x_log10(labels = scales::label_number(scale = 1e-6, suffix = "M", big.mark = ","))+
   scale_y_continuous(labels = label_dollar(scale_cut = cut_short_scale())) +
   # scale_y_continuous(labels = scales::label_dollar(scale = 1e-6, suffix = "M"))+
   scale_size_manual(values = c("<50M"=2, "50–150M"=4, "150–300M"=6, ">300M"=8))+
   labs(title = "Medicare Part B, D & Medicaid Drug Spending - Top 10",
        subtitle = "2019 - 2023",
-       x="Doses Prescribed (Billions)",
-       y="Total Spending (Billions)",
+       x="Doses Prescribed (USD)",
+       y="Total Spending (USD)",
        size="Claims",
        caption="Limited to medications with at least 10 million doses"
        )+
@@ -237,7 +238,7 @@ plot_one_drug <- function(drug) {
   
   ggplot(df) +
     geom_sf(aes(fill = median_price), color = NA) +
-    scale_fill_viridis_c(option = "plasma", na.value = "grey90",
+    scale_fill_viridis_c(option = "magma", direction = -1, na.value = "grey90",
                          limits = c(min_price, max_price)) +
     labs(title = drug, fill = "Median Cost") +
     theme_minimal(base_size = 10) +
@@ -305,7 +306,7 @@ counties_cropped <- st_crop(counties_joined, bbox)
 # Plot it
 ggplot(counties_cropped) +
   geom_sf(aes(fill = median_price)) +
-  scale_fill_viridis_c(option = "plasma", na.value = "grey90") +
+  scale_fill_viridis_c(option = "magma", direction = -1, na.value = "grey90") +
   labs(
     title = paste0("Median Medicare Price for 30-day Supply of ",  chosen_drug, " by US County "),
     fill = "Median Cost"
@@ -356,7 +357,7 @@ counties_cropped <- st_crop(counties_joined, bbox)
 # Plot it
 ggplot(counties_cropped) +
   geom_sf(aes(fill = median_price)) +
-  scale_fill_viridis_c(option = "plasma", na.value = "grey90") +
+  scale_fill_viridis_c(option = "magma", direction = -1, na.value = "grey90") +
   labs(
     title = paste0("Median Medicare Price for 30-day Supply of ",  chosen_drug, " by US County "),
     fill = "Median Cost"

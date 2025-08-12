@@ -482,7 +482,7 @@ ggplot(all_varimp_clean, aes(x = Drug_Model, y = Variable, fill = NormalizedImpo
   geom_text(aes(label = round(NormalizedImportance, 1), color = TextColor), 
             size = 3, 
             angle = 0) +
-  scale_fill_viridis_c(option = "magma", name = "Normalized\nImportance") +
+  scale_fill_viridis_c(option = "magma", direction = -1,, name = "Normalized\nImportance") +
   scale_color_identity() +  # Use colors as-is from the column
   labs(title = "Top 5 Variable Importances for Each Drug with a XGB Model",
        x = NULL,

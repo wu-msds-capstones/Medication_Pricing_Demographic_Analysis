@@ -148,6 +148,7 @@ One contributing factor to the wide range of drug prices is the number of Medica
 #| warning: false
 #| echo: false
 #| message: false
+#| fig-height: 8
 
 
 # Load libraries

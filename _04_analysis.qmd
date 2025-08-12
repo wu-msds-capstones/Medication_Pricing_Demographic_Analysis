@@ -168,7 +168,7 @@ ggplot(or_contracts, aes(x = fct_reorder(COUNTY, unique_contract_plans), y = uni
 
 ```
 
-### Data summary simplifications
+### Data Summary Simplifications
 
 Given the number of plans within each county (and the variation in drug prices by plan, pharmacy, dosage, and delivery mechanism), we chose to simplify the data by calculating the median 30-day supply price for each drug (based on the 9-digit NDC code) within each county. While 60-day and 90-day supply prices were also available, they were excluded to streamline the analysis. For much of the subsequent work, this median county-level price per drug will serve as our primary target variable.
 
@@ -379,7 +379,6 @@ The age, education, racial, and gender data from the Census are provided as abso
 #| warning: false
 #| echo: false
 #| message: false
-#| fig-height: 10
 
  cor_by_drug = readRDS("data/correlations_by_drug.rds")
  
@@ -396,7 +395,7 @@ The age, education, racial, and gender data from the Census are provided as abso
       name = "Pearson\nCorrelation"
     ) +
     coord_flip() +
-    theme_minimal(base_size = 14) +
+    theme_minimal(base_size = 10) +
     theme(
       axis.text.x = element_text(angle = 90, hjust = 1),
       axis.text.y = element_text(size = 10), 

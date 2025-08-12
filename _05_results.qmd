@@ -32,16 +32,16 @@ Accordingly, our team elected to compare mean prices, which notably exposes our 
 
 | Drug Name               | p-value        |
 |------------------------|----------------|
-| Adalimumab             | 3.37e-21        |
-| Apixaban               | 5.46e-21        |
-| Insulin Aspart         | 6.31e-18        |
-| Semaglutide            | 2.53e-13        |
-| Paliperidone Palmitate | 6.19e-13        |
-| Rivaroxaban            | 4.67e-12        |
-| Liraglutide            | 1.44e-10        |
-| Empagliflozin          | 4.23e-04        |
-| Tiotropium Bromide     | 1.16e-02        |
-| Dulaglutide            | 1.30e-02        |
+| *Adalimumab*             | *3.37e-21*        |
+| *Apixaban*               | *5.46e-21*        |
+| *Insulin Aspart*         | *6.31e-18*        |
+| *Semaglutide*            | *2.53e-13*        |
+| *Paliperidone Palmitate* | *6.19e-13*        |
+| *Rivaroxaban*            | *4.67e-12*        |
+| *Liraglutide*            | *1.44e-10*        |
+| *Empagliflozin*          | *4.23e-04*        |
+| *Tiotropium Bromide*     | *1.16e-02*        |
+| *Dulaglutide*            | *1.30e-02*        |
 | Lenalidomide           | 6.55e-02        |
 | Etanercept             | 7.12e-02        |
 | Ustekinumab            | 7.29e-02        |
@@ -51,7 +51,7 @@ Accordingly, our team elected to compare mean prices, which notably exposes our 
 
 </div>
 
-We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See @tbl-h1_pvalue above.) To dive deeper, our team constructed density plots to compare the direction of this difference.  As observed in @fig-h1, where we evaluate two of these medications.  We can clearly see that the direction shifts at different price ranks and depends on the medication.
+We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See @tbl-h1_pvalue above.) To dive deeper, our team constructed density plots to compare the direction of this difference.  As observed in @fig-h1, where we evaluate two of these medications, Semaglutide and Dulaglutide.  We can see that the direction shifts at different price ranks and the shift depends on the medication.
 
 ```{r}
 #| label: fig-h1
@@ -106,7 +106,7 @@ Drilling down again, with these two medications in focus, actual values are comp
 
 </div>
 
-The findings are interesting but have issues.  In the plot, we can clearly see that advantages are given to certain groups at certain prices.  The mean of the mean prices, as well as the standard deviations show practically no difference for Dulaglutide and only some difference for Semaglutide.  Unfortunately, this does not provide much clarity regarding any particular advantage afforded to counties where more than 95% of the population identifies as white.  The findings are hardly definitive and lack confidence intervals.  This does demonstrate the limitations of using the Mann-Whitney U Test.
+The findings are interesting but have issues.  In the plot, we can clearly see that slight advantages are given to certain groups at certain prices.  The mean of the mean prices, as well as the standard deviations show practically no difference for Dulaglutide and only some difference for Semaglutide.  Unfortunately, this does not provide much clarity regarding any particular advantage afforded to counties where more than 95% of the population identifies as white.  The findings are hardly definitive and lack confidence intervals.  This does demonstrate the limitations of using the Mann-Whitney U Test.
 
 ### Hypothesis 2
 
@@ -120,18 +120,18 @@ Using the same assumptions, another consideration involves fully removing the ra
 
 | Drug Name               | p-value        |
 |------------------------|----------------|
-| Semaglutide            | 1.43e-20        |
-| Dulaglutide            | 2.49e-16        |
-| Ibrutinib              | 4.41e-13        |
-| Insulin Aspart         | 2.34e-10        |
-| Adalimumab             | 3.46e-10        |
-| Etanercept             | 2.40e-08        |
-| Ustekinumab            | 8.88e-08        |
-| Apixaban               | 1.90e-06        |
-| Empagliflozin          | 6.70e-06        |
-| Liraglutide            | 1.12e-03        |
-| Lenalidomide           | 1.43e-03        |
-| Paliperidone Palmitate | 2.70e-02        |
+| *Semaglutide*            | *1.43e-20*        |
+| *Dulaglutide*            | *2.49e-16*        |
+| *Ibrutinib*              | *4.41e-13*        |
+| *Insulin Aspart*         | *2.34e-10*        |
+| *Adalimumab*             | *3.46e-10*        |
+| *Etanercept*             | *2.40e-08*        |
+| *Ustekinumab*            | *8.88e-08*        |
+| *Apixaban*               | *1.90e-06*        |
+| *Empagliflozin*          | *6.70e-06*        |
+| *Liraglutide*            | *1.12e-03*        |
+| *Lenalidomide*           | *1.43e-03*        |
+| *Paliperidone Palmitate* | *2.70e-02*        |
 | Tiotropium Bromide     | 8.55e-02        |
 | Rivaroxaban            | 1.54e-01        |
 
@@ -345,7 +345,7 @@ XGBoost is an optimized and scalable implementation of gradient boosting. It inc
 
 ### Model Performance
 
-Looping over every drug, we trained all the previously described models. A heatmap of the resulting model performance is provided below in @fig-heatmap-models-performance. As expected, the gradient boosting machine, the random forest, and the extreme gradient boosting models performed the best across all drugs. Unfortunately, while the models ok R^2 values when fitting to the training data, the R^2 values for the test data is significantly lower. This suggests that the models are overfitting to the training data, and we need to tune the hyperparameters of the models to improve performance.
+Looping over every drug, we trained all the previously described models. A heatmap of the resulting model performance is provided below in @fig-heatmap-models-performance. As expected, the gradient boosting machine, the random forest, and the extreme gradient boosting models performed the best across all drugs. Unfortunately, while the models have ok R^2^ values when fitting to the training data, the R^2^ values for the test data is significantly lower. This suggests that the models are overfitting to the training data, and we need to tune the hyperparameters of the models to improve performance.
 
 
 ```{r}
@@ -409,7 +409,7 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
 
 
 ### Tuning to Prevent Overfitting
-To improve the model performance and prevent overfitting, we tuned the hyperparameters of the extreme gradient boosting models. The tuning process involved adjusting parameters such as the number of rounds, maximum depth, learning rate (aka eta) and more to optimize model performance on the validation set. Our most overfit model XGB6 has a nearly perfect fit to the training data for all drugs, and yet it also has the best fit to the test data. If the model had the key features that drive median price, we would've expected to see the test R^2 values be much closer to the training R^2 values and that there would be a optimum point where the training data might have a worse fit, but the test data would have a better fit in comparison. Tunning the parameters to prevent overfitting, you can see the XGB7, XGB8, and XGB9 get progressively worse fits to the training data, but also those models get worse fits to the test data. Thus, we think that the features that we have are not the best predictors of median drug price. The tuned XGB models are shown in @fig-heatmap-models-performance-tuned.
+To improve the model performance and prevent overfitting, we tuned the hyperparameters of the extreme gradient boosting models. The tuning process involved adjusting parameters such as the number of rounds, maximum depth, learning rate (aka eta) and more to optimize model performance on the validation set. Our most overfit model, XGB6, has a nearly perfect fit to the training data for all drugs, and yet it also has the best fit to the test data. If the model had the appropriate key features that drive median price, we would've expected to see the test R^2^ values much closer to the training R^2 values. There would be a optimum point where the training data might have a worse fit, but the test data would have a better fit in comparison. Tuning the parameters to prevent overfitting, you can see the XGB7, XGB8, and XGB9 get progressively worse fits to the training data, but also those models get worse fits to the test data. Thus, we think that the features that we have are not the best predictors of median drug price. The performance of the tuned XGB models are shown in @fig-heatmap-models-performance-tuned.
   
 ```{r}
 #| label: fig-heatmap-models-performance-tuned
@@ -470,7 +470,7 @@ p2 <- ggplot(test_metrics, aes(x = Model, y = Drug, fill = Rsquared)) +
 ```
 
 ### Feature Importance
- The most important features for the initial XGB model across all drugs are shown in the heatmap below (@fig-heatmap-rf-variable-importance). The most obvious pattern here is that the num_contract_plans (aka the quantity of available Medicare plans) is the most important feature for 12 out of the 14 top drugs. We already looked at the connection between total_population and the quantity of available plans in a county previously, and only saw a mild correlation. For the other two drugs, the top features were income per capita and percent of the population with master's degree.
+ The most important features for the initial XGB model across all drugs are shown in the heatmap below (@fig-heatmap-rf-variable-importance). The most obvious pattern here is that the num_contract_plans (aka the quantity of available Medicare plans) is the most important feature for 12 out of the 14 top drugs. We already looked at the connection between total_] population and the quantity of available plans in a county previously, and only saw a mild correlation. For the other two drugs, the top features were income per capita and percent of the population with master's degree.
 
 
 ``` {r}
@@ -504,7 +504,7 @@ ggplot(all_varimp_clean, aes(x = Drug_Model, y = Variable, fill = NormalizedImpo
 
 ### Feature Direction
 
-We did a quick linear regression fit between the median price of all drugs and the number of available Medicare plans in a county. The results are shown in @fig-effect-available-plans-on-drug-price below. The percent of the price variance that is due to the number of available Medicare plans was pulled from the R^2 value and is shown in the size of the points. The direction of the relationship is shown as a percent of the median drug price on the X-axis. For every 10 medicare plans added to a county, the drug price either increases or decreases by the percent in the plot. The significance of the relationship was determined by a p-value < 0.05 and is color coded in the plot. In general, while some drug account, the number of contracts accounts for ~5% of the variance in drug price, that is still quite a small number. Also, some drugs are increasing price and some decreasing with the addtion of 10 more Medicare plan options in a county. In general, the number of Medicare plans available isn't the only factor that drives drug price, but it is the most important factor we found in our analysis.
+To determine if more Medicare plan options in a county increase or decrease the drug price, we did a quick linear regression fit between the median price of all drugs and the number of available Medicare plans in a county. The results are shown in @fig-effect-available-plans-on-drug-price below. The percent of the price variance that is due to the number of available Medicare plans was pulled from the R^2^ value and is shown in the size of the points. The direction of the relationship is shown as a percent of the median drug price on the X-axis. For every 10 medicare plans added to a county, the drug price either increases or decreases by the percent in the plot. The significance of the relationship was determined by a p-value < 0.05 and is color coded in the plot. For the most affected drug price, the number of contracts accounts for up to ~5% of the variance in drug price. 5% is not a very large imcpart. Also, some drugs are increasing price and some decreasing with the addition of 10 more Medicare plan options in a county. In general, the number of Medicare plans, along with demographics, aren't the only factor that drives drug price, but the number of plans is the most important factor we found in our feature set.
 
 
 ``` {r}

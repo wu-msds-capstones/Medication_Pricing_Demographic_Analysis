@@ -619,7 +619,7 @@ Table&nbsp;1: Top medications by absolute spend and the treatment conditions
 <h2 data-number="5.2" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">5.2</span> Exploratory Data Analysis</h2>
 <section id="price-variance-across-counties" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="price-variance-across-counties"><span class="header-section-number">5.2.1</span> Price Variance Across Counties</h3>
-<p>After mapping individual medication prices to U.S. counties where Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure (<a href="#fig-pricevariance" class="quarto-xref">Figure&nbsp;2</a>). This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.</p>
+<p>After mapping individual medication prices to U.S. counties by which Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure (<a href="#fig-pricevariance" class="quarto-xref">Figure&nbsp;2</a>). This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.</p>
 <div id="cell-fig-pricevariance" class="cell">
 <div class="cell-output-display">
 <div id="fig-pricevariance" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -666,10 +666,10 @@ Figure&nbsp;3: Quantity of Unique Medicare Plan Counts by Oregon County
 <div id="fig-map-facet" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-map-facet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="capstone_files/figure-html/fig-map-facet-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Median drug prices by US County for 14 drugs. Note: The color scale is differnet for every drug. The highest value for each drug is yellow while the lowest value is purple."><img src="capstone_files/figure-html/fig-map-facet-1.png" class="img-fluid figure-img" style="width:100.0%"></a>
+<a href="capstone_files/figure-html/fig-map-facet-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: 30-day supply median drug prices by US County for 14 high total expenditure drugs. Note: The color scale is different for every drug. The highest value for each drug is yellow while the lowest value is purple."><img src="capstone_files/figure-html/fig-map-facet-1.png" class="img-fluid figure-img" style="width:100.0%"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-map-facet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Median drug prices by US County for 14 drugs. Note: The color scale is differnet for every drug. The highest value for each drug is yellow while the lowest value is purple.
+Figure&nbsp;4: 30-day supply median drug prices by US County for 14 high total expenditure drugs. Note: The color scale is different for every drug. The highest value for each drug is yellow while the lowest value is purple.
 </figcaption>
 </figure>
 </div>
@@ -709,7 +709,7 @@ Figure&nbsp;6: Median Medicare Price for 30-day Supply of Liraglutide by US Coun
 </section>
 <section id="correlations" class="level3" data-number="5.2.5">
 <h3 data-number="5.2.5" class="anchored" data-anchor-id="correlations"><span class="header-section-number">5.2.5</span> Correlations</h3>
-<p>The age, education, racial, and gender data from the Census are provided as absolute values. We normalized those by dividing each metric by the total population to convert them to percentages. We then explored which demographic metrics most closely correlate to the prices for each medication in <a href="#fig-by-drug-correlation" class="quarto-xref">Figure&nbsp;7</a>. If all the medications are correlated with similar demographic metrics, all drugs can be modeled together. If not, the individual drugs will need to be modeled separately. In this case, we filtered out weak correlations, keeping only those with Pearson correlation coefficients less than -0.1 or greater than 0.1. There is no clear pattern among all the top drugs for correlations with the demographic metrics.</p>
+<p>The age, education, racial, and gender data from the Census are provided as absolute values. We normalized those by dividing each metric by the total population to convert them to percentages. We then explored which demographic metrics most closely correlate to the prices for each medication in <a href="#fig-by-drug-correlation" class="quarto-xref">Figure&nbsp;7</a>. If all the medications are correlated with similar demographic metrics, all drugs can be modeled together. If not, the individual drugs will need to be modeled separately. In this case, we filtered out weak correlations, keeping only those with Pearson correlation coefficients less than -0.1 or greater than 0.1. There is no clear pattern among all the top drugs for correlations with the demographic metrics. Thus, we concluded that each medication needs to be analyzed independently.</p>
 <div id="cell-fig-by-drug-correlation" class="cell">
 <div class="cell-output-display">
 <div id="fig-by-drug-correlation" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -724,7 +724,7 @@ Figure&nbsp;7: Heatmap of Pearson Correlations Between Demographics and Drug Pri
 </div>
 </div>
 </div>
-<p>We introduced a feature called “Affordability” which divided price by income. This metric showed minimal correlation with other demographic variables. Even the strongest positive and negative correlations had Pearson coefficients below 0.04, indicating negligible relationships. It failed to yield meaningful insights within our analysis and results.</p>
+<p>We also introduced a feature called “Affordability” which divided price by income. This metric showed minimal correlation with other demographic variables also. Even the strongest positive and negative correlations had Pearson coefficients below 0.04, indicating negligible relationships. It failed to yield meaningful insights within our analysis and results.</p>
 </section>
 </section>
 </section>
@@ -767,44 +767,44 @@ Figure&nbsp;7: Heatmap of Pearson Correlations Between Demographics and Drug Pri
 </thead>
 <tbody>
 <tr class="odd">
-<td>Adalimumab</td>
-<td>3.37e-21</td>
+<td><em>Adalimumab</em></td>
+<td><em>3.37e-21</em></td>
 </tr>
 <tr class="even">
-<td>Apixaban</td>
-<td>5.46e-21</td>
+<td><em>Apixaban</em></td>
+<td><em>5.46e-21</em></td>
 </tr>
 <tr class="odd">
-<td>Insulin Aspart</td>
-<td>6.31e-18</td>
+<td><em>Insulin Aspart</em></td>
+<td><em>6.31e-18</em></td>
 </tr>
 <tr class="even">
-<td>Semaglutide</td>
-<td>2.53e-13</td>
+<td><em>Semaglutide</em></td>
+<td><em>2.53e-13</em></td>
 </tr>
 <tr class="odd">
-<td>Paliperidone Palmitate</td>
-<td>6.19e-13</td>
+<td><em>Paliperidone Palmitate</em></td>
+<td><em>6.19e-13</em></td>
 </tr>
 <tr class="even">
-<td>Rivaroxaban</td>
-<td>4.67e-12</td>
+<td><em>Rivaroxaban</em></td>
+<td><em>4.67e-12</em></td>
 </tr>
 <tr class="odd">
-<td>Liraglutide</td>
-<td>1.44e-10</td>
+<td><em>Liraglutide</em></td>
+<td><em>1.44e-10</em></td>
 </tr>
 <tr class="even">
-<td>Empagliflozin</td>
-<td>4.23e-04</td>
+<td><em>Empagliflozin</em></td>
+<td><em>4.23e-04</em></td>
 </tr>
 <tr class="odd">
-<td>Tiotropium Bromide</td>
-<td>1.16e-02</td>
+<td><em>Tiotropium Bromide</em></td>
+<td><em>1.16e-02</em></td>
 </tr>
 <tr class="even">
-<td>Dulaglutide</td>
-<td>1.30e-02</td>
+<td><em>Dulaglutide</em></td>
+<td><em>1.30e-02</em></td>
 </tr>
 <tr class="odd">
 <td>Lenalidomide</td>
@@ -831,7 +831,7 @@ Table&nbsp;2: P-value results for Hypothesis 1
 </figure>
 </div>
 </div>
-<p>We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See <a href="#tbl-h1_pvalue" class="quarto-xref">Table&nbsp;2</a> above.) To dive deeper, our team constructed density plots to compare the direction of this difference. As observed in <a href="#fig-h1" class="quarto-xref">Figure&nbsp;8</a>, where we evaluate two of these medications. We can clearly see that the direction shifts at different price ranks and depends on the medication.</p>
+<p>We can reasonably conclude from this that in 10 of our 14 focus medications, there is a statistically significant difference in mean prices and reject the null hypothesis for these medications. (See <a href="#tbl-h1_pvalue" class="quarto-xref">Table&nbsp;2</a> above.) To dive deeper, our team constructed density plots to compare the direction of this difference. As observed in <a href="#fig-h1" class="quarto-xref">Figure&nbsp;8</a>, where we evaluate two of these medications, Semaglutide and Dulaglutide. We can see that the direction shifts at different price ranks and the shift depends on the medication.</p>
 <div id="cell-fig-h1" class="cell">
 <div class="cell-output-display">
 <div id="fig-h1" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -900,7 +900,7 @@ Table&nbsp;3: Mean of Mean Price and Standard Deviation for Dulaglutide and Sema
 </figure>
 </div>
 </div>
-<p>The findings are interesting but have issues. In the plot, we can clearly see that advantages are given to certain groups at certain prices. The mean of the mean prices, as well as the standard deviations show practically no difference for Dulaglutide and only some difference for Semaglutide. Unfortunately, this does not provide much clarity regarding any particular advantage afforded to counties where more than 95% of the population identifies as white. The findings are hardly definitive and lack confidence intervals. This does demonstrate the limitations of using the Mann-Whitney U Test.</p>
+<p>The findings are interesting but have issues. In the plot, we can clearly see that slight advantages are given to certain groups at certain prices. The mean of the mean prices, as well as the standard deviations show practically no difference for Dulaglutide and only some difference for Semaglutide. Unfortunately, this does not provide much clarity regarding any particular advantage afforded to counties where more than 95% of the population identifies as white. The findings are hardly definitive and lack confidence intervals. This does demonstrate the limitations of using the Mann-Whitney U Test.</p>
 </section>
 <section id="hypothesis-2" class="level3" data-number="6.1.2">
 <h3 data-number="6.1.2" class="anchored" data-anchor-id="hypothesis-2"><span class="header-section-number">6.1.2</span> Hypothesis 2</h3>
@@ -924,52 +924,52 @@ Table&nbsp;3: Mean of Mean Price and Standard Deviation for Dulaglutide and Sema
 </thead>
 <tbody>
 <tr class="odd">
-<td>Semaglutide</td>
-<td>1.43e-20</td>
+<td><em>Semaglutide</em></td>
+<td><em>1.43e-20</em></td>
 </tr>
 <tr class="even">
-<td>Dulaglutide</td>
-<td>2.49e-16</td>
+<td><em>Dulaglutide</em></td>
+<td><em>2.49e-16</em></td>
 </tr>
 <tr class="odd">
-<td>Ibrutinib</td>
-<td>4.41e-13</td>
+<td><em>Ibrutinib</em></td>
+<td><em>4.41e-13</em></td>
 </tr>
 <tr class="even">
-<td>Insulin Aspart</td>
-<td>2.34e-10</td>
+<td><em>Insulin Aspart</em></td>
+<td><em>2.34e-10</em></td>
 </tr>
 <tr class="odd">
-<td>Adalimumab</td>
-<td>3.46e-10</td>
+<td><em>Adalimumab</em></td>
+<td><em>3.46e-10</em></td>
 </tr>
 <tr class="even">
-<td>Etanercept</td>
-<td>2.40e-08</td>
+<td><em>Etanercept</em></td>
+<td><em>2.40e-08</em></td>
 </tr>
 <tr class="odd">
-<td>Ustekinumab</td>
-<td>8.88e-08</td>
+<td><em>Ustekinumab</em></td>
+<td><em>8.88e-08</em></td>
 </tr>
 <tr class="even">
-<td>Apixaban</td>
-<td>1.90e-06</td>
+<td><em>Apixaban</em></td>
+<td><em>1.90e-06</em></td>
 </tr>
 <tr class="odd">
-<td>Empagliflozin</td>
-<td>6.70e-06</td>
+<td><em>Empagliflozin</em></td>
+<td><em>6.70e-06</em></td>
 </tr>
 <tr class="even">
-<td>Liraglutide</td>
-<td>1.12e-03</td>
+<td><em>Liraglutide</em></td>
+<td><em>1.12e-03</em></td>
 </tr>
 <tr class="odd">
-<td>Lenalidomide</td>
-<td>1.43e-03</td>
+<td><em>Lenalidomide</em></td>
+<td><em>1.43e-03</em></td>
 </tr>
 <tr class="even">
-<td>Paliperidone Palmitate</td>
-<td>2.70e-02</td>
+<td><em>Paliperidone Palmitate</em></td>
+<td><em>2.70e-02</em></td>
 </tr>
 <tr class="odd">
 <td>Tiotropium Bromide</td>
@@ -1205,7 +1205,7 @@ Figure&nbsp;11: Correlation between the number of Medicare Plan Options and Tota
 </section>
 <section id="model-performance" class="level3" data-number="6.4.2">
 <h3 data-number="6.4.2" class="anchored" data-anchor-id="model-performance"><span class="header-section-number">6.4.2</span> Model Performance</h3>
-<p>Looping over every drug, we trained all the previously described models. A heatmap of the resulting model performance is provided below in <a href="#fig-heatmap-models-performance" class="quarto-xref">Figure&nbsp;12</a>. As expected, the gradient boosting machine, the random forest, and the extreme gradient boosting models performed the best across all drugs. Unfortunately, while the models ok R^2 values when fitting to the training data, the R^2 values for the test data is significantly lower. This suggests that the models are overfitting to the training data, and we need to tune the hyperparameters of the models to improve performance.</p>
+<p>Looping over every drug, we trained all the previously described models. A heatmap of the resulting model performance is provided below in <a href="#fig-heatmap-models-performance" class="quarto-xref">Figure&nbsp;12</a>. As expected, the gradient boosting machine, the random forest, and the extreme gradient boosting models performed the best across all drugs. Unfortunately, while the models have ok R<sup>2</sup> values when fitting to the training data, the R<sup>2</sup> values for the test data is significantly lower. This suggests that the models are overfitting to the training data, and we need to tune the hyperparameters of the models to improve performance.</p>
 <div id="cell-fig-heatmap-models-performance" class="cell">
 <div class="cell-output-display">
 <div id="fig-heatmap-models-performance" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1223,7 +1223,7 @@ Figure&nbsp;12: Model Performance Heatmap by Drug
 </section>
 <section id="tuning-to-prevent-overfitting" class="level3" data-number="6.4.3">
 <h3 data-number="6.4.3" class="anchored" data-anchor-id="tuning-to-prevent-overfitting"><span class="header-section-number">6.4.3</span> Tuning to Prevent Overfitting</h3>
-<p>To improve the model performance and prevent overfitting, we tuned the hyperparameters of the extreme gradient boosting models. The tuning process involved adjusting parameters such as the number of rounds, maximum depth, learning rate (aka eta) and more to optimize model performance on the validation set. Our most overfit model XGB6 has a nearly perfect fit to the training data for all drugs, and yet it also has the best fit to the test data. If the model had the key features that drive median price, we would’ve expected to see the test R^2 values be much closer to the training R^2 values and that there would be a optimum point where the training data might have a worse fit, but the test data would have a better fit in comparison. Tunning the parameters to prevent overfitting, you can see the XGB7, XGB8, and XGB9 get progressively worse fits to the training data, but also those models get worse fits to the test data. Thus, we think that the features that we have are not the best predictors of median drug price. The tuned XGB models are shown in <a href="#fig-heatmap-models-performance-tuned" class="quarto-xref">Figure&nbsp;13</a>.</p>
+<p>To improve the model performance and prevent overfitting, we tuned the hyperparameters of the extreme gradient boosting models. The tuning process involved adjusting parameters such as the number of rounds, maximum depth, learning rate (aka eta) and more to optimize model performance on the validation set. Our most overfit model, XGB6, has a nearly perfect fit to the training data for all drugs, and yet it also has the best fit to the test data. If the model had the appropriate key features that drive median price, we would’ve expected to see the test R<sup>2</sup> values much closer to the training R^2 values. There would be a optimum point where the training data might have a worse fit, but the test data would have a better fit in comparison. Tuning the parameters to prevent overfitting, you can see the XGB7, XGB8, and XGB9 get progressively worse fits to the training data, but also those models get worse fits to the test data. Thus, we think that the features that we have are not the best predictors of median drug price. The performance of the tuned XGB models are shown in <a href="#fig-heatmap-models-performance-tuned" class="quarto-xref">Figure&nbsp;13</a>.</p>
 <div id="cell-fig-heatmap-models-performance-tuned" class="cell">
 <div class="cell-output-display">
 <div id="fig-heatmap-models-performance-tuned" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1241,7 +1241,7 @@ Figure&nbsp;13: Tuned XGB Models Performance Heatmap by Drug
 </section>
 <section id="feature-importance" class="level3" data-number="6.4.4">
 <h3 data-number="6.4.4" class="anchored" data-anchor-id="feature-importance"><span class="header-section-number">6.4.4</span> Feature Importance</h3>
-<p>The most important features for the initial XGB model across all drugs are shown in the heatmap below (<a href="#fig-heatmap-rf-variable-importance" class="quarto-xref">Figure&nbsp;14</a>). The most obvious pattern here is that the num_contract_plans (aka the quantity of available Medicare plans) is the most important feature for 12 out of the 14 top drugs. We already looked at the connection between total_population and the quantity of available plans in a county previously, and only saw a mild correlation. For the other two drugs, the top features were income per capita and percent of the population with master’s degree.</p>
+<p>The most important features for the initial XGB model across all drugs are shown in the heatmap below (<a href="#fig-heatmap-rf-variable-importance" class="quarto-xref">Figure&nbsp;14</a>). The most obvious pattern here is that the num_contract_plans (aka the quantity of available Medicare plans) is the most important feature for 12 out of the 14 top drugs. We already looked at the connection between total_] population and the quantity of available plans in a county previously, and only saw a mild correlation. For the other two drugs, the top features were income per capita and percent of the population with master’s degree.</p>
 <div id="cell-fig-heatmap-rf-variable-importance" class="cell">
 <div class="cell-output-display">
 <div id="fig-heatmap-rf-variable-importance" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1259,7 +1259,7 @@ Figure&nbsp;14: Top 5 Variable Importance Heatmap by Drug for XGB Model
 </section>
 <section id="feature-direction" class="level3" data-number="6.4.5">
 <h3 data-number="6.4.5" class="anchored" data-anchor-id="feature-direction"><span class="header-section-number">6.4.5</span> Feature Direction</h3>
-<p>We did a quick linear regression fit between the median price of all drugs and the number of available Medicare plans in a county. The results are shown in <a href="#fig-effect-available-plans-on-drug-price" class="quarto-xref">Figure&nbsp;15</a> below. The percent of the price variance that is due to the number of available Medicare plans was pulled from the R^2 value and is shown in the size of the points. The direction of the relationship is shown as a percent of the median drug price on the X-axis. For every 10 medicare plans added to a county, the drug price either increases or decreases by the percent in the plot. The significance of the relationship was determined by a p-value &lt; 0.05 and is color coded in the plot. In general, while some drug account, the number of contracts accounts for ~5% of the variance in drug price, that is still quite a small number. Also, some drugs are increasing price and some decreasing with the addtion of 10 more Medicare plan options in a county. In general, the number of Medicare plans available isn’t the only factor that drives drug price, but it is the most important factor we found in our analysis.</p>
+<p>To determine if more Medicare plan options in a county increase or decrease the drug price, we did a quick linear regression fit between the median price of all drugs and the number of available Medicare plans in a county. The results are shown in <a href="#fig-effect-available-plans-on-drug-price" class="quarto-xref">Figure&nbsp;15</a> below. The percent of the price variance that is due to the number of available Medicare plans was pulled from the R<sup>2</sup> value and is shown in the size of the points. The direction of the relationship is shown as a percent of the median drug price on the X-axis. For every 10 medicare plans added to a county, the drug price either increases or decreases by the percent in the plot. The significance of the relationship was determined by a p-value &lt; 0.05 and is color coded in the plot. For the most affected drug price, the number of contracts accounts for up to ~5% of the variance in drug price. 5% is not a very large imcpart. Also, some drugs are increasing price and some decreasing with the addition of 10 more Medicare plan options in a county. In general, the number of Medicare plans, along with demographics, aren’t the only factor that drives drug price, but the number of plans is the most important factor we found in our feature set.</p>
 <div id="cell-fig-effect-available-plans-on-drug-price" class="cell">
 <div class="cell-output-display">
 <div id="fig-effect-available-plans-on-drug-price" class="quarto-float quarto-figure quarto-figure-center anchored">

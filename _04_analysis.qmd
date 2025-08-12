@@ -71,7 +71,7 @@ We were not able to match all the top drugs to our dataset, so we used only the 
 
 ### Price Variance Across Counties 
 
-After mapping individual medication prices to U.S. counties where Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure (@fig-pricevariance). This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.
+After mapping individual medication prices to U.S. counties by which Medicare plans were available, we found far more variability in pricing than expected. Some drugs had over 6,000 unique prices nationwide, with many others exceeding 4,000. A box plot of the top-spending medications is shown below, ordered from highest to lowest total national expenditure (@fig-pricevariance). This visualization highlights the wide variance in drug pricing. Notably, the absolute cost of a medication does not necessarily align with its total national spending. For example, Apixaban, the drug with the highest overall spend, costs only about $10 for a 30-day supply, while another top-spending drug is priced at approximately $26,000 for the same duration.
 
 
 ```{r}
@@ -190,7 +190,7 @@ An early concern in the development of this project was whether there would even
 
 ``` {r}
 #| label: fig-map-facet
-#| fig-cap: "Median drug prices by US County for 14 drugs. Note: The color scale is differnet for every drug. The highest value for each drug is yellow while the lowest value is purple."
+#| fig-cap: "30-day supply median drug prices by US County for 14 high total expenditure drugs. Note: The color scale is different for every drug. The highest value for each drug is yellow while the lowest value is purple."
 #| warning: false
 #| echo: false
 #| message: false
@@ -393,7 +393,7 @@ Our team was surprised by what we observed once the median prices were applied t
 
 ### Correlations
 
-The age, education, racial, and gender data from the Census are provided as absolute values. We normalized those by dividing each metric by the total population to convert them to percentages. We then explored which demographic metrics most closely correlate to the prices for each medication in @fig-by-drug-correlation. If all the medications are correlated with similar demographic metrics, all drugs can be modeled together. If not, the individual drugs will need to be modeled separately. In this case, we filtered out weak correlations, keeping only those with Pearson correlation coefficients less than -0.1 or greater than 0.1. There is no clear pattern among all the top drugs for correlations with the demographic metrics. 
+The age, education, racial, and gender data from the Census are provided as absolute values. We normalized those by dividing each metric by the total population to convert them to percentages. We then explored which demographic metrics most closely correlate to the prices for each medication in @fig-by-drug-correlation. If all the medications are correlated with similar demographic metrics, all drugs can be modeled together. If not, the individual drugs will need to be modeled separately. In this case, we filtered out weak correlations, keeping only those with Pearson correlation coefficients less than -0.1 or greater than 0.1. There is no clear pattern among all the top drugs for correlations with the demographic metrics. Thus, we concluded that each medication needs to be analyzed independently.
 
 ```{r}
 #| label: fig-by-drug-correlation
@@ -432,7 +432,7 @@ The age, education, racial, and gender data from the Census are provided as abso
   
 ```
 
-We introduced a feature called “Affordability” which divided price by income. This metric showed minimal correlation with other demographic variables. Even the strongest positive and negative correlations had Pearson coefficients below 0.04, indicating negligible relationships.  It failed to yield meaningful insights within our analysis and results.
+We also introduced a feature called “Affordability” which divided price by income. This metric showed minimal correlation with other demographic variables also. Even the strongest positive and negative correlations had Pearson coefficients below 0.04, indicating negligible relationships.  It failed to yield meaningful insights within our analysis and results. 
 
 ```{r}
 # #| label: fig-affordability-correlations
